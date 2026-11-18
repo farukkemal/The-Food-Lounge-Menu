@@ -6,8 +6,8 @@ import {
   useLanguage,
 } from '../context/LanguageContext';
 
-const CategoryCard = memo(function CategoryCard({ category, index, lang, onSelect }) {
-  const displayName = getLocalizedCategoryName(category, lang);
+const CategoryCard = memo(function CategoryCard({ category, index, lang, localeData, onSelect }) {
+  const displayName = getLocalizedCategoryName(category, lang, localeData);
 
   return (
     <button
@@ -49,7 +49,7 @@ const CategoryShowcase = memo(function CategoryShowcase({
   categories,
   onSelectCategory,
 }) {
-  const { lang, strings } = useLanguage();
+  const { lang, localeData, strings } = useLanguage();
 
   return (
     <section aria-label={strings.categories} className="px-4 pt-4 pb-8">
@@ -77,6 +77,7 @@ const CategoryShowcase = memo(function CategoryShowcase({
             category={cat}
             index={idx}
             lang={lang}
+            localeData={localeData}
             onSelect={onSelectCategory}
           />
         ))}

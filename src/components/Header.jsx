@@ -1,45 +1,8 @@
-import { memo } from 'react';
-import { Info, Clock } from 'lucide-react';
+import { memo, useEffect, useRef, useState } from 'react';
+import { Info, Clock, ChevronDown, Check } from 'lucide-react';
 import logoImg from '../assets/logo.webp';
 import { useLanguage } from '../context/LanguageContext';
-
-function TrFlag() {
-  return (
-    <svg
-      width="15"
-      height="11"
-      viewBox="0 0 30 20"
-      aria-hidden="true"
-      className="shrink-0 rounded-[2px] ring-1 ring-black/10"
-    >
-      <rect width="30" height="20" fill="#E30A17" />
-      <circle cx="11.5" cy="10" r="5" fill="#FFFFFF" />
-      <circle cx="12.9" cy="10" r="4" fill="#E30A17" />
-      <polygon
-        fill="#FFFFFF"
-        points="17.2,10 19.6,10.8 18.1,8.7 18.1,11.3 19.6,9.2"
-      />
-    </svg>
-  );
-}
-
-function EnFlag() {
-  return (
-    <svg
-      width="15"
-      height="11"
-      viewBox="0 0 60 40"
-      aria-hidden="true"
-      className="shrink-0 rounded-[2px] ring-1 ring-black/10"
-    >
-      <rect width="60" height="40" fill="#012169" />
-      <path d="M0,0 L60,40 M60,0 L0,40" stroke="#FFFFFF" strokeWidth="7" />
-      <path d="M0,0 L60,40 M60,0 L0,40" stroke="#C8102E" strokeWidth="3.2" />
-      <path d="M30,0 V40 M0,20 H60" stroke="#FFFFFF" strokeWidth="11" />
-      <path d="M30,0 V40 M0,20 H60" stroke="#C8102E" strokeWidth="6.5" />
-    </svg>
-  );
-}
+import { LanguageFlag, SUPPORTED_LANGUAGES } from './LanguageFlags';
 
 const Header = memo(function Header({
   restaurantName,
@@ -50,18 +13,41 @@ const Header = memo(function Header({
   totalItems,
 }) {
   const { lang, setLang, strings } = useLanguage();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
   const hour = new Date().getHours();
   const isOpenNow = hour >= 8 && hour < 24;
+  const activeLangMeta =
+    SUPPORTED_LANGUAGES.find((l) => l.code === lang) || SUPPORTED_LANGUAGES[0];
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const handleOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setMenuOpen(false);
+      }
+    };
+    const handleEsc = (e) => {
+      if (e.key === 'Escape') setMenuOpen(false);
+    };
+    document.addEventListener('pointerdown', handleOutside);
+    window.addEventListener('keydown', handleEsc);
+    return () => {
+      document.removeEventListener('pointerdown', handleOutside);
+      window.removeEventListener('keydown', handleEsc);
+    };
+  }, [menuOpen]);
 
   return (
     <header className="border-b border-[#EBE8E2] bg-white">
       <div className="mx-auto max-w-2xl px-4 py-3">
         <div className="flex items-center justify-between gap-2">
-          {/* Left: Brand Logo + Name + Open Status */}
+          {/* Brand Logo + Name + Open Status */}
           <button
             type="button"
             onClick={onGoHome}
-            className="flex min-w-0 items-center gap-2.5 text-left transition-transform focus:outline-none active:scale-[0.98] active:opacity-85 sm:gap-3"
+            className="flex min-w-0 items-center gap-2.5 text-start transition-transform focus:outline-none active:scale-[0.98] active:opacity-85 sm:gap-3"
             aria-label={strings.homeAria}
           >
             <div className="h-11 w-11 shrink-0 overflow-hidden rounded-xl shadow-xs ring-1 ring-[#CA2F2D]/20">
@@ -103,7 +89,7 @@ const Header = memo(function Header({
                   {isOpenNow ? strings.open : strings.closed}
                 </span>
                 <span className="text-[#D4CFC7]">•</span>
-                <span className="inline-flex items-center gap-1">
+                <span className="inline-flex items-center gap-1" dir="ltr">
                   <Clock size={11} className="text-[#9A938A]" />
                   {hoursLabel}
                 </span>
@@ -115,39 +101,62 @@ const Header = memo(function Header({
             </div>
           </button>
 
-          {/* Right: TR / EN Switcher with Flags + Info (i) Button */}
+          {/* Right: 5-Language Switcher Dropdown + Info (i) Button */}
           <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
-            <div
-              role="group"
-              aria-label="Language selector"
-              className="inline-flex h-10 items-center rounded-xl border border-[#E7E3DC] bg-[#F5F3EE] p-1"
-            >
+            <div ref={dropdownRef} className="relative">
               <button
                 type="button"
-                onClick={() => setLang('tr')}
-                aria-pressed={lang === 'tr'}
-                className={`inline-flex h-full items-center gap-1 rounded-lg px-2 text-[11px] font-bold tracking-wide transition-colors active:scale-95 ${
-                  lang === 'tr'
-                    ? 'bg-[#CA2F2D] text-white shadow-2xs'
-                    : 'text-[#6B665F] hover:text-[#181716]'
-                }`}
+                onClick={() => setMenuOpen((o) => !o)}
+                aria-haspopup="listbox"
+                aria-expanded={menuOpen}
+                aria-label="Language selector"
+                className="inline-flex h-10 items-center gap-1.5 rounded-xl border border-[#E7E3DC] bg-[#FAF9F6] px-2.5 text-xs font-bold text-[#181716] transition-colors hover:border-[#CA2F2D]/40 hover:bg-[#F1EFEA] active:scale-[0.97]"
               >
-                <TrFlag />
-                <span>TR</span>
+                <LanguageFlag code={activeLangMeta.code} width={16} height={12} />
+                <span>{activeLangMeta.short}</span>
+                <ChevronDown
+                  size={13}
+                  className={`text-[#8C857C] transition-transform duration-150 ${
+                    menuOpen ? 'rotate-180' : ''
+                  }`}
+                />
               </button>
-              <button
-                type="button"
-                onClick={() => setLang('en')}
-                aria-pressed={lang === 'en'}
-                className={`inline-flex h-full items-center gap-1 rounded-lg px-2 text-[11px] font-bold tracking-wide transition-colors active:scale-95 ${
-                  lang === 'en'
-                    ? 'bg-[#CA2F2D] text-white shadow-2xs'
-                    : 'text-[#6B665F] hover:text-[#181716]'
-                }`}
-              >
-                <EnFlag />
-                <span>EN</span>
-              </button>
+
+              {menuOpen && (
+                <div
+                  role="listbox"
+                  aria-label="Languages"
+                  dir="ltr"
+                  className="animate-fade-in absolute end-0 top-12 z-50 w-44 overflow-hidden rounded-2xl border border-[#E7E3DC] bg-white p-1.5 shadow-[0_14px_34px_rgba(24,23,22,0.14)]"
+                >
+                  {SUPPORTED_LANGUAGES.map((item) => {
+                    const isActive = item.code === lang;
+                    return (
+                      <button
+                        key={item.code}
+                        type="button"
+                        role="option"
+                        aria-selected={isActive}
+                        onClick={() => {
+                          setLang(item.code);
+                          setMenuOpen(false);
+                        }}
+                        className={`flex w-full items-center justify-between gap-2 rounded-xl px-3 py-2 text-xs font-semibold transition-colors ${
+                          isActive
+                            ? 'bg-[#CA2F2D] text-white'
+                            : 'text-[#272626] hover:bg-[#F5F3EE]'
+                        }`}
+                      >
+                        <span className="flex items-center gap-2.5">
+                          <LanguageFlag code={item.code} width={17} height={12} />
+                          <span>{item.nativeName}</span>
+                        </span>
+                        {isActive && <Check size={13} strokeWidth={2.6} />}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
             </div>
 
             <button

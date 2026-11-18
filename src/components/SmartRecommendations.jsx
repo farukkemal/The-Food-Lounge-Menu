@@ -24,12 +24,13 @@ const SpotlightHeroCard = memo(function SpotlightHeroCard({
   spotlight,
   isMorning,
   lang,
+  localeData,
   onSelectItem,
 }) {
   if (!spotlight?.item) return null;
   const { item, badge, highlightNote } = spotlight;
-  const title = getLocalizedItemTitle(item, lang);
-  const description = getLocalizedItemDesc(item, lang);
+  const title = getLocalizedItemTitle(item, lang, localeData);
+  const description = getLocalizedItemDesc(item, lang, localeData);
 
   return (
     <article
@@ -108,10 +109,11 @@ const CuratedSlideCard = memo(function CuratedSlideCard({
   item,
   index,
   lang,
+  localeData,
   onSelectItem,
 }) {
-  const title = getLocalizedItemTitle(item, lang);
-  const description = getLocalizedItemDesc(item, lang);
+  const title = getLocalizedItemTitle(item, lang, localeData);
+  const description = getLocalizedItemDesc(item, lang, localeData);
 
   return (
     <article
@@ -172,6 +174,7 @@ const PairingSlideCard = memo(function PairingSlideCard({
   pairing,
   index,
   lang,
+  localeData,
   strings,
   onSelectItem,
 }) {
@@ -189,9 +192,9 @@ const PairingSlideCard = memo(function PairingSlideCard({
   } = pairing;
 
   const hasDiscount = discountPercent > 0 && Boolean(savingsFormatted);
-  const foodTitle = getLocalizedItemTitle(food, lang);
-  const cocktailTitle = getLocalizedItemTitle(cocktail, lang);
-  const cocktailDesc = getLocalizedItemDesc(cocktail, lang);
+  const foodTitle = getLocalizedItemTitle(food, lang, localeData);
+  const cocktailTitle = getLocalizedItemTitle(cocktail, lang, localeData);
+  const cocktailDesc = getLocalizedItemDesc(cocktail, lang, localeData);
 
   return (
     <article className="gpu-card snap-card flex w-[85vw] max-w-[360px] shrink-0 flex-col overflow-hidden rounded-3xl bg-[#1A1918] text-white ring-1 ring-white/10">
@@ -329,12 +332,12 @@ const SmartRecommendations = memo(function SmartRecommendations({
 }) {
   const { activeSlot, currentTimeLabel } = useTimeSlot();
   const { index: menuIndex } = useMenu();
-  const { lang, strings } = useLanguage();
+  const { lang, localeData, strings } = useLanguage();
   const carouselRef = useRef(null);
 
   const data = useMemo(
-    () => getRecommendationsForSlot(activeSlot, menuIndex, lang),
-    [activeSlot, menuIndex, lang]
+    () => getRecommendationsForSlot(activeSlot, menuIndex, lang, localeData),
+    [activeSlot, menuIndex, lang, localeData]
   );
 
   useEffect(() => {
@@ -381,6 +384,7 @@ const SmartRecommendations = memo(function SmartRecommendations({
               spotlight={data.spotlight}
               isMorning={isMorning}
               lang={lang}
+              localeData={localeData}
               onSelectItem={onSelectItem}
             />
           )}
@@ -415,6 +419,7 @@ const SmartRecommendations = memo(function SmartRecommendations({
                   item={item}
                   index={idx}
                   lang={lang}
+                  localeData={localeData}
                   onSelectItem={onSelectItem}
                 />
               ))}
@@ -441,6 +446,7 @@ const SmartRecommendations = memo(function SmartRecommendations({
                 pairing={pairing}
                 index={idx}
                 lang={lang}
+                localeData={localeData}
                 strings={strings}
                 onSelectItem={onSelectItem}
               />

@@ -1,46 +1,60 @@
 import { memo, useEffect, useState } from 'react';
 import logoImg from '../assets/logo.webp';
 import { useLanguage } from '../context/LanguageContext';
+import { LanguageFlag, SUPPORTED_LANGUAGES } from './LanguageFlags';
 
-const MIN_DISPLAY_MS = 1200;
-const MAX_WAIT_MS = 2400;
-const FADE_OUT_MS = 420;
+const MIN_LOADING_MS = 1100;
+const MAX_LOADING_MS = 2600;
+const FADE_OUT_MS = 400;
 
+/**
+ * 2-Stage Branded Crimson Opening Flow:
+ * 1) 'select'  -> User selects preferred language (TR, EN, AR, ZH, RU) on crimson screen
+ * 2) 'loading' -> Branded crimson loading screen with logo + spinner while locale & data settle
+ * 3) 'exiting' -> Smooth GPU fade-out revealing the menu in the selected language
+ */
 const SplashScreen = memo(function SplashScreen({ isReady }) {
-  const { strings } = useLanguage();
+  const { lang, setLang, localeReady, strings } = useLanguage();
+  const [phase, setPhase] = useState('select'); // 'select' | 'loading' | 'exiting' | 'done'
   const [minElapsed, setMinElapsed] = useState(false);
   const [forceRelease, setForceRelease] = useState(false);
-  const [exiting, setExiting] = useState(false);
-  const [unmounted, setUnmounted] = useState(false);
 
-  // Enforce smooth minimum display time (~1.2s) & safety max ceiling
+  const handleSelectLanguage = (code) => {
+    setLang(code);
+    setMinElapsed(false);
+    setForceRelease(false);
+    setPhase('loading');
+  };
+
+  // Start minimum & maximum loading timers once language is selected
   useEffect(() => {
-    const minTimer = window.setTimeout(() => setMinElapsed(true), MIN_DISPLAY_MS);
-    const maxTimer = window.setTimeout(() => setForceRelease(true), MAX_WAIT_MS);
+    if (phase !== 'loading') return;
+    const minTimer = window.setTimeout(() => setMinElapsed(true), MIN_LOADING_MS);
+    const maxTimer = window.setTimeout(() => setForceRelease(true), MAX_LOADING_MS);
     return () => {
       window.clearTimeout(minTimer);
       window.clearTimeout(maxTimer);
     };
-  }, []);
+  }, [phase]);
 
-  // Begin smooth GPU fade-out once both data state is ready and min display time elapsed
+  // Begin smooth fade-out once menu data + selected language bundle + min duration are all ready
   useEffect(() => {
-    if (exiting || unmounted) return;
-    if ((isReady && minElapsed) || forceRelease) {
-      setExiting(true);
+    if (phase !== 'loading') return;
+    if ((isReady && localeReady && minElapsed) || forceRelease) {
+      setPhase('exiting');
     }
-  }, [isReady, minElapsed, forceRelease, exiting, unmounted]);
+  }, [phase, isReady, localeReady, minElapsed, forceRelease]);
 
-  // Unmount cleanly after fade-out completes (zero DOM overhead afterwards)
+  // Unmount cleanly after fade-out
   useEffect(() => {
-    if (!exiting) return;
-    const hideTimer = window.setTimeout(() => setUnmounted(true), FADE_OUT_MS);
+    if (phase !== 'exiting') return;
+    const hideTimer = window.setTimeout(() => setPhase('done'), FADE_OUT_MS);
     return () => window.clearTimeout(hideTimer);
-  }, [exiting]);
+  }, [phase]);
 
-  // Lock background scroll only while splash is covering the screen
+  // Lock page scroll while splash covers the screen
   useEffect(() => {
-    if (unmounted || exiting) {
+    if (phase === 'exiting' || phase === 'done') {
       document.body.style.overflow = '';
       return;
     }
@@ -48,35 +62,40 @@ const SplashScreen = memo(function SplashScreen({ isReady }) {
     return () => {
       document.body.style.overflow = '';
     };
-  }, [exiting, unmounted]);
+  }, [phase]);
 
-  if (unmounted) return null;
+  if (phase === 'done') return null;
 
   return (
     <div
-      role="status"
-      aria-live="polite"
-      aria-label="The Food Lounge dijital menü yükleniyor"
+      dir="ltr"
+      role={phase === 'loading' ? 'status' : 'dialog'}
+      aria-modal={phase === 'select' ? 'true' : undefined}
+      aria-label="The Food Lounge"
       style={{
         background:
-          'radial-gradient(circle at 50% 44%, #D93836 0%, #CA2F2D 48%, #9B1C1A 100%)',
+          'radial-gradient(circle at 50% 38%, #D93836 0%, #CA2F2D 48%, #9B1C1A 100%)',
         willChange: 'opacity, transform',
       }}
-      className={`fixed inset-0 z-[100] flex flex-col items-center justify-center px-6 text-white select-none transition-all duration-[420ms] ease-out ${
-        exiting
+      className={`fixed inset-0 z-[100] flex flex-col items-center justify-center overflow-y-auto px-5 py-8 text-white select-none transition-all duration-[400ms] ease-out ${
+        phase === 'exiting'
           ? 'pointer-events-none scale-[1.03] opacity-0'
           : 'scale-100 opacity-100'
       }`}
     >
-      {/* Subtle ambient glow behind the brand medallion */}
+      {/* Subtle ambient glow */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute h-72 w-72 rounded-full bg-white/10 blur-3xl"
       />
 
-      <div className="animate-splash-logo relative flex flex-col items-center">
+      <div className="animate-splash-logo relative flex w-full max-w-sm flex-col items-center">
         {/* Centered Brand Logo */}
-        <div className="h-36 w-36 overflow-hidden rounded-full bg-[#CA2F2D] shadow-[0_20px_50px_rgba(0,0,0,0.3)] ring-2 ring-white/30 sm:h-44 sm:w-44">
+        <div
+          className={`overflow-hidden rounded-full bg-[#CA2F2D] shadow-[0_20px_50px_rgba(0,0,0,0.3)] ring-2 ring-white/30 transition-all duration-300 ${
+            phase === 'select' ? 'h-30 w-30 sm:h-36 sm:w-36' : 'h-36 w-36 sm:h-44 sm:w-44'
+          }`}
+        >
           <img
             src={logoImg}
             alt="The Food Lounge"
@@ -89,16 +108,65 @@ const SplashScreen = memo(function SplashScreen({ isReady }) {
           />
         </div>
 
-        {/* Modern Smooth Circular Spinner Directly Below Logo */}
-        <div className="mt-8 flex flex-col items-center gap-3">
-          <div
-            aria-hidden="true"
-            className="h-9 w-9 animate-spin rounded-full border-[3px] border-white/25 border-t-white border-r-white/75"
-          />
-          <span className="text-[11px] font-semibold tracking-[0.22em] text-white/85 uppercase">
-            {strings.preparingMenu}
-          </span>
-        </div>
+        {/* Stage 1: Language Picker */}
+        {phase === 'select' ? (
+          <div className="animate-fade-in mt-6 w-full text-center">
+            <h1
+              className="text-2xl font-bold tracking-wide text-white sm:text-[26px]"
+              style={{ fontFamily: 'var(--font-display)' }}
+            >
+              The Food Lounge
+            </h1>
+            <p className="mt-1 text-[11px] font-semibold tracking-[0.18em] text-white/80 uppercase">
+              Dil Seçiniz • Select Language
+            </p>
+
+            <div className="mt-5 grid grid-cols-1 gap-2.5">
+              {SUPPORTED_LANGUAGES.map((item) => {
+                const isLastSelected = lang === item.code;
+                return (
+                  <button
+                    key={item.code}
+                    type="button"
+                    onClick={() => handleSelectLanguage(item.code)}
+                    className={`flex w-full items-center justify-between rounded-2xl border px-4 py-3 text-left transition-transform duration-150 active:scale-[0.975] ${
+                      isLastSelected
+                        ? 'border-white bg-white text-[#181716] shadow-[0_8px_24px_rgba(0,0,0,0.2)]'
+                        : 'border-white/28 bg-white/12 text-white hover:bg-white/20'
+                    }`}
+                  >
+                    <span className="flex items-center gap-3">
+                      <LanguageFlag code={item.code} width={22} height={16} />
+                      <span className="text-[15px] font-bold tracking-wide">
+                        {item.nativeName}
+                      </span>
+                    </span>
+                    <span
+                      className={`rounded-lg px-2 py-0.5 text-[11px] font-bold tracking-wider ${
+                        isLastSelected
+                          ? 'bg-[#CA2F2D]/12 text-[#CA2F2D]'
+                          : 'bg-black/20 text-white/90'
+                      }`}
+                    >
+                      {item.short}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        ) : (
+          /* Stage 2: Crimson Loading Spinner */
+          <div className="animate-fade-in mt-8 flex flex-col items-center gap-3.5">
+            <div
+              aria-hidden="true"
+              className="h-9 w-9 animate-spin rounded-full border-[3px] border-white/25 border-t-white border-r-white/75"
+            />
+            <span className="text-xs font-semibold tracking-[0.18em] text-white/90 uppercase">
+              {strings.preparingMenu}
+            </span>
+          </div>
+        )}
       </div>
     </div>
   );

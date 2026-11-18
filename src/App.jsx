@@ -51,7 +51,7 @@ function isAdminLocation() {
 
 function CustomerMenuView({ onOpenAdmin }) {
   const { index } = useMenu();
-  const { lang, strings } = useLanguage();
+  const { lang, localeData, strings } = useLanguage();
   const restaurant = index.restaurant;
   const stats = index.stats;
   const categories = index.activeCategories;
@@ -166,7 +166,7 @@ function CustomerMenuView({ onOpenAdmin }) {
                     className="truncate text-2xl leading-tight font-bold text-[#181716]"
                     style={{ fontFamily: 'var(--font-display)' }}
                   >
-                    {getLocalizedCategoryName(activeCategory, lang)}
+                    {getLocalizedCategoryName(activeCategory, lang, localeData)}
                   </h2>
                   <p className="text-xs font-medium text-[#7C766E]">
                     {displayedItems.length} {strings.dishesListed}
@@ -199,7 +199,7 @@ function CustomerMenuView({ onOpenAdmin }) {
                         : 'border border-[#E5E1D9] bg-white text-[#524E48]'
                     }`}
                   >
-                    {getLocalizedSubcategoryLabel(activeCategory, sub, lang)}
+                    {getLocalizedSubcategoryLabel(activeCategory, sub, lang, localeData)}
                   </button>
                 ))}
               </div>
@@ -213,7 +213,7 @@ function CustomerMenuView({ onOpenAdmin }) {
                       <h3 className="text-xs font-bold tracking-[0.12em] text-[#CA2F2D] uppercase">
                         {subKey === '__other__'
                           ? strings.other
-                          : getLocalizedSubcategoryLabel(activeCategory, subKey, lang)}
+                          : getLocalizedSubcategoryLabel(activeCategory, subKey, lang, localeData)}
                       </h3>
                       <span className="text-[11px] font-medium text-[#8E8880]">
                         {subItems.length}

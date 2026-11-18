@@ -10,7 +10,7 @@ import {
 } from '../context/LanguageContext';
 
 const ProductModal = memo(function ProductModal({ item, onClose }) {
-  const { lang, strings } = useLanguage();
+  const { lang, localeData, strings } = useLanguage();
 
   useEffect(() => {
     if (!item) return;
@@ -27,10 +27,10 @@ const ProductModal = memo(function ProductModal({ item, onClose }) {
 
   if (!item) return null;
 
-  const title = getLocalizedItemTitle(item, lang);
-  const description = getLocalizedItemDesc(item, lang);
-  const categoryLabel = getLocalizedItemCategory(item, lang);
-  const subcategoryLabel = getLocalizedItemSubcategory(item, lang);
+  const title = getLocalizedItemTitle(item, lang, localeData);
+  const description = getLocalizedItemDesc(item, lang, localeData);
+  const categoryLabel = getLocalizedItemCategory(item, lang, localeData);
+  const subcategoryLabel = getLocalizedItemSubcategory(item, lang, localeData);
 
   return (
     <div

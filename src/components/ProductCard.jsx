@@ -15,13 +15,13 @@ const ProductCard = memo(function ProductCard({
   showCategoryBadge = false,
   priority = false,
 }) {
-  const { lang, strings } = useLanguage();
+  const { lang, localeData, strings } = useLanguage();
   const hasImage = Boolean(item.image);
-  const title = getLocalizedItemTitle(item, lang);
-  const description = getLocalizedItemDesc(item, lang);
+  const title = getLocalizedItemTitle(item, lang, localeData);
+  const description = getLocalizedItemDesc(item, lang, localeData);
   const badgeText =
-    getLocalizedItemSubcategory(item, lang) ||
-    getLocalizedItemCategory(item, lang);
+    getLocalizedItemSubcategory(item, lang, localeData) ||
+    getLocalizedItemCategory(item, lang, localeData);
 
   return (
     <article

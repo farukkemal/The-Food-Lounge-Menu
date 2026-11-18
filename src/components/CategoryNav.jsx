@@ -10,7 +10,7 @@ const CategoryNav = memo(function CategoryNav({
   activeCategoryId,
   onSelectCategory,
 }) {
-  const { lang, strings } = useLanguage();
+  const { lang, localeData, strings } = useLanguage();
   const scrollRef = useRef(null);
   const activeBtnRef = useRef(null);
 
@@ -62,7 +62,7 @@ const CategoryNav = memo(function CategoryNav({
                   : 'border border-[#E5E1D9] bg-white text-[#4A4641] hover:border-[#CBC5BC]'
               }`}
             >
-              {getLocalizedCategoryName(cat, lang)}
+              {getLocalizedCategoryName(cat, lang, localeData)}
             </button>
           );
         })}
