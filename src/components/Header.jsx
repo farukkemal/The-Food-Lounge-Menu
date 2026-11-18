@@ -3,6 +3,44 @@ import { Info, Clock } from 'lucide-react';
 import logoImg from '../assets/logo.webp';
 import { useLanguage } from '../context/LanguageContext';
 
+function TrFlag() {
+  return (
+    <svg
+      width="15"
+      height="11"
+      viewBox="0 0 30 20"
+      aria-hidden="true"
+      className="shrink-0 rounded-[2px] ring-1 ring-black/10"
+    >
+      <rect width="30" height="20" fill="#E30A17" />
+      <circle cx="11.5" cy="10" r="5" fill="#FFFFFF" />
+      <circle cx="12.9" cy="10" r="4" fill="#E30A17" />
+      <polygon
+        fill="#FFFFFF"
+        points="17.2,10 19.6,10.8 18.1,8.7 18.1,11.3 19.6,9.2"
+      />
+    </svg>
+  );
+}
+
+function EnFlag() {
+  return (
+    <svg
+      width="15"
+      height="11"
+      viewBox="0 0 60 40"
+      aria-hidden="true"
+      className="shrink-0 rounded-[2px] ring-1 ring-black/10"
+    >
+      <rect width="60" height="40" fill="#012169" />
+      <path d="M0,0 L60,40 M60,0 L0,40" stroke="#FFFFFF" strokeWidth="7" />
+      <path d="M0,0 L60,40 M60,0 L0,40" stroke="#C8102E" strokeWidth="3.2" />
+      <path d="M30,0 V40 M0,20 H60" stroke="#FFFFFF" strokeWidth="11" />
+      <path d="M30,0 V40 M0,20 H60" stroke="#C8102E" strokeWidth="6.5" />
+    </svg>
+  );
+}
+
 const Header = memo(function Header({
   restaurantName,
   hoursLabel = '08:00 – 24:00',
@@ -18,7 +56,7 @@ const Header = memo(function Header({
   return (
     <header className="border-b border-[#EBE8E2] bg-white">
       <div className="mx-auto max-w-2xl px-4 py-3">
-        <div className="flex items-center justify-between gap-2.5">
+        <div className="flex items-center justify-between gap-2">
           {/* Left: Brand Logo + Name + Open Status */}
           <button
             type="button"
@@ -40,7 +78,7 @@ const Header = memo(function Header({
             <div className="min-w-0">
               <div className="flex items-center gap-1.5 sm:gap-2">
                 <h1
-                  className="truncate text-[19px] leading-tight font-bold tracking-tight text-[#181716] sm:text-[21px]"
+                  className="truncate text-[18px] leading-tight font-bold tracking-tight text-[#181716] sm:text-[21px]"
                   style={{ fontFamily: 'var(--font-display)' }}
                 >
                   {restaurantName}
@@ -77,9 +115,8 @@ const Header = memo(function Header({
             </div>
           </button>
 
-          {/* Right: TR / EN Switcher + Info (i) Button */}
+          {/* Right: TR / EN Switcher with Flags + Info (i) Button */}
           <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
-            {/* TR / EN Language Selector immediately to the left of Info button */}
             <div
               role="group"
               aria-label="Language selector"
@@ -89,25 +126,27 @@ const Header = memo(function Header({
                 type="button"
                 onClick={() => setLang('tr')}
                 aria-pressed={lang === 'tr'}
-                className={`h-full rounded-lg px-2.5 text-[11px] font-bold tracking-wide transition-colors active:scale-95 ${
+                className={`inline-flex h-full items-center gap-1 rounded-lg px-2 text-[11px] font-bold tracking-wide transition-colors active:scale-95 ${
                   lang === 'tr'
                     ? 'bg-[#CA2F2D] text-white shadow-2xs'
                     : 'text-[#6B665F] hover:text-[#181716]'
                 }`}
               >
-                TR
+                <TrFlag />
+                <span>TR</span>
               </button>
               <button
                 type="button"
                 onClick={() => setLang('en')}
                 aria-pressed={lang === 'en'}
-                className={`h-full rounded-lg px-2.5 text-[11px] font-bold tracking-wide transition-colors active:scale-95 ${
+                className={`inline-flex h-full items-center gap-1 rounded-lg px-2 text-[11px] font-bold tracking-wide transition-colors active:scale-95 ${
                   lang === 'en'
                     ? 'bg-[#CA2F2D] text-white shadow-2xs'
                     : 'text-[#6B665F] hover:text-[#181716]'
                 }`}
               >
-                EN
+                <EnFlag />
+                <span>EN</span>
               </button>
             </div>
 
