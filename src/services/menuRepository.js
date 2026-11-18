@@ -36,6 +36,19 @@ export function formatPriceTL(amount) {
   );
 }
 
+function resolveAssetUrl(url) {
+  if (typeof url !== 'string') return null;
+  const trimmed = url.trim();
+  if (!trimmed) return null;
+  if (/^(https?:|data:|blob:)/i.test(trimmed)) return trimmed;
+  const base = import.meta.env.BASE_URL || '/';
+  const cleanBase = base.endsWith('/') ? base : `${base}/`;
+  const withoutBase = trimmed.startsWith(cleanBase)
+    ? trimmed.slice(cleanBase.length)
+    : trimmed.replace(/^\/+/, '');
+  return `${cleanBase}${withoutBase}`;
+}
+
 export function recomputeMenuData(rawData) {
   const safeData = rawData && typeof rawData === 'object' ? rawData : {};
   const rawItems = Array.isArray(safeData.items) ? safeData.items : [];
@@ -64,7 +77,7 @@ export function recomputeMenuData(rawData) {
         description: item.description ? String(item.description).trim() : '',
         descriptionEn: item.descriptionEn ? String(item.descriptionEn).trim() : (item.description ? String(item.description).trim() : ''),
         calories: item.calories ? String(item.calories).trim() : null,
-        image: typeof item.image === 'string' && item.image.trim() ? item.image.trim() : null,
+        image: resolveAssetUrl(item.image),
         active: item.active !== false,
         featured: Boolean(item.featured),
         price: numPrice,
@@ -93,7 +106,7 @@ export function recomputeMenuData(rawData) {
         name,
         nameEn: cat.nameEn ? String(cat.nameEn).trim() : name,
         slug: cat.slug || slugify(name) || id,
-        image: typeof cat.image === 'string' && cat.image.trim() ? cat.image.trim() : null,
+        image: resolveAssetUrl(cat.image),
         itemCount: activeCatItems.length,
         totalItemCount: catItems.length,
         subcategories: Array.from(subSet),

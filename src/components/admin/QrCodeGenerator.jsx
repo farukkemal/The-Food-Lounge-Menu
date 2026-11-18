@@ -195,8 +195,11 @@ const QrTableCard = memo(function QrTableCard({ entry, onNotify }) {
 });
 
 const QrCodeGenerator = memo(function QrCodeGenerator({ onNotify }) {
+  const baseSubpath = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
   const defaultOrigin =
-    typeof window !== 'undefined' ? window.location.origin : 'https://thefoodlounge.com';
+    typeof window !== 'undefined'
+      ? `${window.location.origin}${baseSubpath}`
+      : 'https://farukkemal.github.io/The-Food-Lounge-Menu';
 
   const [baseUrl, setBaseUrl] = useState(defaultOrigin);
   const [mode, setMode] = useState('batch'); // 'single' | 'batch'

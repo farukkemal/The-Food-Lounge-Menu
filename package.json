@@ -2,11 +2,14 @@
   "name": "the-food-lounge-menu",
   "private": true,
   "version": "1.0.0",
+  "homepage": "https://farukkemal.github.io/The-Food-Lounge-Menu/",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "predeploy": "npm run build && node -e \"require('fs').copyFileSync('dist/index.html','dist/404.html')\"",
+    "deploy": "gh-pages -d dist",
     "scrape": "node scripts/scrape-menu.mjs",
     "optimize:images": "python scripts/optimize-images.py"
   },
@@ -20,6 +23,7 @@
     "@tailwindcss/vite": "^4.1.4",
     "@vitejs/plugin-react": "^4.4.1",
     "cheerio": "^1.0.0",
+    "gh-pages": "^6.3.0",
     "tailwindcss": "^4.1.4",
     "vite": "^6.3.2"
   }

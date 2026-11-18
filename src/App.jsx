@@ -36,10 +36,17 @@ function AdminLoadingFallback() {
   );
 }
 
+const BASE_PATH = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
+
 function isAdminLocation() {
   if (typeof window === 'undefined') return false;
   const p = window.location.pathname.replace(/\/+$/, '');
-  return p === '/admin' || window.location.hash.startsWith('#/admin');
+  return (
+    p === '/admin' ||
+    p === `${BASE_PATH}/admin` ||
+    p.endsWith('/admin') ||
+    window.location.hash.startsWith('#/admin')
+  );
 }
 
 function CustomerMenuView({ onOpenAdmin }) {
@@ -295,7 +302,11 @@ export default function App() {
   }, []);
 
   const navigate = useCallback((path) => {
-    window.history.pushState({}, '', path);
+    const targetUrl =
+      path === '/admin'
+        ? `${BASE_PATH}/admin`
+        : `${BASE_PATH || ''}/`;
+    window.history.pushState({}, '', targetUrl);
     setIsAdminRoute(path === '/admin');
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, []);
