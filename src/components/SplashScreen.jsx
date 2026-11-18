@@ -1,11 +1,13 @@
 import { memo, useEffect, useState } from 'react';
 import logoImg from '../assets/logo.webp';
+import { useLanguage } from '../context/LanguageContext';
 
 const MIN_DISPLAY_MS = 1200;
 const MAX_WAIT_MS = 2400;
 const FADE_OUT_MS = 420;
 
 const SplashScreen = memo(function SplashScreen({ isReady }) {
+  const { strings } = useLanguage();
   const [minElapsed, setMinElapsed] = useState(false);
   const [forceRelease, setForceRelease] = useState(false);
   const [exiting, setExiting] = useState(false);
@@ -94,7 +96,7 @@ const SplashScreen = memo(function SplashScreen({ isReady }) {
             className="h-9 w-9 animate-spin rounded-full border-[3px] border-white/25 border-t-white border-r-white/75"
           />
           <span className="text-[11px] font-semibold tracking-[0.22em] text-white/85 uppercase">
-            Menü Hazırlanıyor
+            {strings.preparingMenu}
           </span>
         </div>
       </div>

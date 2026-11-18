@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import { Star, ExternalLink } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 const DEFAULT_REVIEW_URL = 'https://maps.google.com/?cid=15489077177326640443';
 
@@ -34,8 +35,9 @@ function GoogleGIcon({ size = 18 }) {
 
 const GoogleReviewButton = memo(function GoogleReviewButton({
   href = DEFAULT_REVIEW_URL,
-  variant = 'card', // 'card' (footer showcase) | 'button' (compact modal CTA)
+  variant = 'card',
 }) {
+  const { strings } = useLanguage();
   const reviewHref = href || DEFAULT_REVIEW_URL;
 
   if (variant === 'button') {
@@ -50,7 +52,7 @@ const GoogleReviewButton = memo(function GoogleReviewButton({
           <GoogleGIcon size={18} />
           <div className="min-w-0">
             <span className="block text-xs font-bold text-[#181716]">
-              Google&apos;da Değerlendir / Yorum Bırak
+              {strings.reviewButton}
             </span>
             <span className="mt-0.5 flex items-center gap-0.5 text-[10.5px] font-medium text-[#7A746C]">
               {[0, 1, 2, 3, 4].map((i) => (
@@ -60,7 +62,7 @@ const GoogleReviewButton = memo(function GoogleReviewButton({
                   className="fill-[#FBBC05] text-[#FBBC05]"
                 />
               ))}
-              <span className="ml-1">Görüşleriniz bizim için değerli</span>
+              <span className="ml-1">{strings.reviewCompactHint}</span>
             </span>
           </div>
         </div>
@@ -81,10 +83,10 @@ const GoogleReviewButton = memo(function GoogleReviewButton({
         ))}
       </div>
       <p className="mt-2 text-xs font-bold text-[#181716]">
-        The Food Lounge deneyiminiz nasıldı?
+        {strings.reviewTitle}
       </p>
       <p className="mt-0.5 text-[11px] text-[#7A746C]">
-        Bizi Google Haritalar&apos;da değerlendirerek destek olabilirsiniz.
+        {strings.reviewSubtitle}
       </p>
       <a
         href={reviewHref}
@@ -93,7 +95,7 @@ const GoogleReviewButton = memo(function GoogleReviewButton({
         className="mt-3 inline-flex w-full items-center justify-center gap-2.5 rounded-xl border border-[#E5E1D9] bg-white px-4 py-2.5 text-xs font-bold text-[#181716] shadow-xs transition-transform duration-150 hover:border-[#CA2F2D]/40 active:scale-[0.98]"
       >
         <GoogleGIcon size={17} />
-        <span>Google&apos;da Değerlendir / Yorum Bırak</span>
+        <span>{strings.reviewButton}</span>
         <ExternalLink size={13} className="text-[#8C857C]" />
       </a>
     </div>

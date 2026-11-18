@@ -55,10 +55,14 @@ export function recomputeMenuData(rawData) {
       return {
         id: item.id || `tfl-fallback-${idx + 1}`,
         title: String(item.title || 'İsimsiz Ürün').trim(),
+        titleEn: item.titleEn ? String(item.titleEn).trim() : String(item.title || 'Unnamed Item').trim(),
         category: String(item.category || 'Diğer').trim(),
+        categoryEn: item.categoryEn ? String(item.categoryEn).trim() : String(item.category || 'Other').trim(),
         categoryId: String(item.categoryId || 'cat-uncategorized'),
         subcategory: item.subcategory ? String(item.subcategory).trim() : null,
+        subcategoryEn: item.subcategoryEn ? String(item.subcategoryEn).trim() : (item.subcategory ? String(item.subcategory).trim() : null),
         description: item.description ? String(item.description).trim() : '',
+        descriptionEn: item.descriptionEn ? String(item.descriptionEn).trim() : (item.description ? String(item.description).trim() : ''),
         calories: item.calories ? String(item.calories).trim() : null,
         image: typeof item.image === 'string' && item.image.trim() ? item.image.trim() : null,
         active: item.active !== false,
@@ -87,11 +91,16 @@ export function recomputeMenuData(rawData) {
         ...cat,
         id,
         name,
+        nameEn: cat.nameEn ? String(cat.nameEn).trim() : name,
         slug: cat.slug || slugify(name) || id,
         image: typeof cat.image === 'string' && cat.image.trim() ? cat.image.trim() : null,
         itemCount: activeCatItems.length,
         totalItemCount: catItems.length,
         subcategories: Array.from(subSet),
+        subcategoryLabelsEn:
+          cat.subcategoryLabelsEn && typeof cat.subcategoryLabelsEn === 'object'
+            ? cat.subcategoryLabelsEn
+            : {},
       };
     });
 

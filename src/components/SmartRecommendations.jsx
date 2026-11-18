@@ -1,7 +1,5 @@
 import { memo, useEffect, useMemo, useRef } from 'react';
 import {
-  Sun,
-  Utensils,
   Wine,
   Sparkles,
   ChevronRight,
@@ -11,26 +9,27 @@ import {
 } from 'lucide-react';
 import {
   TIME_SLOT_IDS,
-  TIME_SLOT_LIST,
   useTimeSlot,
 } from '../hooks/useTimeSlot';
 import { getRecommendationsForSlot } from '../services/recommendationEngine';
 import { useMenu } from '../context/MenuContext';
+import {
+  getLocalizedItemDesc,
+  getLocalizedItemTitle,
+  useLanguage,
+} from '../context/LanguageContext';
 import LazyImage from './LazyImage';
-
-const SLOT_ICONS = {
-  [TIME_SLOT_IDS.MORNING]: Sun,
-  [TIME_SLOT_IDS.AFTERNOON]: Utensils,
-  [TIME_SLOT_IDS.EVENING]: Wine,
-};
 
 const SpotlightHeroCard = memo(function SpotlightHeroCard({
   spotlight,
   isMorning,
+  lang,
   onSelectItem,
 }) {
   if (!spotlight?.item) return null;
   const { item, badge, highlightNote } = spotlight;
+  const title = getLocalizedItemTitle(item, lang);
+  const description = getLocalizedItemDesc(item, lang);
 
   return (
     <article
@@ -48,7 +47,7 @@ const SpotlightHeroCard = memo(function SpotlightHeroCard({
       <div className="relative aspect-[16/10] w-full overflow-hidden sm:aspect-[16/9]">
         <LazyImage
           src={item.image}
-          alt={item.title}
+          alt={title}
           width={640}
           height={400}
           sizes="(max-width: 672px) 94vw, 640px"
@@ -57,10 +56,8 @@ const SpotlightHeroCard = memo(function SpotlightHeroCard({
           fallbackIconSize={34}
         />
 
-        {/* Editorial Gradient Scrim */}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/88 via-black/35 to-transparent" />
 
-        {/* Top Badges (no backdrop-blur for 60 FPS scroll) */}
         <div className="absolute inset-x-3.5 top-3.5 flex items-center justify-between gap-2">
           <span
             className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-bold tracking-wide text-white ${
@@ -77,7 +74,6 @@ const SpotlightHeroCard = memo(function SpotlightHeroCard({
           )}
         </div>
 
-        {/* Bottom Content Overlay */}
         <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
           {highlightNote && (
             <p className="text-[11px] font-medium tracking-wide text-white/80">
@@ -90,11 +86,11 @@ const SpotlightHeroCard = memo(function SpotlightHeroCard({
                 className="truncate text-[23px] leading-tight font-bold text-white drop-shadow-xs sm:text-[26px]"
                 style={{ fontFamily: 'var(--font-display)' }}
               >
-                {item.title}
+                {title}
               </h3>
-              {item.description && (
+              {description && (
                 <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-white/82">
-                  {item.description}
+                  {description}
                 </p>
               )}
             </div>
@@ -108,7 +104,15 @@ const SpotlightHeroCard = memo(function SpotlightHeroCard({
   );
 });
 
-const CuratedSlideCard = memo(function CuratedSlideCard({ item, index, onSelectItem }) {
+const CuratedSlideCard = memo(function CuratedSlideCard({
+  item,
+  index,
+  lang,
+  onSelectItem,
+}) {
+  const title = getLocalizedItemTitle(item, lang);
+  const description = getLocalizedItemDesc(item, lang);
+
   return (
     <article
       role="button"
@@ -125,7 +129,7 @@ const CuratedSlideCard = memo(function CuratedSlideCard({ item, index, onSelectI
       <div className="relative aspect-[4/3] w-full overflow-hidden">
         <LazyImage
           src={item.image}
-          alt={item.title}
+          alt={title}
           width={248}
           height={186}
           sizes="248px"
@@ -139,12 +143,12 @@ const CuratedSlideCard = memo(function CuratedSlideCard({ item, index, onSelectI
 
       <div className="flex flex-1 flex-col justify-between p-3">
         <div>
-          <h4 className="line-clamp-1 text-[13.5px] font-bold text-[#1C1B1A] transition-colors group-hover:text-[#CA2F2D]">
-            {item.title}
+          <h4 className="line-clamp-1 text-[13.5px] font-bold text-[#1C1B1A]">
+            {title}
           </h4>
-          {item.description && (
+          {description && (
             <p className="mt-1 line-clamp-2 text-[11.5px] leading-snug text-[#736D65]">
-              {item.description}
+              {description}
             </p>
           )}
         </div>
@@ -167,6 +171,8 @@ const CuratedSlideCard = memo(function CuratedSlideCard({ item, index, onSelectI
 const PairingSlideCard = memo(function PairingSlideCard({
   pairing,
   index,
+  lang,
+  strings,
   onSelectItem,
 }) {
   const {
@@ -183,10 +189,12 @@ const PairingSlideCard = memo(function PairingSlideCard({
   } = pairing;
 
   const hasDiscount = discountPercent > 0 && Boolean(savingsFormatted);
+  const foodTitle = getLocalizedItemTitle(food, lang);
+  const cocktailTitle = getLocalizedItemTitle(cocktail, lang);
+  const cocktailDesc = getLocalizedItemDesc(cocktail, lang);
 
   return (
     <article className="gpu-card snap-card flex w-[85vw] max-w-[360px] shrink-0 flex-col overflow-hidden rounded-3xl bg-[#1A1918] text-white ring-1 ring-white/10">
-      {/* Top Steak Visual */}
       <div
         role="button"
         tabIndex={0}
@@ -230,25 +238,23 @@ const PairingSlideCard = memo(function PairingSlideCard({
         </div>
       </div>
 
-      {/* Pairing Body */}
       <div className="flex flex-1 flex-col justify-between p-4 pt-2">
         <p className="text-[12px] leading-relaxed text-[#C7C1B8]">
           {sommelierNote}
         </p>
 
-        {/* Interactive Paired Items */}
         <div className="mt-3.5 space-y-2">
           <button
             type="button"
             onClick={() => onSelectItem(food)}
-            className="flex w-full items-center justify-between gap-2 rounded-2xl border border-white/10 bg-white/6 px-3 py-2.5 text-left transition-all hover:bg-white/12 active:scale-[0.98]"
+            className="flex w-full items-center justify-between gap-2 rounded-2xl border border-white/10 bg-white/6 px-3 py-2.5 text-left transition-transform hover:bg-white/12 active:scale-[0.98]"
           >
             <div className="min-w-0">
               <span className="block text-[10px] font-semibold tracking-wider text-amber-300/90 uppercase">
-                Özel Soslu Biftek / Steak
+                {strings.steakLabel}
               </span>
               <span className="block truncate text-xs font-bold text-white">
-                {food.title}
+                {foodTitle}
               </span>
             </div>
             <span className="shrink-0 text-xs font-bold text-white/95">
@@ -265,18 +271,18 @@ const PairingSlideCard = memo(function PairingSlideCard({
           <button
             type="button"
             onClick={() => onSelectItem(cocktail)}
-            className="flex w-full items-center justify-between gap-2 rounded-2xl border border-white/10 bg-white/6 px-3 py-2.5 text-left transition-all hover:bg-white/12 active:scale-[0.98]"
+            className="flex w-full items-center justify-between gap-2 rounded-2xl border border-white/10 bg-white/6 px-3 py-2.5 text-left transition-transform hover:bg-white/12 active:scale-[0.98]"
           >
             <div className="min-w-0">
               <span className="block text-[10px] font-semibold tracking-wider text-[#F28482] uppercase">
-                İmza Kokteyl
+                {strings.cocktailLabel}
               </span>
               <span className="block truncate text-xs font-bold text-white">
-                {cocktail.title}
+                {cocktailTitle}
               </span>
-              {cocktail.description && (
+              {cocktailDesc && (
                 <span className="block truncate text-[10.5px] text-[#A9A299]">
-                  {cocktail.description}
+                  {cocktailDesc}
                 </span>
               )}
             </div>
@@ -286,16 +292,17 @@ const PairingSlideCard = memo(function PairingSlideCard({
           </button>
         </div>
 
-        {/* Dynamic Live Pricing Footer */}
         {comboPriceFormatted && (
           <div className="mt-3.5 flex items-end justify-between gap-2 border-t border-white/10 pt-3">
             <div>
               <span className="block text-[10.5px] font-medium text-[#A9A299]">
-                {hasDiscount ? 'Kombo Özel Fiyatı' : 'Özel Tavsiye Toplam'}
+                {hasDiscount ? strings.comboSpecialPrice : strings.specialRecTotal}
               </span>
               {hasDiscount && (
                 <span className="mt-0.5 inline-flex items-center rounded-md bg-emerald-500/18 px-1.5 py-0.5 text-[10px] font-bold text-emerald-300">
-                  {savingsFormatted} Avantaj
+                  {lang === 'en'
+                    ? `${strings.advantage} ${savingsFormatted}`
+                    : `${savingsFormatted} ${strings.advantage}`}
                 </span>
               )}
             </div>
@@ -321,16 +328,15 @@ const SmartRecommendations = memo(function SmartRecommendations({
   onNavigateCategory,
 }) {
   const { activeSlot, currentTimeLabel } = useTimeSlot();
-
   const { index: menuIndex } = useMenu();
+  const { lang, strings } = useLanguage();
   const carouselRef = useRef(null);
 
   const data = useMemo(
-    () => getRecommendationsForSlot(activeSlot, menuIndex),
-    [activeSlot, menuIndex]
+    () => getRecommendationsForSlot(activeSlot, menuIndex, lang),
+    [activeSlot, menuIndex, lang]
   );
 
-  // Instant scroll reset on automatic time-slot boundary change
   useEffect(() => {
     if (carouselRef.current) {
       carouselRef.current.scrollLeft = 0;
@@ -342,51 +348,19 @@ const SmartRecommendations = memo(function SmartRecommendations({
 
   return (
     <section
-      aria-label="Saat Bazlı Akıllı Öneriler"
+      aria-label={data.title}
       className="pt-4 pb-2"
     >
-      {/* Header Container */}
       <div className="px-4">
-        {/* Top Row: Live System Clock + Read-Only Automatic Time-Slot Indicator */}
-        <div className="flex flex-wrap items-center justify-between gap-2">
+        <div className="flex items-center">
           <div className="inline-flex select-none items-center gap-1.5 rounded-full border border-[#E7E3DC] bg-white px-2.5 py-1 text-[11px] font-semibold text-[#4F4A44] shadow-[0_1px_2px_rgba(0,0,0,0.03)]">
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" />
             <Clock size={11} className="text-[#8E877E]" />
             <span>{currentTimeLabel}</span>
           </div>
-
-          {/* Non-Interactive Visual Status Indicator (Strict System Clock Mode) */}
-          <div
-            aria-label="Aktif zaman dilimi göstergesi"
-            className="pointer-events-none inline-flex select-none items-center rounded-full border border-[#E5E1D9] bg-[#EFECE6]/90 p-0.5"
-          >
-            {TIME_SLOT_LIST.map((slot) => {
-              const Icon = SLOT_ICONS[slot.id];
-              const isCurrent = activeSlot === slot.id;
-              return (
-                <span
-                  key={slot.id}
-                  aria-current={isCurrent ? 'time' : undefined}
-                  className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-semibold transition-all ${
-                    isCurrent
-                      ? 'bg-[#181716] text-white shadow-[0_2px_8px_rgba(24,23,22,0.22)] ring-1 ring-white/15'
-                      : 'text-[#9A938A] opacity-65'
-                  }`}
-                >
-                  <Icon size={11} />
-                  <span>{slot.shortLabel}</span>
-                  {isCurrent && (
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                  )}
-                </span>
-              );
-            })}
-          </div>
         </div>
 
-        {/* Animated Slot Body */}
-        <div key={activeSlot} className="animate-fade-in">
-          {/* Section Heading */}
+        <div key={`${activeSlot}-${lang}`} className="animate-fade-in">
           <div className="mt-3">
             <p className="text-[11px] font-bold tracking-[0.14em] text-[#CA2F2D] uppercase">
               {data.eyebrow}
@@ -402,31 +376,33 @@ const SmartRecommendations = memo(function SmartRecommendations({
             </p>
           </div>
 
-          {/* Hero Spotlight for Morning & Afternoon */}
           {data.mode === 'featured' && data.spotlight && (
             <SpotlightHeroCard
               spotlight={data.spotlight}
               isMorning={isMorning}
+              lang={lang}
               onSelectItem={onSelectItem}
             />
           )}
         </div>
       </div>
 
-      {/* Horizontal Momentum-Scroll Carousel */}
       {data.mode === 'featured' ? (
         data.items.length > 0 && (
-          <div key={`carousel-${activeSlot}-${data.isAdminCurated ? 'admin' : 'auto'}`} className="animate-fade-in mt-3.5">
+          <div
+            key={`carousel-${activeSlot}-${data.isAdminCurated ? 'admin' : 'auto'}`}
+            className="animate-fade-in mt-3.5"
+          >
             <div className="mb-2 flex items-center justify-between px-4">
               <span className="text-[11px] font-bold tracking-wider text-[#8C857C] uppercase">
                 {data.isAdminCurated
-                  ? `Öne Çıkarılan Diğer Lezzetler (${data.items.length})`
+                  ? `${strings.featuredOther} (${data.items.length})`
                   : isMorning
-                    ? 'Kahvaltı Grubu Öne Çıkanlar'
-                    : 'Dünya Mutfağı Öne Çıkanlar'}
+                    ? strings.breakfastHighlights
+                    : strings.worldCuisineHighlights}
               </span>
               <span className="text-[11px] font-medium text-[#A19A91]">
-                Kaydır →
+                {strings.swipe}
               </span>
             </div>
             <div
@@ -438,6 +414,7 @@ const SmartRecommendations = memo(function SmartRecommendations({
                   key={item.id}
                   item={item}
                   index={idx}
+                  lang={lang}
                   onSelectItem={onSelectItem}
                 />
               ))}
@@ -448,10 +425,10 @@ const SmartRecommendations = memo(function SmartRecommendations({
         <div key={`carousel-${activeSlot}`} className="animate-fade-in mt-3.5">
           <div className="mb-2 flex items-center justify-between px-4">
             <span className="text-[11px] font-bold tracking-wider text-[#8C857C] uppercase">
-              Avantajlı Steak & Kokteyl Komboları ({data.pairings.length})
+              {strings.eveningCombosHeading} ({data.pairings.length})
             </span>
             <span className="text-[11px] font-medium text-[#A19A91]">
-              Kaydır →
+              {strings.swipe}
             </span>
           </div>
           <div
@@ -463,6 +440,8 @@ const SmartRecommendations = memo(function SmartRecommendations({
                 key={pairing.id}
                 pairing={pairing}
                 index={idx}
+                lang={lang}
+                strings={strings}
                 onSelectItem={onSelectItem}
               />
             ))}
@@ -470,7 +449,6 @@ const SmartRecommendations = memo(function SmartRecommendations({
         </div>
       )}
 
-      {/* Quick Category Jump Chips */}
       {data.quickLinks?.length > 0 && (
         <div className="no-scrollbar touch-scroll-free mt-2.5 flex items-center gap-2 overflow-x-auto px-4 pb-2">
           {data.quickLinks.map((link) => (
@@ -480,8 +458,8 @@ const SmartRecommendations = memo(function SmartRecommendations({
               onClick={() =>
                 onNavigateCategory(link.categoryId, link.subcategory || null)
               }
-              className={`inline-flex shrink-0 items-center gap-1 rounded-xl px-3.5 py-2 text-xs font-semibold transition-all active:scale-[0.96] ${
-                isEvening
+              className={`inline-flex shrink-0 items-center gap-1 rounded-xl px-3.5 py-2 text-xs font-semibold transition-transform active:scale-[0.96] ${
+                isEvening && !data.isAdminCurated
                   ? 'bg-[#181716] text-white hover:bg-[#2E2C29]'
                   : 'border border-[#E5E1D9] bg-white text-[#272626] hover:border-[#CA2F2D]/40 hover:text-[#CA2F2D]'
               }`}
@@ -493,7 +471,6 @@ const SmartRecommendations = memo(function SmartRecommendations({
         </div>
       )}
 
-      {/* Subtle Section Divider */}
       <div className="mx-4 mt-4 border-b border-[#EAE6DF]" />
     </section>
   );

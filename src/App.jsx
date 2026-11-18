@@ -1,6 +1,11 @@
-import { Suspense, lazy, useCallback, useDeferredValue, useEffect, useMemo, useState } from 'react';
-import { ArrowLeft, SearchX, Utensils, Shield } from 'lucide-react';
+import { Suspense, lazy, useCallback, useEffect, useMemo, useState } from 'react';
+import { ArrowLeft, Utensils, Shield } from 'lucide-react';
 import { useMenu } from './context/MenuContext';
+import {
+  getLocalizedCategoryName,
+  getLocalizedSubcategoryLabel,
+  useLanguage,
+} from './context/LanguageContext';
 import { clearStoredAuth, readStoredAuth } from './services/menuRepository';
 import Header from './components/Header';
 import CategoryNav from './components/CategoryNav';
@@ -39,6 +44,7 @@ function isAdminLocation() {
 
 function CustomerMenuView({ onOpenAdmin }) {
   const { index } = useMenu();
+  const { lang, strings } = useLanguage();
   const restaurant = index.restaurant;
   const stats = index.stats;
   const categories = index.activeCategories;
@@ -46,19 +52,14 @@ function CustomerMenuView({ onOpenAdmin }) {
 
   const [activeCategoryId, setActiveCategoryId] = useState('all');
   const [activeSubcategory, setActiveSubcategory] = useState(null);
-  const [searchQuery, setSearchQuery] = useState('');
   const [selectedItem, setSelectedItem] = useState(null);
   const [infoOpen, setInfoOpen] = useState(false);
-
-  const deferredSearch = useDeferredValue(searchQuery);
-  const isSearching = deferredSearch.trim().length > 0;
 
   const activeCategory = useMemo(
     () => (activeCategoryId === 'all' ? null : index.getCategoryById(activeCategoryId)),
     [activeCategoryId, index]
   );
 
-  // If an admin hides/deletes the currently viewed category, return cleanly to home
   useEffect(() => {
     if (activeCategoryId !== 'all' && !activeCategory) {
       setActiveCategoryId('all');
@@ -69,30 +70,21 @@ function CustomerMenuView({ onOpenAdmin }) {
   const handleSelectCategory = useCallback((categoryId, subcategory = null) => {
     setActiveCategoryId(categoryId);
     setActiveSubcategory(subcategory);
-    setSearchQuery('');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
   const handleGoHome = useCallback(() => {
     setActiveCategoryId('all');
     setActiveSubcategory(null);
-    setSearchQuery('');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
-  const handleClearSearch = useCallback(() => {
-    setSearchQuery('');
-  }, []);
-
   const displayedItems = useMemo(() => {
-    if (isSearching) {
-      return index.searchItems(deferredSearch);
-    }
     if (activeCategoryId === 'all') {
       return [];
     }
     return index.getItemsByCategory(activeCategoryId, activeSubcategory);
-  }, [index, isSearching, deferredSearch, activeCategoryId, activeSubcategory]);
+  }, [index, activeCategoryId, activeSubcategory]);
 
   const activeSubcategoriesForCategory = useMemo(() => {
     if (!activeCategory) return [];
@@ -103,7 +95,6 @@ function CustomerMenuView({ onOpenAdmin }) {
 
   const groupedSubcategories = useMemo(() => {
     if (
-      isSearching ||
       !activeCategory ||
       activeSubcategoriesForCategory.length === 0 ||
       activeSubcategory
@@ -113,12 +104,12 @@ function CustomerMenuView({ onOpenAdmin }) {
 
     const groups = new Map();
     for (const item of displayedItems) {
-      const key = item.subcategory || 'Diğer';
+      const key = item.subcategory || '__other__';
       if (!groups.has(key)) groups.set(key, []);
       groups.get(key).push(item);
     }
     return Array.from(groups.entries());
-  }, [isSearching, activeCategory, activeSubcategoriesForCategory, activeSubcategory, displayedItems]);
+  }, [activeCategory, activeSubcategoriesForCategory, activeSubcategory, displayedItems]);
 
   return (
     <div className="min-h-dvh bg-[#F8F7F4] text-[#181716]">
@@ -127,9 +118,6 @@ function CustomerMenuView({ onOpenAdmin }) {
           restaurantName={restaurant.name}
           hoursLabel={restaurant.hoursLabel}
           tableNumber={tableNumber}
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
-          onClearSearch={handleClearSearch}
           onOpenInfo={() => setInfoOpen(true)}
           onGoHome={handleGoHome}
           totalItems={stats.activeItems}
@@ -137,55 +125,13 @@ function CustomerMenuView({ onOpenAdmin }) {
 
         <CategoryNav
           categories={categories}
-          activeCategoryId={isSearching ? null : activeCategoryId}
+          activeCategoryId={activeCategoryId}
           onSelectCategory={handleSelectCategory}
         />
       </div>
 
       <main className="mx-auto max-w-2xl pb-12">
-        {isSearching ? (
-          <section className="px-4 pt-4">
-            <div className="mb-3.5 flex items-center justify-between">
-              <h2 className="text-sm font-bold text-[#181716]">
-                Arama Sonuçları
-                <span className="ml-2 rounded-full bg-[#EFECE6] px-2 py-0.5 text-xs font-semibold text-[#5E5850]">
-                  {displayedItems.length}
-                </span>
-              </h2>
-              <button
-                type="button"
-                onClick={handleClearSearch}
-                className="text-xs font-semibold text-[#CA2F2D]"
-              >
-                Temizle
-              </button>
-            </div>
-
-            {displayedItems.length === 0 ? (
-              <div className="mt-10 flex flex-col items-center justify-center rounded-3xl border border-dashed border-[#DFDAD1] bg-white/70 px-6 py-12 text-center">
-                <SearchX size={34} className="text-[#B5AEA4]" strokeWidth={1.6} />
-                <p className="mt-3 text-sm font-semibold text-[#3A3733]">
-                  &ldquo;{deferredSearch}&rdquo; için sonuç bulunamadı
-                </p>
-                <p className="mt-1 text-xs text-[#8A837A]">
-                  Farklı bir ürün adı veya kategori kelimesi deneyebilirsiniz.
-                </p>
-              </div>
-            ) : (
-              <div className="gpu-list flex flex-col gap-2.5">
-                {displayedItems.map((item, idx) => (
-                  <ProductCard
-                    key={item.id}
-                    item={item}
-                    priority={idx < 4}
-                    onSelect={setSelectedItem}
-                    showCategoryBadge
-                  />
-                ))}
-              </div>
-            )}
-          </section>
-        ) : activeCategoryId === 'all' ? (
+        {activeCategoryId === 'all' ? (
           <>
             <SmartRecommendations
               onSelectItem={setSelectedItem}
@@ -204,7 +150,7 @@ function CustomerMenuView({ onOpenAdmin }) {
                   type="button"
                   onClick={handleGoHome}
                   className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-[#E5E1D9] bg-white text-[#272626] transition-colors hover:bg-[#F3F1EC] active:scale-95"
-                  aria-label="Kategorilere dön"
+                  aria-label={strings.backToCategories}
                 >
                   <ArrowLeft size={16} />
                 </button>
@@ -213,10 +159,10 @@ function CustomerMenuView({ onOpenAdmin }) {
                     className="truncate text-2xl leading-tight font-bold text-[#181716]"
                     style={{ fontFamily: 'var(--font-display)' }}
                   >
-                    {activeCategory?.name}
+                    {getLocalizedCategoryName(activeCategory, lang)}
                   </h2>
                   <p className="text-xs font-medium text-[#7C766E]">
-                    {displayedItems.length} lezzet listeleniyor
+                    {displayedItems.length} {strings.dishesListed}
                   </p>
                 </div>
               </div>
@@ -227,26 +173,26 @@ function CustomerMenuView({ onOpenAdmin }) {
                 <button
                   type="button"
                   onClick={() => setActiveSubcategory(null)}
-                  className={`shrink-0 rounded-xl px-3 py-1.5 text-xs font-semibold transition-all ${
+                  className={`shrink-0 rounded-xl px-3 py-1.5 text-xs font-semibold transition-transform active:scale-95 ${
                     activeSubcategory === null
                       ? 'bg-[#181716] text-white'
                       : 'border border-[#E5E1D9] bg-white text-[#524E48]'
                   }`}
                 >
-                  Tümü ({activeCategory?.itemCount})
+                  {strings.all} ({activeCategory?.itemCount})
                 </button>
                 {activeSubcategoriesForCategory.map((sub) => (
                   <button
                     key={sub}
                     type="button"
                     onClick={() => setActiveSubcategory(sub)}
-                    className={`shrink-0 rounded-xl px-3 py-1.5 text-xs font-semibold transition-all ${
+                    className={`shrink-0 rounded-xl px-3 py-1.5 text-xs font-semibold transition-transform active:scale-95 ${
                       activeSubcategory === sub
                         ? 'bg-[#CA2F2D] text-white'
                         : 'border border-[#E5E1D9] bg-white text-[#524E48]'
                     }`}
                   >
-                    {sub}
+                    {getLocalizedSubcategoryLabel(activeCategory, sub, lang)}
                   </button>
                 ))}
               </div>
@@ -254,11 +200,13 @@ function CustomerMenuView({ onOpenAdmin }) {
 
             {groupedSubcategories ? (
               <div className="gpu-list space-y-6">
-                {groupedSubcategories.map(([subName, subItems], groupIdx) => (
-                  <div key={subName}>
+                {groupedSubcategories.map(([subKey, subItems], groupIdx) => (
+                  <div key={subKey}>
                     <div className="mb-2.5 flex items-center justify-between border-b border-[#E8E4DC] pb-1.5">
                       <h3 className="text-xs font-bold tracking-[0.12em] text-[#CA2F2D] uppercase">
-                        {subName}
+                        {subKey === '__other__'
+                          ? strings.other
+                          : getLocalizedSubcategoryLabel(activeCategory, subKey, lang)}
                       </h3>
                       <span className="text-[11px] font-medium text-[#8E8880]">
                         {subItems.length}
@@ -299,7 +247,9 @@ function CustomerMenuView({ onOpenAdmin }) {
 
           <div className="mt-1 inline-flex items-center gap-1.5 font-semibold text-[#4A4641]">
             <Utensils size={13} className="text-[#CA2F2D]" />
-            <span>{restaurant.name} Dijital Menü</span>
+            <span>
+              {restaurant.name} {strings.digitalMenu}
+            </span>
           </div>
           {restaurant.address && (
             <p className="max-w-md text-[11px] leading-relaxed text-[#7A746C]">
@@ -307,7 +257,9 @@ function CustomerMenuView({ onOpenAdmin }) {
             </p>
           )}
           <p className="text-[11px]">
-            Çalışma Saatleri: {restaurant.hoursLabel || '08:00 – 24:00'} • Tüm fiyatlara KDV dahildir • {categories.length} Kategori, {stats.activeItems} Aktif Ürün
+            {strings.footerHours}: {restaurant.hoursLabel || '08:00 – 24:00'} •{' '}
+            {strings.vatIncluded} • {categories.length} {strings.categoryUnit},{' '}
+            {stats.activeItems} {strings.activeItems}
           </p>
           <button
             type="button"
@@ -315,7 +267,7 @@ function CustomerMenuView({ onOpenAdmin }) {
             className="mt-1 inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-[11px] font-medium text-[#9A938A] transition-colors hover:bg-[#EFECE6] hover:text-[#181716]"
           >
             <Shield size={11} />
-            Yönetici Girişi
+            {strings.adminLogin}
           </button>
         </div>
       </footer>

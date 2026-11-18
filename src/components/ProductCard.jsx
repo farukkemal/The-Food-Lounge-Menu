@@ -1,6 +1,13 @@
 import { memo } from 'react';
 import { Flame, WheatOff } from 'lucide-react';
 import LazyImage from './LazyImage';
+import {
+  getLocalizedItemCategory,
+  getLocalizedItemDesc,
+  getLocalizedItemSubcategory,
+  getLocalizedItemTitle,
+  useLanguage,
+} from '../context/LanguageContext';
 
 const ProductCard = memo(function ProductCard({
   item,
@@ -8,7 +15,13 @@ const ProductCard = memo(function ProductCard({
   showCategoryBadge = false,
   priority = false,
 }) {
+  const { lang, strings } = useLanguage();
   const hasImage = Boolean(item.image);
+  const title = getLocalizedItemTitle(item, lang);
+  const description = getLocalizedItemDesc(item, lang);
+  const badgeText =
+    getLocalizedItemSubcategory(item, lang) ||
+    getLocalizedItemCategory(item, lang);
 
   return (
     <article
@@ -30,31 +43,31 @@ const ProductCard = memo(function ProductCard({
             <div className="mb-1.5 flex flex-wrap items-center gap-1.5">
               {showCategoryBadge && (
                 <span className="rounded-md bg-[#F4F2ED] px-2 py-0.5 text-[10px] font-semibold tracking-wide text-[#6E685F] uppercase">
-                  {item.subcategory || item.category}
+                  {badgeText}
                 </span>
               )}
               {item.dietary?.includes('Spicy') && (
                 <span className="inline-flex items-center gap-0.5 rounded-md bg-red-50 px-1.5 py-0.5 text-[10px] font-semibold text-[#CA2F2D]">
                   <Flame size={10} />
-                  Acılı
+                  {strings.spicy}
                 </span>
               )}
               {item.dietary?.includes('Gluten-Free') && (
                 <span className="inline-flex items-center gap-0.5 rounded-md bg-amber-50 px-1.5 py-0.5 text-[10px] font-semibold text-amber-800">
                   <WheatOff size={10} />
-                  Glutensiz
+                  {strings.glutenFree}
                 </span>
               )}
             </div>
           )}
 
           <h3 className="text-[15px] leading-snug font-bold text-[#1C1B1A]">
-            {item.title}
+            {title}
           </h3>
 
-          {item.description && (
+          {description && (
             <p className="mt-1 line-clamp-2 text-[12.5px] leading-relaxed text-[#6E6962]">
-              {item.description}
+              {description}
             </p>
           )}
         </div>
@@ -75,7 +88,7 @@ const ProductCard = memo(function ProductCard({
       {hasImage && (
         <LazyImage
           src={item.image}
-          alt={item.title}
+          alt={title}
           width={104}
           height={104}
           sizes="104px"

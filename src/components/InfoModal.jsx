@@ -2,8 +2,11 @@ import { memo, useEffect } from 'react';
 import { X, MapPin, Clock, Instagram, Facebook } from 'lucide-react';
 import logoImg from '../assets/logo.webp';
 import GoogleReviewButton from './GoogleReviewButton';
+import { useLanguage } from '../context/LanguageContext';
 
 const InfoModal = memo(function InfoModal({ open, restaurant, onClose }) {
+  const { strings } = useLanguage();
+
   useEffect(() => {
     if (!open) return;
     const handleKey = (e) => {
@@ -19,7 +22,7 @@ const InfoModal = memo(function InfoModal({ open, restaurant, onClose }) {
 
   if (!open) return null;
 
-  const todayIndex = (new Date().getDay() + 6) % 7; // Monday = 0
+  const todayIndex = (new Date().getDay() + 6) % 7;
 
   return (
     <div
@@ -27,7 +30,7 @@ const InfoModal = memo(function InfoModal({ open, restaurant, onClose }) {
       onClick={onClose}
       role="dialog"
       aria-modal="true"
-      aria-label="İşletme Bilgileri"
+      aria-label={strings.infoAria}
     >
       <div
         className="animate-sheet-up pb-safe relative max-h-[88vh] w-full max-w-lg overflow-y-auto overscroll-y-contain rounded-t-3xl bg-white p-5 shadow-2xl sm:rounded-3xl sm:p-6"
@@ -51,25 +54,24 @@ const InfoModal = memo(function InfoModal({ open, restaurant, onClose }) {
               >
                 {restaurant.name}
               </h2>
-              <p className="text-xs text-[#7A746C]">İşletme Bilgileri & Çalışma Saatleri</p>
+              <p className="text-xs text-[#7A746C]">{strings.infoSubtitle}</p>
             </div>
           </div>
           <button
             type="button"
             onClick={onClose}
             className="flex h-9 w-9 items-center justify-center rounded-full bg-[#F4F2ED] text-[#4A4641] hover:bg-[#E7E3DC]"
-            aria-label="Kapat"
+            aria-label={strings.close}
           >
             <X size={18} />
           </button>
         </div>
 
-        {/* Official Address */}
         {restaurant.address && (
           <div className="mt-5">
             <h3 className="flex items-center gap-1.5 text-xs font-bold tracking-wider text-[#8C857C] uppercase">
               <MapPin size={13} className="text-[#CA2F2D]" />
-              Resmi Adres
+              {strings.officialAddress}
             </h3>
             <p className="mt-2 rounded-2xl border border-[#ECE8E1] bg-[#FAF9F6] px-3.5 py-3 text-xs leading-relaxed font-medium text-[#2E2C29]">
               {restaurant.address}
@@ -77,12 +79,11 @@ const InfoModal = memo(function InfoModal({ open, restaurant, onClose }) {
           </div>
         )}
 
-        {/* Working Hours */}
         {restaurant.workingHours?.length > 0 && (
           <div className="mt-5">
             <h3 className="flex items-center gap-1.5 text-xs font-bold tracking-wider text-[#8C857C] uppercase">
               <Clock size={13} />
-              Çalışma Saatleri
+              {strings.workingHours}
             </h3>
             <div className="mt-2.5 divide-y divide-[#F2EFE9] rounded-2xl border border-[#ECE8E1] bg-[#FAF9F6] px-3.5">
               {restaurant.workingHours.map((row, idx) => (
@@ -92,7 +93,7 @@ const InfoModal = memo(function InfoModal({ open, restaurant, onClose }) {
                     idx === todayIndex ? 'font-bold text-[#CA2F2D]' : 'text-[#3F3C38]'
                   }`}
                 >
-                  <span>{row.day}</span>
+                  <span>{strings.days[row.day] || row.day}</span>
                   <span>{row.hours}</span>
                 </div>
               ))}
@@ -100,12 +101,10 @@ const InfoModal = memo(function InfoModal({ open, restaurant, onClose }) {
           </div>
         )}
 
-        {/* Google Review CTA */}
         <div className="mt-5">
           <GoogleReviewButton href={restaurant.googleReviewUrl} variant="button" />
         </div>
 
-        {/* Actions */}
         <div className="mt-3 flex flex-wrap gap-2.5">
           {restaurant.directionsUrl && (
             <a
@@ -115,7 +114,7 @@ const InfoModal = memo(function InfoModal({ open, restaurant, onClose }) {
               className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-[#181716] px-4 py-3 text-xs font-semibold text-white transition-colors hover:bg-[#2E2C29]"
             >
               <MapPin size={15} />
-              Yol Tarifi Al
+              {strings.getDirections}
             </a>
           )}
           {restaurant.socials?.instagram && (

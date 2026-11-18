@@ -4,6 +4,7 @@ import {
   useDeferredValue,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react';
 import {
@@ -13,9 +14,6 @@ import {
   ExternalLink,
   Pencil,
   Trash2,
-  Check,
-  Eye,
-  EyeOff,
   Package,
   Layers,
   CheckCircle2,
@@ -31,20 +29,64 @@ import ProductFormModal from './ProductFormModal';
 import CategoryManager from './CategoryManager';
 import QrCodeGenerator from './QrCodeGenerator';
 
-const PAGE_SIZE = 30;
+const PAGE_SIZE = 40;
+
+const ToggleSwitch = memo(function ToggleSwitch({
+  checked,
+  onChange,
+  label,
+  activeColorClass = 'bg-emerald-500',
+  ariaLabel,
+  icon = null,
+}) {
+  return (
+    <button
+      type="button"
+      role="switch"
+      aria-checked={checked}
+      aria-label={ariaLabel || label}
+      onClick={onChange}
+      className="inline-flex items-center gap-1.5 rounded-xl border border-[#EAE6DF] bg-[#FAF9F6] px-2.5 py-1.5 text-[11px] font-semibold text-[#3F3B36] transition-transform duration-150 hover:border-[#D8D3CA] active:scale-[0.97]"
+    >
+      {icon}
+      <span>{label}</span>
+      <span
+        className={`relative ml-0.5 inline-flex h-4.5 w-8 shrink-0 items-center rounded-full transition-colors duration-150 ${
+          checked ? activeColorClass : 'bg-[#D6D1C8]'
+        }`}
+      >
+        <span
+          className={`inline-block h-3.5 w-3.5 rounded-full bg-white shadow-xs transition-transform duration-150 ${
+            checked ? 'translate-x-4' : 'translate-x-0.5'
+          }`}
+        />
+      </span>
+    </button>
+  );
+});
 
 const AdminProductRow = memo(function AdminProductRow({
   item,
-  onQuickSavePrice,
+  onInlineSaveTitle,
+  onInlineSavePrice,
   onToggleActive,
   onToggleFeatured,
   onEdit,
   onDelete,
 }) {
+  const [editingTitle, setEditingTitle] = useState(false);
+  const [titleDraft, setTitleDraft] = useState(item.title);
+  const titleInputRef = useRef(null);
+
+  const [editingPrice, setEditingPrice] = useState(false);
   const [priceDraft, setPriceDraft] = useState(
     item.price !== null && item.price !== undefined ? String(item.price) : ''
   );
-  const [justSaved, setJustSaved] = useState(false);
+  const priceInputRef = useRef(null);
+
+  useEffect(() => {
+    setTitleDraft(item.title);
+  }, [item.title]);
 
   useEffect(() => {
     setPriceDraft(
@@ -52,19 +94,40 @@ const AdminProductRow = memo(function AdminProductRow({
     );
   }, [item.price]);
 
-  const numericDraft = Number.parseFloat(String(priceDraft).replace(',', '.'));
-  const isDirty =
-    !Number.isNaN(numericDraft) &&
-    numericDraft >= 0 &&
-    numericDraft !== item.price;
-
-  const handleSavePrice = async () => {
-    if (!isDirty) return;
-    const ok = await onQuickSavePrice(item.id, numericDraft, item.title);
-    if (ok) {
-      setJustSaved(true);
-      window.setTimeout(() => setJustSaved(false), 1200);
+  useEffect(() => {
+    if (editingTitle && titleInputRef.current) {
+      titleInputRef.current.focus();
+      titleInputRef.current.select();
     }
+  }, [editingTitle]);
+
+  useEffect(() => {
+    if (editingPrice && priceInputRef.current) {
+      priceInputRef.current.focus();
+      priceInputRef.current.select();
+    }
+  }, [editingPrice]);
+
+  const commitTitle = () => {
+    setEditingTitle(false);
+    const cleaned = titleDraft.trim();
+    if (!cleaned || cleaned === item.title) {
+      setTitleDraft(item.title);
+      return;
+    }
+    onInlineSaveTitle(item.id, cleaned);
+  };
+
+  const commitPrice = () => {
+    setEditingPrice(false);
+    const parsed = Number.parseFloat(String(priceDraft).replace(',', '.'));
+    if (Number.isNaN(parsed) || parsed < 0 || parsed === item.price) {
+      setPriceDraft(
+        item.price !== null && item.price !== undefined ? String(item.price) : ''
+      );
+      return;
+    }
+    onInlineSavePrice(item.id, parsed, item.title);
   };
 
   const isActive = item.active !== false;
@@ -72,19 +135,22 @@ const AdminProductRow = memo(function AdminProductRow({
 
   return (
     <div
-      className={`cv-auto-card flex flex-col gap-3 rounded-2xl border bg-white p-3.5 shadow-2xs transition-colors sm:flex-row sm:items-center sm:justify-between ${
+      className={`gpu-card cv-auto-card flex flex-col gap-3 rounded-2xl border bg-white p-3.5 transition-colors sm:flex-row sm:items-center sm:justify-between ${
         !isActive
           ? 'border-dashed border-[#D8D3CA] bg-[#FAF9F7] opacity-75'
           : isFeatured
-            ? 'border-amber-300/90 bg-amber-50/25'
+            ? 'border-amber-300/90 bg-amber-50/20'
             : 'border-[#EAE6DF]'
       }`}
     >
-      {/* Left: Thumbnail + Info */}
+      {/* Left: Thumbnail + Click-to-Edit Title & Category */}
       <div className="flex min-w-0 flex-1 items-center gap-3">
         <LazyImage
           src={item.image}
           alt={item.title}
+          width={52}
+          height={52}
+          sizes="52px"
           containerClassName="aspect-square h-13 w-13 shrink-0 rounded-xl ring-1 ring-black/5"
           fallbackIconSize={18}
         />
@@ -107,14 +173,45 @@ const AdminProductRow = memo(function AdminProductRow({
             )}
             {!isActive && (
               <span className="rounded-md bg-stone-200 px-2 py-0.5 text-[10px] font-bold text-stone-700">
-                Pasif (Gizli)
+                Pasif
               </span>
             )}
           </div>
 
-          <h4 className="mt-1 truncate text-sm font-bold text-[#181716]">
-            {item.title}
-          </h4>
+          {/* Click-to-Edit Inline Product Name */}
+          <div className="mt-1">
+            {editingTitle ? (
+              <input
+                ref={titleInputRef}
+                type="text"
+                value={titleDraft}
+                onChange={(e) => setTitleDraft(e.target.value)}
+                onBlur={commitTitle}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    commitTitle();
+                  } else if (e.key === 'Escape') {
+                    setTitleDraft(item.title);
+                    setEditingTitle(false);
+                  }
+                }}
+                aria-label="Ürün adını düzenle"
+                className="h-8 w-full rounded-lg border border-[#CA2F2D] bg-white px-2.5 text-sm font-bold text-[#181716] ring-2 ring-[#CA2F2D]/15 focus:outline-none"
+              />
+            ) : (
+              <button
+                type="button"
+                onClick={() => setEditingTitle(true)}
+                title="Adı değiştirmek için tıklayın"
+                className="group/title flex max-w-full items-center gap-1.5 rounded-md text-left hover:text-[#CA2F2D] focus:outline-none"
+              >
+                <span className="truncate text-sm font-bold text-[#181716] group-hover/title:text-[#CA2F2D] group-hover/title:underline group-hover/title:decoration-dashed group-hover/title:underline-offset-4">
+                  {item.title}
+                </span>
+              </button>
+            )}
+          </div>
 
           {item.description && (
             <p className="mt-0.5 line-clamp-1 text-xs text-[#7C766E]">
@@ -124,110 +221,96 @@ const AdminProductRow = memo(function AdminProductRow({
         </div>
       </div>
 
-      {/* Right: Inline Price Editor + Action Buttons */}
+      {/* Right: Click-to-Edit Inline Price + One-Click Switches + Actions */}
       <div className="flex flex-wrap items-center justify-between gap-2 border-t border-[#F2EFEA] pt-2.5 sm:justify-end sm:border-t-0 sm:pt-0">
-        {/* Inline Price Control */}
-        <div className="flex items-center gap-1.5">
+        {/* Click-to-Edit Inline Price */}
+        {editingPrice ? (
           <div className="relative">
             <input
+              ref={priceInputRef}
               type="number"
               step="0.01"
               min="0"
               value={priceDraft}
               onChange={(e) => setPriceDraft(e.target.value)}
+              onBlur={commitPrice}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                   e.preventDefault();
-                  handleSavePrice();
+                  commitPrice();
+                } else if (e.key === 'Escape') {
+                  setPriceDraft(
+                    item.price !== null && item.price !== undefined
+                      ? String(item.price)
+                      : ''
+                  );
+                  setEditingPrice(false);
                 }
               }}
-              aria-label={`${item.title} fiyatı`}
-              className={`h-9 w-24 rounded-xl border bg-[#FAF9F6] pr-6 pl-2.5 text-right text-sm font-bold transition-colors focus:bg-white focus:outline-none ${
-                isDirty
-                  ? 'border-[#CA2F2D] text-[#CA2F2D] ring-2 ring-[#CA2F2D]/15'
-                  : 'border-[#E5E1D9] text-[#181716]'
-              }`}
+              aria-label={`${item.title} fiyatını düzenle`}
+              className="h-9 w-26 rounded-xl border border-[#CA2F2D] bg-white pr-6 pl-2.5 text-right text-sm font-extrabold text-[#CA2F2D] ring-2 ring-[#CA2F2D]/15 focus:outline-none"
             />
-            <span className="pointer-events-none absolute top-1/2 right-2 -translate-y-1/2 text-xs font-semibold text-[#8C857C]">
+            <span className="pointer-events-none absolute top-1/2 right-2.5 -translate-y-1/2 text-xs font-bold text-[#8C857C]">
               ₺
             </span>
           </div>
-
+        ) : (
           <button
             type="button"
-            disabled={!isDirty}
-            onClick={handleSavePrice}
-            title="Fiyatı anında kaydet"
-            className={`flex h-9 w-9 items-center justify-center rounded-xl transition-all ${
-              justSaved
-                ? 'bg-emerald-600 text-white'
-                : isDirty
-                  ? 'bg-[#CA2F2D] text-white shadow-xs hover:bg-[#B02422] active:scale-95'
-                  : 'border border-[#EBE8E2] bg-[#FAF9F6] text-[#C4BEB5] cursor-not-allowed'
-            }`}
-            aria-label="Fiyatı kaydet"
+            onClick={() => setEditingPrice(true)}
+            title="Fiyatı hızlıca değiştirmek için tıklayın"
+            className="inline-flex h-9 min-w-[84px] items-center justify-center rounded-xl border border-[#E7E3DC] bg-[#FAF9F6] px-3 text-sm font-extrabold tracking-tight text-[#CA2F2D] transition-colors hover:border-[#CA2F2D] hover:bg-white active:scale-[0.97]"
           >
-            <Check size={15} strokeWidth={2.5} />
+            {item.priceFormatted || '—'}
           </button>
-        </div>
+        )}
 
-        {/* Actions */}
-        <div className="flex items-center gap-1.5">
-          <button
-            type="button"
-            onClick={() => onToggleFeatured(item)}
-            title={
-              isFeatured
-                ? 'Öne çıkarılanlardan kaldır'
-                : 'Öne Çıkar (Günün Önerisi alanında öncelikli göster)'
+        {/* Side-by-Side One-Click Switches */}
+        <div className="flex flex-wrap items-center gap-1.5">
+          <ToggleSwitch
+            checked={isFeatured}
+            onChange={() => onToggleFeatured(item)}
+            label="Öne Çıkar"
+            activeColorClass="bg-amber-500"
+            ariaLabel={`${item.title} öne çıkar`}
+            icon={
+              <Star
+                size={12}
+                className={
+                  isFeatured
+                    ? 'fill-amber-500 text-amber-500'
+                    : 'text-[#9A938A]'
+                }
+              />
             }
-            className={`inline-flex h-9 items-center gap-1 rounded-xl border px-2.5 text-[11px] font-bold transition-colors active:scale-95 ${
-              isFeatured
-                ? 'border-amber-300 bg-amber-100 text-amber-800 hover:bg-amber-200/70'
-                : 'border-[#E7E3DC] bg-white text-[#6B665F] hover:border-amber-300 hover:bg-amber-50 hover:text-amber-700'
-            }`}
-            aria-pressed={isFeatured}
-            aria-label={isFeatured ? 'Öne çıkarılanlardan kaldır' : 'Öne çıkar'}
-          >
-            <Star
-              size={14}
-              className={isFeatured ? 'fill-amber-500 text-amber-500' : ''}
-            />
-            <span className="hidden md:inline">Öne Çıkar</span>
-          </button>
+          />
 
-          <button
-            type="button"
-            onClick={() => onToggleActive(item)}
-            title={isActive ? 'Müşteri menüsünden gizle (Pasif)' : 'Müşteri menüsünde göster (Aktif)'}
-            className={`flex h-9 w-9 items-center justify-center rounded-xl border transition-colors ${
-              isActive
-                ? 'border-[#E7E3DC] bg-white text-emerald-700 hover:bg-emerald-50'
-                : 'border-amber-200 bg-amber-50 text-amber-700 hover:bg-amber-100'
-            }`}
-            aria-label={isActive ? 'Pasife al' : 'Aktif et'}
-          >
-            {isActive ? <Eye size={15} /> : <EyeOff size={15} />}
-          </button>
+          <ToggleSwitch
+            checked={isActive}
+            onChange={() => onToggleActive(item)}
+            label="Aktif"
+            activeColorClass="bg-emerald-500"
+            ariaLabel={`${item.title} aktiflik durumu`}
+          />
 
           <button
             type="button"
             onClick={() => onEdit(item)}
-            title="Ürünü düzenle"
-            className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#E7E3DC] bg-white text-[#4A4641] transition-colors hover:border-[#181716] hover:text-[#181716]"
-            aria-label="Ürünü düzenle"
+            title="Detaylı düzenle (açıklama, görsel, kategori)"
+            className="flex h-8 w-8 items-center justify-center rounded-xl border border-[#E7E3DC] bg-white text-[#4A4641] transition-colors hover:border-[#181716] hover:text-[#181716] active:scale-95"
+            aria-label="Ürünü detaylı düzenle"
           >
-            <Pencil size={15} />
+            <Pencil size={14} />
           </button>
 
           <button
             type="button"
             onClick={() => onDelete(item)}
             title="Ürünü sil"
-            className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#E7E3DC] bg-white text-[#8C857C] transition-colors hover:border-red-200 hover:bg-red-50 hover:text-[#CA2F2D]"
+            className="flex h-8 w-8 items-center justify-center rounded-xl border border-[#E7E3DC] bg-white text-[#8C857C] transition-colors hover:border-red-200 hover:bg-red-50 hover:text-[#CA2F2D] active:scale-95"
             aria-label="Ürünü sil"
           >
-            <Trash2 size={15} />
+            <Trash2 size={14} />
           </button>
         </div>
       </div>
@@ -251,29 +334,53 @@ export default function AdminDashboard({ user, onLogout, onOpenMenu }) {
     deleteCategory,
   } = useMenu();
 
-  const [activeTab, setActiveTab] = useState('products'); // 'products' | 'categories'
+  const [activeTab, setActiveTab] = useState('products'); // 'products' | 'categories' | 'qr'
   const [searchQuery, setSearchQuery] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('all');
-  const [statusFilter, setStatusFilter] = useState('all'); // 'all' | 'active' | 'passive'
+  const [statusFilter, setStatusFilter] = useState('all'); // 'all' | 'featured' | 'active' | 'passive'
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
   const [modalOpen, setModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
   const [toast, setToast] = useState(null);
 
+  const searchInputRef = useRef(null);
   const deferredQuery = useDeferredValue(searchQuery);
 
-  const showToast = useCallback((message, type = 'success') => {
-    setToast({ id: Date.now(), message, type });
+  const showToast = useCallback((detail = '', type = 'success') => {
+    setToast({
+      id: Date.now(),
+      title: type === 'error' ? 'İşlem Başarısız' : 'Değişiklikler Kaydedildi',
+      detail,
+      type,
+    });
   }, []);
 
+  // Quick 1.8s auto-dismiss feedback toast
   useEffect(() => {
     if (!toast) return;
-    const t = window.setTimeout(() => setToast(null), 3000);
+    const t = window.setTimeout(() => setToast(null), 1800);
     return () => window.clearTimeout(t);
   }, [toast]);
 
-  // Reset pagination when filters change
+  // Press "/" to focus search instantly on desktop
+  useEffect(() => {
+    const onKey = (e) => {
+      if (
+        e.key === '/' &&
+        activeTab === 'products' &&
+        !modalOpen &&
+        document.activeElement?.tagName !== 'INPUT' &&
+        document.activeElement?.tagName !== 'TEXTAREA'
+      ) {
+        e.preventDefault();
+        searchInputRef.current?.focus();
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [activeTab, modalOpen]);
+
   useEffect(() => {
     setVisibleCount(PAGE_SIZE);
   }, [deferredQuery, categoryFilter, statusFilter]);
@@ -308,12 +415,20 @@ export default function AdminDashboard({ user, onLogout, onOpenMenu }) {
     [onLogout, showToast]
   );
 
-  const handleQuickSavePrice = useCallback(
+  const handleInlineSaveTitle = useCallback(
+    async (itemId, newTitle) => {
+      const res = await updateItem(itemId, { title: newTitle });
+      if (handleAuthError(res)) return;
+      showToast(`Ürün adı: "${newTitle}"`);
+    },
+    [updateItem, handleAuthError, showToast]
+  );
+
+  const handleInlineSavePrice = useCallback(
     async (itemId, newPrice, title) => {
       const res = await updateItem(itemId, { price: newPrice });
-      if (handleAuthError(res)) return false;
-      showToast(`"${title}" fiyatı güncellendi (${newPrice} ₺).`);
-      return true;
+      if (handleAuthError(res)) return;
+      showToast(`${title} • ${newPrice} ₺`);
     },
     [updateItem, handleAuthError, showToast]
   );
@@ -322,8 +437,9 @@ export default function AdminDashboard({ user, onLogout, onOpenMenu }) {
     async (item) => {
       const res = await toggleItemActive(item.id);
       if (handleAuthError(res)) return;
-      const nextState = item.active === false ? 'aktif edildi' : 'pasife alındı';
-      showToast(`"${item.title}" ${nextState}.`);
+      showToast(
+        `${item.title} • ${item.active === false ? 'Aktif edildi' : 'Pasife alındı'}`
+      );
     },
     [toggleItemActive, handleAuthError, showToast]
   );
@@ -332,10 +448,11 @@ export default function AdminDashboard({ user, onLogout, onOpenMenu }) {
     async (item) => {
       const res = await toggleItemFeatured(item.id);
       if (handleAuthError(res)) return;
-      const nextMsg = item.featured
-        ? `"${item.title}" öne çıkarılanlardan kaldırıldı.`
-        : `"${item.title}" öne çıkarıldı — Günün Önerisi alanında öncelikli gösterilecek.`;
-      showToast(nextMsg);
+      showToast(
+        item.featured
+          ? `${item.title} • Öne çıkarılanlardan kaldırıldı`
+          : `${item.title} • Öne çıkarıldı`
+      );
     },
     [toggleItemFeatured, handleAuthError, showToast]
   );
@@ -347,7 +464,7 @@ export default function AdminDashboard({ user, onLogout, onOpenMenu }) {
       }
       const res = await deleteItem(item.id);
       if (handleAuthError(res)) return;
-      showToast(`"${item.title}" menüden silindi.`);
+      showToast(`"${item.title}" silindi`);
     },
     [deleteItem, handleAuthError, showToast]
   );
@@ -367,11 +484,11 @@ export default function AdminDashboard({ user, onLogout, onOpenMenu }) {
       if (editingItem) {
         const res = await updateItem(editingItem.id, formValues);
         if (handleAuthError(res)) return;
-        showToast(`"${formValues.title}" başarıyla güncellendi.`);
+        showToast(`"${formValues.title}" güncellendi`);
       } else {
         const res = await addItem(formValues);
         if (handleAuthError(res)) return;
-        showToast(`"${formValues.title}" menüye eklendi.`);
+        showToast(`"${formValues.title}" menüye eklendi`);
       }
     },
     [editingItem, updateItem, addItem, handleAuthError, showToast]
@@ -380,7 +497,7 @@ export default function AdminDashboard({ user, onLogout, onOpenMenu }) {
   return (
     <div className="min-h-dvh bg-[#F6F5F1] text-[#181716]">
       {/* Sticky Admin Header */}
-      <header className="no-print sticky top-0 z-30 border-b border-[#EAE6DF] bg-white/95 backdrop-blur-md">
+      <header className="no-print sticky top-0 z-30 border-b border-[#EAE6DF] bg-white">
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 px-4 py-3">
           <div className="flex min-w-0 items-center gap-3">
             <div className="h-10 w-10 shrink-0 overflow-hidden rounded-xl shadow-xs ring-1 ring-[#CA2F2D]/20">
@@ -405,12 +522,12 @@ export default function AdminDashboard({ user, onLogout, onOpenMenu }) {
                   {saving
                     ? 'Kaydediliyor...'
                     : persistenceMode === 'file'
-                      ? 'menu_data.json canlı bağlı'
+                      ? 'Canlı kayıt aktif'
                       : 'Tarayıcı belleği aktif'}
                 </span>
                 {lastSavedAt && !saving && (
                   <span className="hidden sm:inline">
-                    • Son kayıt:{' '}
+                    •{' '}
                     {new Date(lastSavedAt).toLocaleTimeString('tr-TR', {
                       hour: '2-digit',
                       minute: '2-digit',
@@ -446,22 +563,29 @@ export default function AdminDashboard({ user, onLogout, onOpenMenu }) {
         </div>
       </header>
 
-      <main className="mx-auto max-w-5xl px-4 py-5 pb-16">
-        {/* KPI Overview Strip */}
+      <main className="mx-auto max-w-5xl px-4 py-4 pb-16">
+        {/* Compact KPI Strip */}
         <section className="no-print grid grid-cols-2 gap-2.5 sm:grid-cols-4 sm:gap-3">
-          <div className="rounded-2xl border border-[#EAE6DF] bg-white p-3.5 shadow-2xs">
+          <button
+            type="button"
+            onClick={() => {
+              setActiveTab('products');
+              setStatusFilter('all');
+            }}
+            className="rounded-2xl border border-[#EAE6DF] bg-white p-3 text-left transition-colors hover:border-[#CBC5BC]"
+          >
             <p className="text-[11px] font-semibold text-[#8A837A]">Toplam Ürün</p>
-            <p className="mt-1 text-2xl font-extrabold text-[#181716]">
+            <p className="mt-0.5 text-2xl font-extrabold text-[#181716]">
               {index.stats.totalItems}
             </p>
-          </div>
+          </button>
           <button
             type="button"
             onClick={() => {
               setActiveTab('products');
               setStatusFilter((prev) => (prev === 'featured' ? 'all' : 'featured'));
             }}
-            className={`rounded-2xl border p-3.5 text-left shadow-2xs transition-colors ${
+            className={`rounded-2xl border p-3 text-left transition-colors ${
               statusFilter === 'featured'
                 ? 'border-amber-400 bg-amber-50'
                 : 'border-[#EAE6DF] bg-white hover:border-amber-300'
@@ -471,39 +595,54 @@ export default function AdminDashboard({ user, onLogout, onOpenMenu }) {
               <Star size={11} className="fill-amber-500 text-amber-500" />
               Öne Çıkanlar
             </p>
-            <p className="mt-1 text-2xl font-extrabold text-amber-700">
+            <p className="mt-0.5 text-2xl font-extrabold text-amber-700">
               {featuredCount}
             </p>
-            <p className="mt-0.5 text-[10px] font-medium text-[#8A837A]">
+            <p className="text-[10px] font-medium text-[#8A837A]">
               {featuredCount > 0 ? 'Öncelikli gösterimde' : 'Otomatik saat modu'}
             </p>
           </button>
-          <div className="rounded-2xl border border-[#EAE6DF] bg-white p-3.5 shadow-2xs">
+          <button
+            type="button"
+            onClick={() => {
+              setActiveTab('products');
+              setStatusFilter((prev) => (prev === 'passive' ? 'all' : 'passive'));
+            }}
+            className={`rounded-2xl border p-3 text-left transition-colors ${
+              statusFilter === 'passive'
+                ? 'border-stone-400 bg-stone-100'
+                : 'border-[#EAE6DF] bg-white hover:border-[#CBC5BC]'
+            }`}
+          >
             <p className="text-[11px] font-semibold text-emerald-700">Aktif / Pasif</p>
-            <p className="mt-1 text-2xl font-extrabold text-emerald-700">
+            <p className="mt-0.5 text-2xl font-extrabold text-emerald-700">
               {index.stats.activeItems}
               <span className="ml-1.5 text-sm font-semibold text-[#8A837A]">
                 / {passiveCount}
               </span>
             </p>
-          </div>
-          <div className="rounded-2xl border border-[#EAE6DF] bg-white p-3.5 shadow-2xs">
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab('categories')}
+            className="rounded-2xl border border-[#EAE6DF] bg-white p-3 text-left transition-colors hover:border-[#CA2F2D]/40"
+          >
             <p className="text-[11px] font-semibold text-[#CA2F2D]">Kategoriler</p>
-            <p className="mt-1 text-2xl font-extrabold text-[#CA2F2D]">
+            <p className="mt-0.5 text-2xl font-extrabold text-[#CA2F2D]">
               {index.stats.totalCategories}
             </p>
-          </div>
+          </button>
         </section>
 
-        {/* Tabs + Primary Action */}
-        <div className="no-print mt-5 flex flex-wrap items-center justify-between gap-3">
+        {/* Navigation Tabs + Quick Add Button */}
+        <div className="no-print mt-4 flex flex-wrap items-center justify-between gap-2.5">
           <div className="no-scrollbar touch-scroll-free inline-flex max-w-full overflow-x-auto rounded-2xl border border-[#E5E1D9] bg-[#EFECE6] p-1">
             <button
               type="button"
               onClick={() => setActiveTab('products')}
-              className={`inline-flex shrink-0 items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-bold transition-all ${
+              className={`inline-flex shrink-0 items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-bold transition-colors ${
                 activeTab === 'products'
-                  ? 'bg-white text-[#181716] shadow-xs'
+                  ? 'bg-white text-[#181716] shadow-2xs'
                   : 'text-[#6B665F] hover:text-[#181716]'
               }`}
             >
@@ -513,9 +652,9 @@ export default function AdminDashboard({ user, onLogout, onOpenMenu }) {
             <button
               type="button"
               onClick={() => setActiveTab('categories')}
-              className={`inline-flex shrink-0 items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-bold transition-all ${
+              className={`inline-flex shrink-0 items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-bold transition-colors ${
                 activeTab === 'categories'
-                  ? 'bg-white text-[#181716] shadow-xs'
+                  ? 'bg-white text-[#181716] shadow-2xs'
                   : 'text-[#6B665F] hover:text-[#181716]'
               }`}
             >
@@ -525,9 +664,9 @@ export default function AdminDashboard({ user, onLogout, onOpenMenu }) {
             <button
               type="button"
               onClick={() => setActiveTab('qr')}
-              className={`inline-flex shrink-0 items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-bold transition-all ${
+              className={`inline-flex shrink-0 items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-bold transition-colors ${
                 activeTab === 'qr'
-                  ? 'bg-white text-[#181716] shadow-xs'
+                  ? 'bg-white text-[#181716] shadow-2xs'
                   : 'text-[#6B665F] hover:text-[#181716]'
               }`}
             >
@@ -540,7 +679,7 @@ export default function AdminDashboard({ user, onLogout, onOpenMenu }) {
             <button
               type="button"
               onClick={handleOpenAddModal}
-              className="inline-flex items-center gap-1.5 rounded-xl bg-[#CA2F2D] px-4 py-2.5 text-xs font-bold text-white shadow-xs transition-all hover:bg-[#B02422] active:scale-[0.98]"
+              className="inline-flex items-center gap-1.5 rounded-xl bg-[#CA2F2D] px-4 py-2.5 text-xs font-bold text-white shadow-xs transition-transform hover:bg-[#B02422] active:scale-[0.97]"
             >
               <Plus size={15} />
               Yeni Ürün Ekle
@@ -548,91 +687,127 @@ export default function AdminDashboard({ user, onLogout, onOpenMenu }) {
           )}
         </div>
 
-        {/* Tab 1: Products Management */}
+        {/* Tab 1: Speed-First Products Management */}
         {activeTab === 'products' ? (
-          <section className="mt-4 space-y-4">
-            {/* Search & Filters Bar */}
-            <div className="grid grid-cols-1 gap-2.5 rounded-2xl border border-[#EAE6DF] bg-white p-3.5 shadow-2xs sm:grid-cols-12">
-              <div className="relative sm:col-span-5">
-                <Search
-                  size={15}
-                  className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-[#9A938A]"
-                />
-                <input
-                  type="search"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Ürün adı, açıklama veya kategori ara..."
-                  className="h-10 w-full rounded-xl border border-[#E5E1D9] bg-[#FAF9F6] pr-8 pl-9 text-sm text-[#181716] focus:border-[#CA2F2D] focus:bg-white focus:outline-none"
-                />
-                {searchQuery && (
-                  <button
-                    type="button"
-                    onClick={() => setSearchQuery('')}
-                    className="absolute top-1/2 right-2.5 -translate-y-1/2 text-[#8C857C] hover:text-[#181716]"
-                    aria-label="Aramayı temizle"
+          <section className="mt-3.5 space-y-3.5">
+            {/* Sticky Instant Search & Quick Filters */}
+            <div className="sticky top-[65px] z-20 space-y-2.5 rounded-2xl border border-[#EAE6DF] bg-white p-3 shadow-xs">
+              <div className="grid grid-cols-1 gap-2 sm:grid-cols-12">
+                <div className="relative sm:col-span-6">
+                  <Search
+                    size={16}
+                    className="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-[#9A938A]"
+                  />
+                  <input
+                    ref={searchInputRef}
+                    type="search"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Hızlı ürün ara... (örn. Serpme, Burger, Negroni)"
+                    className="h-10 w-full rounded-xl border border-[#E5E1D9] bg-[#FAF9F6] pr-9 pl-10 text-sm text-[#181716] placeholder:text-[#9A938A] focus:border-[#CA2F2D] focus:bg-white focus:outline-none"
+                    autoComplete="off"
+                  />
+                  {searchQuery && (
+                    <button
+                      type="button"
+                      onClick={() => setSearchQuery('')}
+                      className="absolute top-1/2 right-2.5 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full bg-[#E7E3DC] text-[#4A4641] hover:bg-[#D8D3CA]"
+                      aria-label="Aramayı temizle"
+                    >
+                      <X size={13} />
+                    </button>
+                  )}
+                </div>
+
+                <div className="sm:col-span-3">
+                  <select
+                    value={categoryFilter}
+                    onChange={(e) => setCategoryFilter(e.target.value)}
+                    aria-label="Kategori filtresi"
+                    className="h-10 w-full rounded-xl border border-[#E5E1D9] bg-[#FAF9F6] px-3 text-xs font-semibold text-[#181716] focus:border-[#CA2F2D] focus:bg-white focus:outline-none"
                   >
-                    <X size={14} />
+                    <option value="all">Tüm Kategoriler ({index.stats.totalItems})</option>
+                    {index.categories.map((cat) => (
+                      <option key={cat.id} value={cat.id}>
+                        {cat.name} ({cat.totalItemCount ?? cat.itemCount})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="sm:col-span-3">
+                  <select
+                    value={statusFilter}
+                    onChange={(e) => setStatusFilter(e.target.value)}
+                    aria-label="Durum filtresi"
+                    className="h-10 w-full rounded-xl border border-[#E5E1D9] bg-[#FAF9F6] px-3 text-xs font-semibold text-[#181716] focus:border-[#CA2F2D] focus:bg-white focus:outline-none"
+                  >
+                    <option value="all">Tüm Durumlar</option>
+                    <option value="featured">Sadece Öne Çıkanlar ({featuredCount})</option>
+                    <option value="active">Sadece Aktif</option>
+                    <option value="passive">Sadece Pasif ({passiveCount})</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* 1-Tap Horizontal Category Quick Pills */}
+              <div className="no-scrollbar touch-scroll-free flex items-center gap-1.5 overflow-x-auto pb-0.5">
+                <button
+                  type="button"
+                  onClick={() => setCategoryFilter('all')}
+                  className={`shrink-0 rounded-lg px-2.5 py-1 text-[11px] font-bold transition-colors ${
+                    categoryFilter === 'all'
+                      ? 'bg-[#181716] text-white'
+                      : 'bg-[#F3F1EC] text-[#5E5850] hover:bg-[#E7E3DC]'
+                  }`}
+                >
+                  Tümü
+                </button>
+                {index.categories.map((cat) => (
+                  <button
+                    key={cat.id}
+                    type="button"
+                    onClick={() => setCategoryFilter(cat.id)}
+                    className={`shrink-0 rounded-lg px-2.5 py-1 text-[11px] font-semibold transition-colors ${
+                      categoryFilter === cat.id
+                        ? 'bg-[#CA2F2D] text-white'
+                        : 'bg-[#F3F1EC] text-[#5E5850] hover:bg-[#E7E3DC]'
+                    }`}
+                  >
+                    {cat.name}
                   </button>
-                )}
-              </div>
-
-              <div className="sm:col-span-4">
-                <select
-                  value={categoryFilter}
-                  onChange={(e) => setCategoryFilter(e.target.value)}
-                  aria-label="Kategori filtresi"
-                  className="h-10 w-full rounded-xl border border-[#E5E1D9] bg-[#FAF9F6] px-3 text-xs font-semibold text-[#181716] focus:border-[#CA2F2D] focus:bg-white focus:outline-none"
-                >
-                  <option value="all">Tüm Kategoriler ({index.stats.totalItems})</option>
-                  {index.categories.map((cat) => (
-                    <option key={cat.id} value={cat.id}>
-                      {cat.name} ({cat.totalItemCount ?? cat.itemCount})
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="sm:col-span-3">
-                <select
-                  value={statusFilter}
-                  onChange={(e) => setStatusFilter(e.target.value)}
-                  aria-label="Durum filtresi"
-                  className="h-10 w-full rounded-xl border border-[#E5E1D9] bg-[#FAF9F6] px-3 text-xs font-semibold text-[#181716] focus:border-[#CA2F2D] focus:bg-white focus:outline-none"
-                >
-                  <option value="all">Tüm Durumlar</option>
-                  <option value="featured">Sadece Öne Çıkanlar ({featuredCount})</option>
-                  <option value="active">Sadece Aktif</option>
-                  <option value="passive">Sadece Pasif ({passiveCount})</option>
-                </select>
+                ))}
               </div>
             </div>
 
-            {/* Result Meta & Tip */}
+            {/* Result Counter & Inline Editing Hint */}
             <div className="flex flex-wrap items-center justify-between gap-2 px-1 text-xs text-[#7C766E]">
               <span>
-                Toplam <strong className="text-[#181716]">{filteredItems.length}</strong> ürün
+                <strong className="text-[#181716]">{filteredItems.length}</strong> ürün
                 listeleniyor
               </span>
               <span className="text-[11px]">
-                İpucu: Fiyatı kutucuktan değiştirip <strong className="text-[#181716]">Enter</strong> veya ✓ ile anında kaydedebilirsiniz.
+                Hızlı Düzenleme: <strong className="text-[#181716]">Ad</strong> veya{' '}
+                <strong className="text-[#CA2F2D]">Fiyat</strong> üzerine tıklayın, değiştirip{' '}
+                <strong className="text-[#181716]">Enter</strong> veya dışına tıklayın — otomatik kaydedilir.
               </span>
             </div>
 
             {/* Product Rows */}
             {visibleItems.length === 0 ? (
-              <div className="rounded-3xl border border-dashed border-[#DFDAD1] bg-white/70 px-6 py-12 text-center">
+              <div className="rounded-3xl border border-dashed border-[#DFDAD1] bg-white px-6 py-12 text-center">
                 <p className="text-sm font-semibold text-[#3A3733]">
                   Filtrelere uygun ürün bulunamadı.
                 </p>
               </div>
             ) : (
-              <div className="space-y-2.5">
+              <div className="gpu-list space-y-2">
                 {visibleItems.map((item) => (
                   <AdminProductRow
                     key={item.id}
                     item={item}
-                    onQuickSavePrice={handleQuickSavePrice}
+                    onInlineSaveTitle={handleInlineSaveTitle}
+                    onInlineSavePrice={handleInlineSavePrice}
                     onToggleActive={handleToggleActive}
                     onToggleFeatured={handleToggleFeatured}
                     onEdit={handleOpenEditModal}
@@ -642,13 +817,13 @@ export default function AdminDashboard({ user, onLogout, onOpenMenu }) {
               </div>
             )}
 
-            {/* Progressive Pagination (keeps DOM super light & zero-lag) */}
+            {/* Progressive Load More */}
             {visibleCount < filteredItems.length && (
               <div className="flex justify-center pt-2">
                 <button
                   type="button"
                   onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
-                  className="rounded-xl border border-[#E5E1D9] bg-white px-5 py-2.5 text-xs font-bold text-[#181716] shadow-2xs transition-colors hover:border-[#CA2F2D] hover:text-[#CA2F2D]"
+                  className="rounded-xl border border-[#E5E1D9] bg-white px-5 py-2.5 text-xs font-bold text-[#181716] transition-colors hover:border-[#CA2F2D] hover:text-[#CA2F2D]"
                 >
                   Daha Fazla Göster ({filteredItems.length - visibleCount} ürün kaldı)
                 </button>
@@ -656,7 +831,6 @@ export default function AdminDashboard({ user, onLogout, onOpenMenu }) {
             )}
           </section>
         ) : activeTab === 'categories' ? (
-          /* Tab 2: Category Management */
           <section className="mt-4">
             <CategoryManager
               categories={index.categories}
@@ -667,14 +841,13 @@ export default function AdminDashboard({ user, onLogout, onOpenMenu }) {
             />
           </section>
         ) : (
-          /* Tab 3: Table QR Code Generator */
           <section className="mt-4">
-            <QrCodeGenerator onNotify={showToast} />
+            <QrCodeGenerator onNotify={(msg, type) => showToast(msg, type)} />
           </section>
         )}
       </main>
 
-      {/* Product Add/Edit Modal */}
+      {/* Product Add / Full Edit Modal */}
       <ProductFormModal
         open={modalOpen}
         item={editingItem}
@@ -684,16 +857,25 @@ export default function AdminDashboard({ user, onLogout, onOpenMenu }) {
         onSubmit={handleSubmitModal}
       />
 
-      {/* Live Feedback Toast */}
+      {/* Top-Right Instant Save Toast (1.8s auto-dismiss) */}
       {toast && (
         <div
+          key={toast.id}
           role="status"
-          className={`animate-sheet-up fixed right-4 bottom-5 left-4 z-50 mx-auto flex max-w-md items-center gap-2.5 rounded-2xl px-4 py-3 text-xs font-semibold text-white shadow-xl sm:left-auto ${
+          aria-live="polite"
+          className={`animate-fade-in fixed top-16 right-4 z-50 flex max-w-xs items-start gap-2.5 rounded-2xl px-4 py-3 text-white shadow-xl ${
             toast.type === 'error' ? 'bg-[#CA2F2D]' : 'bg-[#181716]'
           }`}
         >
-          <CheckCircle2 size={16} className="shrink-0 text-emerald-400" />
-          <span className="flex-1">{toast.message}</span>
+          <CheckCircle2 size={17} className="mt-0.5 shrink-0 text-emerald-400" />
+          <div className="min-w-0">
+            <p className="text-xs font-bold leading-tight">{toast.title}</p>
+            {toast.detail && (
+              <p className="mt-0.5 truncate text-[11px] text-white/80">
+                {toast.detail}
+              </p>
+            )}
+          </div>
         </div>
       )}
     </div>
