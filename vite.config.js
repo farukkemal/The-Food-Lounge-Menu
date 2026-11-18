@@ -3,8 +3,8 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { menuApiPlugin } from './server/menuApiPlugin.mjs';
 
-export default defineConfig(({ command }) => ({
-  base: command === 'build' ? '/The-Food-Lounge-Menu/' : '/',
+export default defineConfig({
+  base: '/The-Food-Lounge-Menu/',
   plugins: [react(), tailwindcss(), menuApiPlugin()],
   server: {
     host: true,
@@ -27,4 +27,4 @@ export default defineConfig(({ command }) => ({
       },
     },
   },
-}));
+});
