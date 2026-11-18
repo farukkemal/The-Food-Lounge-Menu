@@ -2,47 +2,64 @@ import { useEffect, useState } from 'react';
 
 export const TIME_SLOT_IDS = {
   MORNING: 'morning',
-  AFTERNOON: 'afternoon',
-  EVENING: 'evening',
+  LUNCH: 'lunch',
+  DINNER: 'dinner',
+  NIGHT: 'night',
 };
 
 export const TIME_SLOT_META = {
   [TIME_SLOT_IDS.MORNING]: {
     id: TIME_SLOT_IDS.MORNING,
-    shortLabel: 'Sabah',
-    rangeLabel: '03:00 – 15:00',
-    periodLabel: 'Sabah / Öğle Öncesi',
+    shortLabel: 'Sabah Servisi',
+    rangeLabel: '09:00 – 13:00',
   },
-  [TIME_SLOT_IDS.AFTERNOON]: {
-    id: TIME_SLOT_IDS.AFTERNOON,
-    shortLabel: 'Öğle',
-    rangeLabel: '15:00 – 19:00',
-    periodLabel: 'Öğle / Akşamüstü',
+  [TIME_SLOT_IDS.LUNCH]: {
+    id: TIME_SLOT_IDS.LUNCH,
+    shortLabel: 'Öğle Servisi',
+    rangeLabel: '13:00 – 17:00',
   },
-  [TIME_SLOT_IDS.EVENING]: {
-    id: TIME_SLOT_IDS.EVENING,
-    shortLabel: 'Akşam',
-    rangeLabel: '19:00 – 00:00',
-    periodLabel: 'Akşam / Gece',
+  [TIME_SLOT_IDS.DINNER]: {
+    id: TIME_SLOT_IDS.DINNER,
+    shortLabel: 'Akşam Servisi',
+    rangeLabel: '17:00 – 20:30',
+  },
+  [TIME_SLOT_IDS.NIGHT]: {
+    id: TIME_SLOT_IDS.NIGHT,
+    shortLabel: 'Gece Servisi',
+    rangeLabel: '20:30 – 24:00',
   },
 };
 
 export const TIME_SLOT_LIST = [
   TIME_SLOT_META[TIME_SLOT_IDS.MORNING],
-  TIME_SLOT_META[TIME_SLOT_IDS.AFTERNOON],
-  TIME_SLOT_META[TIME_SLOT_IDS.EVENING],
+  TIME_SLOT_META[TIME_SLOT_IDS.LUNCH],
+  TIME_SLOT_META[TIME_SLOT_IDS.DINNER],
+  TIME_SLOT_META[TIME_SLOT_IDS.NIGHT],
 ];
 
 /**
- * Strict automatic time-based rule resolver (based strictly on system clock):
- * - 03:00 - 15:00 -> morning (Kahvaltı Keyfi)
- * - 15:00 - 19:00 -> afternoon (Dünya Mutfağı)
- * - 19:00 - 00:00 (ve 00:00 - 03:00 gece devamı) -> evening (Kokteyl + Biftek Komboları)
+ * Strict automatic service-window resolver (minute-precision):
+ * - 09:00 - 13:00 (ve 03:00 - 09:00 erken açılış) -> morning (Sabah Servisi)
+ * - 13:00 - 17:00 -> lunch  (Öğle Servisi)
+ * - 17:00 - 20:30 -> dinner (Akşam Servisi)
+ * - 20:30 - 24:00 (ve 00:00 - 03:00 geç devam) -> night (Gece Servisi)
  */
+export function getTimeSlotForTime(hour, minute = 0) {
+  const totalMinutes = hour * 60 + minute;
+  if (totalMinutes >= 3 * 60 && totalMinutes < 13 * 60) {
+    return TIME_SLOT_IDS.MORNING;
+  }
+  if (totalMinutes >= 13 * 60 && totalMinutes < 17 * 60) {
+    return TIME_SLOT_IDS.LUNCH;
+  }
+  if (totalMinutes >= 17 * 60 && totalMinutes < 20 * 60 + 30) {
+    return TIME_SLOT_IDS.DINNER;
+  }
+  return TIME_SLOT_IDS.NIGHT;
+}
+
 export function getTimeSlotForHour(hour) {
-  if (hour >= 3 && hour < 15) return TIME_SLOT_IDS.MORNING;
-  if (hour >= 15 && hour < 19) return TIME_SLOT_IDS.AFTERNOON;
-  return TIME_SLOT_IDS.EVENING;
+  return getTimeSlotForTime(hour, 0);
 }
 
 function formatClock(date) {
@@ -62,7 +79,7 @@ export function useTimeSlot() {
     return () => window.clearInterval(timer);
   }, []);
 
-  const activeSlot = getTimeSlotForHour(now.getHours());
+  const activeSlot = getTimeSlotForTime(now.getHours(), now.getMinutes());
 
   return {
     activeSlot,

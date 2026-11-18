@@ -5,6 +5,8 @@ import {
   getLocalizedItemSubcategory,
 } from '../context/LanguageContext';
 
+const CAROUSEL_LIMIT = 4;
+
 function pickLang(dict, lang) {
   if (!dict) return '';
   return dict[lang] || dict.en || dict.tr || '';
@@ -21,6 +23,7 @@ function resolveCuratedItems(
   const usedIds = new Set();
 
   for (const spec of specs) {
+    if (resolved.length >= CAROUSEL_LIMIT) break;
     const item = menuIndex.getItemById(spec.id);
     if (item && !usedIds.has(item.id)) {
       usedIds.add(item.id);
@@ -33,13 +36,13 @@ function resolveCuratedItems(
     }
   }
 
-  if (resolved.length < 4 && fallbackCategoryIds.length > 0) {
+  if (resolved.length < CAROUSEL_LIMIT && fallbackCategoryIds.length > 0) {
     for (const catId of fallbackCategoryIds) {
       const catItems = menuIndex
         .getItemsByCategory(catId)
         .filter((i) => i.image);
       for (const item of catItems) {
-        if (!usedIds.has(item.id) && resolved.length < 6) {
+        if (!usedIds.has(item.id) && resolved.length < CAROUSEL_LIMIT) {
           usedIds.add(item.id);
           resolved.push({
             ...item,
@@ -50,10 +53,11 @@ function resolveCuratedItems(
     }
   }
 
-  return resolved;
+  return resolved.slice(0, CAROUSEL_LIMIT);
 }
 
-const EVENING_PAIRING_SPECS = [
+// 4 swipeable Night Service (20:30 - 24:00) Steak + Cocktail Pairings
+const NIGHT_PAIRING_SPECS = [
   {
     id: 'pair-cafe-de-paris-negroni',
     badge: {
@@ -127,11 +131,11 @@ const EVENING_PAIRING_SPECS = [
     },
     sommelierNote: {
       tr: 'Özenle dinlendirilmiş Dallas Steak’in güçlü dokusuna, bourbon bazlı ferahlatıcı narenciye notaları eşlik eder.',
-      en: 'Juicy aged Dallas Steak paired with refreshing bourbon-infused citrus notes for an unforgettable dinner.',
+      en: 'Juicy aged Dallas Steak paired with refreshing bourbon-infused citrus notes for an unforgettable night.',
       de: 'Saftiges gereiftes Dallas Steak kombiniert mit erfrischenden Zitrusnoten auf Bourbon-Basis.',
       es: 'Jugoso Dallas Steak madurado acompañado de refrescantes notas cítricas con base de bourbon.',
       ar: 'ستيك دالاس المعتّق والعصاري يتكامل مع نكهات الحمضيات المنعشة والبوربون لعشاء لا يُنسى.',
-      zh: '多汁熟成达拉斯牛排搭配清爽的波本柑橘风味鸡尾酒，成就难忘晚餐。',
+      zh: '多汁熟成达拉斯牛排搭配清爽的波本柑橘风味鸡尾酒，成就难忘之夜。',
       ru: 'Сочный выдержанный Даллас Стейк в дуэте с освежающим цитрусовым коктейлем на основе бурбона.',
     },
     foodId: 'tfl-184',
@@ -222,48 +226,6 @@ const EVENING_PAIRING_SPECS = [
     cocktailId: 'tfl-338',
     discountRate: 0,
   },
-  {
-    id: 'pair-lokum-espresso',
-    badge: {
-      tr: '%10 Kombo İndirimi',
-      en: '10% Combo Deal',
-      de: '10% Kombi-Rabatt',
-      es: '10% Dto. Combo',
-      ar: 'خصم 10% على الكومبو',
-      zh: '套餐立减 10%',
-      ru: 'Скидка 10% на комбо',
-    },
-    accentLabel: {
-      tr: 'Gece Klasiği',
-      en: 'Night Classic',
-      de: 'Abend-Klassiker',
-      es: 'Clásico Nocturno',
-      ar: 'كلاسيكي مسائي',
-      zh: '夜晚经典',
-      ru: 'Вечерняя классика',
-    },
-    headline: {
-      tr: 'Lokum Bonfile + Espresso Martini',
-      en: 'Lokum Tenderloin + Espresso Martini',
-      de: 'Lokum Filet + Espresso Martini',
-      es: 'Solomillo Lokum + Espresso Martini',
-      ar: 'فيليه لوكوم مشوي + إسبريسو مارتيني',
-      zh: '炭烤菲力牛柳 + 浓缩咖啡马提尼',
-      ru: 'Вырезка Локум + Эспрессо Мартини',
-    },
-    sommelierNote: {
-      tr: 'Izgara bonfile keyfini kadifemsi espresso ve kahve likörü notalarıyla taçlandıran sofistike ikili.',
-      en: 'Chargrilled tenderloin elevated by the velvety richness of a freshly shaken Espresso Martini.',
-      de: 'Gegrilltes Rinderfilet veredelt durch die samtige Note eines frisch geschüttelten Espresso Martini.',
-      es: 'Solomillo a la parrilla elevado por la cremosidad de un Espresso Martini recién agitado.',
-      ar: 'فيليه مشوي على الفحم يتكامل مع قوام إسبريسو مارتيني المخملي الغني بالقهوة.',
-      zh: '炭烤菲力牛排搭配丝滑浓郁的现调浓缩咖啡马提尼，尽显优雅格调。',
-      ru: 'Вырезка на гриле, дополненная бархатистой глубиной свежеприготовленного Эспрессо Мартини.',
-    },
-    foodId: 'tfl-186',
-    cocktailId: 'tfl-327',
-    discountRate: 0.1,
-  },
 ];
 
 export function calculateComboPricing(foodPrice, cocktailPrice, discountRate = 0) {
@@ -303,9 +265,10 @@ export function calculateComboPricing(foodPrice, cocktailPrice, discountRate = 0
   };
 }
 
-function resolveEveningPairings(menuIndex, lang) {
+function resolveNightPairings(menuIndex, lang) {
   const pairings = [];
-  for (const spec of EVENING_PAIRING_SPECS) {
+  for (const spec of NIGHT_PAIRING_SPECS) {
+    if (pairings.length >= CAROUSEL_LIMIT) break;
     const food = menuIndex.getItemById(spec.foodId);
     const cocktail = menuIndex.getItemById(spec.cocktailId);
     if (food && cocktail) {
@@ -326,7 +289,7 @@ function resolveEveningPairings(menuIndex, lang) {
       });
     }
   }
-  return pairings;
+  return pairings.slice(0, CAROUSEL_LIMIT);
 }
 
 export function getRecommendationsForSlot(
@@ -436,19 +399,14 @@ export function getRecommendationsForSlot(
     };
   }
 
-  // Priority 2: Automatic Time-Based Recommendations
-  // 03:00 - 15:00 -> Breakfast
+  // 1) 09:00 - 13:00 -> Sabah Servisi (Fixed 4 breakfast items + 4 swipeable cards starting with 2 soups)
   if (slotId === TIME_SLOT_IDS.MORNING) {
-    const spotlight =
-      menuIndex.getItemById('tfl-001') ||
-      menuIndex.getItemsByCategory('cat-82')[0] ||
-      null;
-    const items = resolveCuratedItems(
+    const fixedItems = resolveCuratedItems(
       menuIndex,
       [
         {
-          id: 'tfl-004',
-          tag: { tr: 'Sıcak Kahvaltı', en: 'Hot Breakfast', de: 'Warmes Frühstück', es: 'Desayuno Caliente', ar: 'إفطار ساخن', zh: '热食早餐', ru: 'Горячий завтрак' },
+          id: 'tfl-001',
+          tag: { tr: 'Sabahın Yıldızı', en: 'Morning Star', de: 'Morgen-Favorit', es: 'Estrella', ar: 'نجم الصباح', zh: '人气必点', ru: 'Хит утра' },
         },
         {
           id: 'tfl-002',
@@ -459,25 +417,38 @@ export function getRecommendationsForSlot(
           tag: { tr: 'Fit & Hafif', en: 'Light & Fit', de: 'Leicht & Fit', es: 'Ligero y Fit', ar: 'خفيف وصحي', zh: '轻食健康', ru: 'Лёгкий' },
         },
         {
-          id: 'tfl-009',
-          tag: { tr: 'Gurme Kahvaltı', en: 'Gourmet', de: 'Gourmet', es: 'Gourmet', ar: 'غورميه', zh: '精致早午餐', ru: 'Гурмэ' },
-        },
-        {
-          id: 'tfl-007',
-          tag: { tr: 'Sıcak Tava', en: 'Hot Pan', de: 'Pfannengericht', es: 'En Sartén', ar: 'طاوة ساخنة', zh: '铁锅煎蛋', ru: 'На сковороде' },
-        },
-        {
-          id: 'tfl-008',
-          tag: { tr: 'Şefin Önerisi', en: "Chef's Pick", de: 'Chef-Tipp', es: 'Elección del Chef', ar: 'اختيار الشيف', zh: '主厨推荐', ru: 'Выбор шефа' },
-        },
-        {
-          id: 'tfl-013',
-          tag: { tr: 'Omlet', en: 'Omelette', de: 'Omelett', es: 'Tortilla', ar: 'أومليت', zh: '欧姆蛋', ru: 'Омлет' },
+          id: 'tfl-004',
+          tag: { tr: 'Sıcak Kahvaltı', en: 'Hot Breakfast', de: 'Warmes Frühstück', es: 'Desayuno Caliente', ar: 'إفطار ساخن', zh: '热食早餐', ru: 'Горячий завтрак' },
         },
       ],
       lang,
       localeData,
       ['cat-82']
+    );
+
+    const items = resolveCuratedItems(
+      menuIndex,
+      [
+        {
+          id: 'tfl-066', // GÜNÜN ÇORBASI
+          tag: { tr: 'Günün Çorbası', en: 'Soup of the Day', de: 'Tagessuppe', es: 'Sopa del Día', ar: 'شوربة اليوم', zh: '今日例汤', ru: 'Суп дня' },
+        },
+        {
+          id: 'tfl-067', // MİNESTRONE ÇORBA (İtalyan Sebze Çorbası)
+          tag: { tr: 'İtalyan Sebze Çorbası', en: 'Italian Vegetable Soup', de: 'Italienische Gemüsesuppe', es: 'Sopa Italiana de Verduras', ar: 'شوربة خضار إيطالية', zh: '意式蔬菜浓汤', ru: 'Итальянский овощной суп' },
+        },
+        {
+          id: 'tfl-009', // AVAKADO SOSLU POŞE YUMURTA
+          tag: { tr: 'Gurme Kahvaltı', en: 'Gourmet', de: 'Gourmet', es: 'Gourmet', ar: 'غورميه', zh: '精致早午餐', ru: 'Гурмэ' },
+        },
+        {
+          id: 'tfl-007', // SAHANDA KAVURMALI YUMURTA
+          tag: { tr: 'Sıcak Tava', en: 'Hot Pan', de: 'Pfannengericht', es: 'En Sartén', ar: 'طاوة ساخنة', zh: '铁锅煎蛋', ru: 'На сковороде' },
+        },
+      ],
+      lang,
+      localeData,
+      ['cat-83', 'cat-82']
     );
 
     const breakfastCount = menuIndex.getItemsByCategory('cat-82').length;
@@ -487,13 +458,13 @@ export function getRecommendationsForSlot(
       mode: 'featured',
       eyebrow: pickLang(
         {
-          tr: 'Günün Önerisi',
-          en: "Today's Pick",
-          de: 'Tagesempfehlung',
-          es: 'Sugerencia de Hoy',
-          ar: 'توصية اليوم',
-          zh: '今日推荐',
-          ru: 'Рекомендация дня',
+          tr: 'Sabah Servisi',
+          en: 'Morning Service',
+          de: 'Frühstücksservice',
+          es: 'Servicio de Mañana',
+          ar: 'خدمة الصباح',
+          zh: '早餐时段',
+          ru: 'Утренний сервис',
         },
         lang
       ),
@@ -511,45 +482,18 @@ export function getRecommendationsForSlot(
       ),
       subtitle: pickLang(
         {
-          tr: 'Bu saat aralığında yalnızca Serpme Kahvaltı ve taptaze kahvaltı sofralarımızı öne çıkarıyoruz.',
-          en: 'Start your day with our signature Turkish spread breakfast and fresh morning plates.',
-          de: 'Starten Sie Ihren Tag mit unserem reichhaltigen türkischen Frühstück und frischen Morgenklassikern.',
-          es: 'Empieza el día con nuestro tradicional desayuno turco completo y platos frescos de mañana.',
-          ar: 'ابدأ يومك بإفطارنا التركي الغني وأشهى الأطباق الصباحية الطازجة.',
+          tr: 'Güne taptaze Serpme Kahvaltı ve seçkin sabah lezzetleriyle başlayın.',
+          en: 'Start your morning with our signature Turkish spread breakfast and fresh plates.',
+          de: 'Starten Sie Ihren Morgen mit unserem reichhaltigen türkischen Frühstück.',
+          es: 'Comienza la mañana con nuestro desayuno turco completo y platos frescos.',
+          ar: 'ابدأ صباحك بإفطارنا التركي الغني وأشهى الأطباق الصباحية الطازجة.',
           zh: '以丰盛正宗的土耳其特色拼盘早餐和新鲜晨间美味开启美好一天。',
-          ru: 'Начните утро с фирменного турецкого завтрака серпме и свежих утренних блюд.',
+          ru: 'Начните утро с фирменного турецкого завтрака серпме и свежих блюд.',
         },
         lang
       ),
-      spotlight: spotlight
-        ? {
-            item: spotlight,
-            badge: pickLang(
-              {
-                tr: 'Sabahın Yıldızı',
-                en: 'Morning Star',
-                de: 'Morgen-Favorit',
-                es: 'Estrella de la Mañana',
-                ar: 'نجم الصباح',
-                zh: '人气必点',
-                ru: 'Хит утра',
-              },
-              lang
-            ),
-            highlightNote: pickLang(
-              {
-                tr: 'Min. 2 kişilik • Sınırsız demleme çay ile',
-                en: 'Prepared for min. 2 guests • With unlimited Turkish tea',
-                de: 'Für mind. 2 Personen • Inkl. unbegrenztem türkischem Tee',
-                es: 'Para mín. 2 personas • Con té turco ilimitado',
-                ar: 'لشخصين على الأقل • مع شاي تركي غير محدود',
-                zh: '2人起订 · 享无限续杯土耳其红茶',
-                ru: 'Минимум на 2 персоны • Безлимитный турецкий чай',
-              },
-              lang
-            ),
-          }
-        : null,
+      spotlight: null,
+      fixedItems,
       items,
       quickLinks: [
         {
@@ -571,8 +515,8 @@ export function getRecommendationsForSlot(
     };
   }
 
-  // 15:00 - 19:00 -> World Cuisine
-  if (slotId === TIME_SLOT_IDS.AFTERNOON) {
+  // 2) 13:00 - 17:00 -> Öğle Servisi (Spotlight + 4 swipeable cards starting with 2 soups)
+  if (slotId === TIME_SLOT_IDS.LUNCH) {
     const spotlight =
       menuIndex.getItemById('tfl-138') ||
       menuIndex.getItemsByCategory('cat-88')[0] ||
@@ -580,18 +524,20 @@ export function getRecommendationsForSlot(
     const items = resolveCuratedItems(
       menuIndex,
       [
+        {
+          id: 'tfl-066', // GÜNÜN ÇORBASI
+          tag: { tr: 'Günün Çorbası', en: 'Soup of the Day', de: 'Tagessuppe', es: 'Sopa del Día', ar: 'شوربة اليوم', zh: '今日例汤', ru: 'Суп дня' },
+        },
+        {
+          id: 'tfl-067', // MİNESTRONE ÇORBA (İtalyan Sebze Çorbası)
+          tag: { tr: 'İtalyan Sebze Çorbası', en: 'Italian Vegetable Soup', de: 'Italienische Gemüsesuppe', es: 'Sopa Italiana de Verduras', ar: 'شوربة خضار إيطالية', zh: '意式蔬菜浓汤', ru: 'Итальянский овощной суп' },
+        },
         { id: 'tfl-123', tag: { tr: 'Makarna', en: 'Pasta', de: 'Pasta', es: 'Pasta', ar: 'معكرونة', zh: '意面', ru: 'Паста' } },
-        { id: 'tfl-059', tag: { tr: 'Atıştırmalık', en: 'Starter', de: 'Vorspeise', es: 'Entrante', ar: 'مقبلات', zh: '开胃小吃', ru: 'Закуска' } },
-        { id: 'tfl-166', tag: { tr: 'Ana Yemek', en: 'Main Dish', de: 'Hauptgericht', es: 'Principal', ar: 'طبق رئيسي', zh: '主菜', ru: 'Основное' } },
-        { id: 'tfl-106', tag: { tr: 'Dünya Mutfağı', en: 'World Cuisine', de: 'Weltküche', es: 'Cocina Global', ar: 'مطبخ عالمي', zh: '环球美食', ru: 'Мировая кухня' } },
-        { id: 'tfl-117', tag: { tr: 'Makarna', en: 'Pasta', de: 'Pasta', es: 'Pasta', ar: 'معكرونة', zh: '意面', ru: 'Паста' } },
-        { id: 'tfl-151', tag: { tr: 'Tex-Mex', en: 'Tex-Mex', de: 'Tex-Mex', es: 'Tex-Mex', ar: 'تيكس-ميكس', zh: '墨式风味', ru: 'Текс-Мекс' } },
-        { id: 'tfl-163', tag: { tr: 'Ana Yemek', en: 'Healthy Bowl', de: 'Healthy Bowl', es: 'Bowl Saludable', ar: 'طبق صحي', zh: '健康能量碗', ru: 'Боул' } },
-        { id: 'tfl-068', tag: { tr: 'Atıştırmalık', en: 'Shareable', de: 'Zum Teilen', es: 'Para Compartir', ar: 'للمشاركة', zh: '分享小食', ru: 'На компанию' } },
+        { id: 'tfl-163', tag: { tr: 'Hafif Kase', en: 'Healthy Bowl', de: 'Healthy Bowl', es: 'Bowl Saludable', ar: 'طبق صحي', zh: '健康能量碗', ru: 'Боул' } },
       ],
       lang,
       localeData,
-      ['cat-86', 'cat-83', 'cat-92', 'cat-88']
+      ['cat-83', 'cat-86', 'cat-91']
     );
 
     return {
@@ -599,37 +545,37 @@ export function getRecommendationsForSlot(
       mode: 'featured',
       eyebrow: pickLang(
         {
-          tr: 'Dünya Mutfağı',
-          en: 'World Cuisine',
-          de: 'Weltküche',
-          es: 'Cocina Internacional',
-          ar: 'المطبخ العالمي',
-          zh: '环球风味',
-          ru: 'Мировая кухня',
+          tr: 'Öğle Servisi',
+          en: 'Lunch Service',
+          de: 'Mittagsservice',
+          es: 'Servicio de Almuerzo',
+          ar: 'خدمة الغداء',
+          zh: '午餐时段',
+          ru: 'Дневной сервис',
         },
         lang
       ),
       title: pickLang(
         {
-          tr: 'Öğle & Akşamüstü Seçkisi',
-          en: 'Lunch & Afternoon Selection',
-          de: 'Mittags- & Nachmittagsauswahl',
-          es: 'Selección de Almuerzo y Tarde',
-          ar: 'مختارات الغداء وبعد الظهر',
-          zh: '午后与主厨精选',
-          ru: 'Дневная коллекция блюд',
+          tr: 'Dünya Mutfağı Seçkisi',
+          en: 'World Cuisine Selection',
+          de: 'Weltküche-Auswahl',
+          es: 'Selección de Cocina Internacional',
+          ar: 'مختارات المطبخ العالمي',
+          zh: '环球风味午间精选',
+          ru: 'Коллекция мировой кухни',
         },
         lang
       ),
       subtitle: pickLang(
         {
-          tr: 'Dünya mutfağından seçkin makarnalar, paylaşmalık atıştırmalıklar ve şefin ana yemekleri.',
-          en: 'Handcrafted pastas, shareable starters, and signature world cuisine main dishes.',
-          de: 'Handgemachte Pasta, Vorspeisen zum Teilen und internationale Spezialitäten unseres Küchenchefs.',
-          es: 'Pastas artesanales, entrantes para compartir y platos principales de cocina internacional.',
-          ar: 'معكرونة محضرة يدوياً، مقبلات للمشاركة، وأطباق رئيسية من المطبخ العالمي.',
-          zh: '手工意面、分享开胃菜与主厨招牌环球主菜。',
-          ru: 'Домашняя паста, закуски для компании и фирменные горячие блюда мировой кухни.',
+          tr: 'Öğle servisine özel el yapımı makarnalar, paylaşmalık atıştırmalıklar ve hafif tabaklar.',
+          en: 'Handcrafted pastas, shareable starters, signature burgers, and balanced bowls.',
+          de: 'Handgemachte Pasta, Vorspeisen zum Teilen, Burger und frische Bowls.',
+          es: 'Pastas artesanales, entrantes para compartir, hamburguesas y bowls frescos.',
+          ar: 'معكرونة محضرة يدوياً، مقبلات للمشاركة، برغر مميز وأطباق صحية.',
+          zh: '手工意面、分享开胃菜、招牌汉堡与均衡轻食碗。',
+          ru: 'Домашняя паста, закуски для компании, фирменные бургеры и лёгкие боулы.',
         },
         lang
       ),
@@ -638,25 +584,25 @@ export function getRecommendationsForSlot(
             item: spotlight,
             badge: pickLang(
               {
-                tr: 'İmza Ana Yemek',
-                en: 'Signature Main',
-                de: 'Signature-Gericht',
-                es: 'Plato de Autor',
-                ar: 'طبق رئيسي مميز',
-                zh: '招牌主菜',
-                ru: 'Фирменное блюдо',
+                tr: 'Öğlenin İmza Lezzeti',
+                en: 'Lunch Signature',
+                de: 'Mittags-Highlight',
+                es: 'Estrella del Almuerzo',
+                ar: 'طبق الغداء المميز',
+                zh: '午间招牌',
+                ru: 'Хит обеда',
               },
               lang
             ),
             highlightNote: pickLang(
               {
-                tr: 'Günün öne çıkan dünya mutfağı tavsiyesi',
-                en: "Today's highlighted world cuisine recommendation",
-                de: 'Unsere heutige Empfehlung aus der Weltküche',
-                es: 'Nuestra recomendación internacional destacada de hoy',
-                ar: 'أبرز توصيات المطبخ العالمي اليوم',
-                zh: '今日环球风味主厨力荐',
-                ru: 'Главная рекомендация дня из мировой кухни',
+                tr: 'Dünya mutfağından şefin öğle tavsiyesi',
+                en: "Chef's top lunch recommendation",
+                de: 'Empfehlung unseres Küchenchefs zum Mittagessen',
+                es: 'Recomendación principal del chef para el almuerzo',
+                ar: 'توصية الشيف الأولى لوجبة الغداء',
+                zh: '主厨午间力荐环球风味',
+                ru: 'Главная рекомендация шефа на обед',
               },
               lang
             ),
@@ -669,38 +615,145 @@ export function getRecommendationsForSlot(
           categoryId: 'cat-86',
         },
         {
-          label: pickLang({ tr: 'Atıştırmalıklar', en: 'Starters', de: 'Vorspeisen', es: 'Entrantes', ar: 'المقبلات', zh: '开胃前菜', ru: 'Закуски' }, lang),
+          label: pickLang({ tr: 'Başlangıçlar', en: 'Starters', de: 'Vorspeisen', es: 'Entrantes', ar: 'المقبلات', zh: '开胃前菜', ru: 'Закуски' }, lang),
           categoryId: 'cat-83',
-        },
-        {
-          label: pickLang({ tr: 'Tavuk & Ana Yemekler', en: 'Chicken & Mains', de: 'Hähnchen & Hauptgerichte', es: 'Pollo y Principales', ar: 'أطباق الدجاج', zh: '鸡肉主菜', ru: 'Блюда из курицы' }, lang),
-          categoryId: 'cat-92',
         },
         {
           label: pickLang({ tr: 'Burgerler', en: 'Burgers', de: 'Burger', es: 'Hamburguesas', ar: 'البرغر', zh: '招牌汉堡', ru: 'Бургеры' }, lang),
           categoryId: 'cat-88',
         },
+        {
+          label: pickLang({ tr: 'Kaseler', en: 'Bowls', de: 'Bowls', es: 'Bowls', ar: 'أطباق البول', zh: '能量碗', ru: 'Боулы' }, lang),
+          categoryId: 'cat-91',
+        },
       ],
     };
   }
 
-  // 19:00 - 00:00 -> Evening Pairings
-  const pairings = resolveEveningPairings(menuIndex, lang);
+  // 3) 17:00 - 20:30 -> Akşam Servisi (Spotlight + 4 swipeable dinner/steak cards)
+  if (slotId === TIME_SLOT_IDS.DINNER) {
+    const spotlight =
+      menuIndex.getItemById('tfl-184') ||
+      menuIndex.getItemsByCategory('cat-124')[0] ||
+      null;
+    const items = resolveCuratedItems(
+      menuIndex,
+      [
+        { id: 'tfl-183', tag: { tr: 'Özel Soslu Steak', en: 'Signature Steak', de: 'Signature Steak', es: 'Steak de Autor', ar: 'ستيك بصلصة خاصة', zh: '秘制牛排', ru: 'Фирменный стейк' } },
+        { id: 'tfl-190', tag: { tr: 'Izgara Şef Seçimi', en: 'Chef Grill', de: 'Vom Grill', es: 'A la Parrilla', ar: 'مشويات الشيف', zh: '炭烤精选', ru: 'На гриле' } },
+        { id: 'tfl-191', tag: { tr: 'Lokum Bonfile', en: 'Tenderloin', de: 'Rinderfilet', es: 'Solomillo', ar: 'فيليه طري', zh: '嫩煎菲力', ru: 'Вырезка' } },
+        { id: 'tfl-148', tag: { tr: 'Tex-Mex Fajita', en: 'Sizzling Fajita', de: 'Heiße Fajita', es: 'Fajita Caliente', ar: 'فاهيتا ساخنة', zh: '铁板法士达', ru: 'Горячий фахитас' } },
+      ],
+      lang,
+      localeData,
+      ['cat-124', 'cat-89', 'cat-92']
+    );
+
+    const steakCount = menuIndex.getItemsByCategory('cat-124').length;
+
+    return {
+      slotId,
+      mode: 'featured',
+      eyebrow: pickLang(
+        {
+          tr: 'Akşam Servisi',
+          en: 'Dinner Service',
+          de: 'Abendservice',
+          es: 'Servicio de Cena',
+          ar: 'خدمة العشاء',
+          zh: '晚餐时段',
+          ru: 'Вечерний сервис',
+        },
+        lang
+      ),
+      title: pickLang(
+        {
+          tr: 'Akşam Yemeği & Steak Seçkisi',
+          en: 'Dinner & Steak Selection',
+          de: 'Abendessen & Steak-Auswahl',
+          es: 'Selección de Cena y Steaks',
+          ar: 'مختارات العشاء والستيك',
+          zh: '晚间牛排与主菜精选',
+          ru: 'Ужин и коллекция стейков',
+        },
+        lang
+      ),
+      subtitle: pickLang(
+        {
+          tr: 'Akşam yemeğine özel dinlendirilmiş steak çeşitleri, ızgara etler ve sıcak dünya mutfağı tabakları.',
+          en: 'Aged prime steaks, chargrilled meats, and warm world cuisine dishes crafted for dinner.',
+          de: 'Gereifte Steaks, Gegrilltes und warme Spezialitäten für ein genussvolles Abendessen.',
+          es: 'Steaks madurados, carnes a la parrilla y platos calientes internacionales para la cena.',
+          ar: 'أفخر أنواع الستيك المعتّق، المشويات وأطباق العشاء الساخنة من المطبخ العالمي.',
+          zh: '熟成精选牛排、炭烤鲜肉与热腾腾的环球晚餐主菜。',
+          ru: 'Выдержанные стейки, блюда на гриле и горячие хиты мировой кухни к ужину.',
+        },
+        lang
+      ),
+      spotlight: spotlight
+        ? {
+            item: spotlight,
+            badge: pickLang(
+              {
+                tr: 'Akşamın Yıldızı',
+                en: 'Dinner Star',
+                de: 'Abend-Highlight',
+                es: 'Estrella de la Cena',
+                ar: 'نجم العشاء',
+                zh: '晚餐必点',
+                ru: 'Хит ужина',
+              },
+              lang
+            ),
+            highlightNote: pickLang(
+              {
+                tr: 'Özenle dinlendirilmiş şefin akşam steak tavsiyesi',
+                en: "Chef's signature aged steak for dinner",
+                de: 'Empfehlung des Küchenchefs für den Abend',
+                es: 'Steak madurado recomendado por el chef',
+                ar: 'توصية الشيف الخاصة لعشاء فاخر',
+                zh: '主厨晚间甄选熟成牛排',
+                ru: 'Фирменный выдержанный стейк от шефа',
+              },
+              lang
+            ),
+          }
+        : null,
+      items,
+      quickLinks: [
+        {
+          label: `${pickLang({ tr: 'Et & Steak', en: 'Meat & Steak', de: 'Fleisch & Steaks', es: 'Carnes y Steaks', ar: 'اللحوم والستيك', zh: '牛排主菜', ru: 'Стейки и мясо' }, lang)} (${steakCount})`,
+          categoryId: 'cat-124',
+        },
+        {
+          label: pickLang({ tr: 'Tex-Mex & Fajita', en: 'Tex-Mex & Fajita', de: 'Tex-Mex & Fajita', es: 'Tex-Mex y Fajitas', ar: 'تيكس-ميكس', zh: '墨式铁板', ru: 'Текс-Мекс' }, lang),
+          categoryId: 'cat-89',
+        },
+        {
+          label: pickLang({ tr: 'Anadolu Lezzetleri', en: 'Anatolian Flavors', de: 'Anatolische Küche', es: 'Sabores de Anatolia', ar: 'نكهات الأناضول', zh: '安纳托利亚风味', ru: 'Вкусы Анатолии' }, lang),
+          categoryId: 'cat-93',
+        },
+      ],
+    };
+  }
+
+  // 4) 20:30 - 24:00 -> Gece Servisi (4 swipeable Steak + Cocktail Pairings)
+  const pairings = resolveNightPairings(menuIndex, lang);
   const steakCount = menuIndex.getItemsByCategory('cat-124').length;
   const cocktailCount = menuIndex.getItemsByCategory('cat-123', 'KOKTEYLLER').length;
 
   return {
-    slotId: TIME_SLOT_IDS.EVENING,
+    slotId: TIME_SLOT_IDS.NIGHT,
     mode: 'pairings',
     eyebrow: pickLang(
       {
-        tr: 'Alkollü Mekan & Dünya Mutfağı',
-        en: 'Lounge & World Cuisine',
-        de: 'Lounge-Bar & Weltküche',
-        es: 'Lounge y Cocina Internacional',
-        ar: 'لاونج والمطبخ العالمي',
-        zh: '微醺酒廊 · 环球美食',
-        ru: 'Лаунж-бар и мировая кухня',
+        tr: 'Gece Servisi',
+        en: 'Night Service',
+        de: 'Nachtservice',
+        es: 'Servicio Nocturno',
+        ar: 'الخدمة الليلية',
+        zh: '夜宵酒廊时段',
+        ru: 'Ночной сервис',
       },
       lang
     ),
@@ -718,13 +771,13 @@ export function getRecommendationsForSlot(
     ),
     subtitle: pickLang(
       {
-        tr: 'Özel soslu bifteklerimiz ile miksoloji barımızın imza kokteyllerinden avantajlı akşam eşleştirmeleri.',
-        en: 'Curated evening pairings combining our signature steaks with handcrafted bar cocktails.',
-        de: 'Abendliche Genuss-Kombinationen aus unseren erlesenen Steaks und hausgemachten Signature-Cocktails.',
-        es: 'Maridajes nocturnos exclusivos que combinan nuestros steaks de autor con cócteles artesanales.',
-        ar: 'توليفات مسائية فاخرة تجمع بين أشهى شرائح الستيك وكوكتيلاتنا المميزة.',
-        zh: '精选秘制牛排与调酒师招牌鸡尾酒的晚间特惠搭配。',
-        ru: 'Вечерние гастрономические пары: фирменные стейки и авторские коктейли нашего бара.',
+        tr: 'Gece servisine özel bifteklerimiz ile miksoloji barımızın imza kokteyllerinden avantajlı eşleştirmeler.',
+        en: 'Curated late-evening pairings combining our signature steaks with handcrafted bar cocktails.',
+        de: 'Exklusive Nacht-Kombinationen aus unseren erlesenen Steaks und Signature-Cocktails.',
+        es: 'Maridajes nocturnos exclusivos con nuestros steaks de autor y cócteles artesanales.',
+        ar: 'توليفات ليلية فاخرة تجمع بين أشهى شرائح الستيك وكوكتيلاتنا المميزة.',
+        zh: '夜宵时段专属：秘制牛排与调酒师招牌鸡尾酒的特惠搭配。',
+        ru: 'Ночные гастрономические пары: фирменные стейки и авторские коктейли нашего бара.',
       },
       lang
     ),

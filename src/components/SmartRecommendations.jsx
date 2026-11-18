@@ -19,6 +19,7 @@ import {
   useLanguage,
 } from '../context/LanguageContext';
 import LazyImage from './LazyImage';
+import ProductCard from './ProductCard';
 
 const SpotlightHeroCard = memo(function SpotlightHeroCard({
   spotlight,
@@ -346,8 +347,9 @@ const SmartRecommendations = memo(function SmartRecommendations({
     }
   }, [activeSlot]);
 
-  const isEvening = activeSlot === TIME_SLOT_IDS.EVENING;
+  const isNight = activeSlot === TIME_SLOT_IDS.NIGHT;
   const isMorning = activeSlot === TIME_SLOT_IDS.MORNING;
+  const isDinner = activeSlot === TIME_SLOT_IDS.DINNER;
 
   return (
     <section
@@ -388,6 +390,19 @@ const SmartRecommendations = memo(function SmartRecommendations({
               onSelectItem={onSelectItem}
             />
           )}
+
+          {data.mode === 'featured' && data.fixedItems?.length > 0 && (
+            <div className="gpu-list mt-3.5 flex flex-col gap-2.5">
+              {data.fixedItems.map((item, idx) => (
+                <ProductCard
+                  key={item.id}
+                  item={item}
+                  priority={idx < 2}
+                  onSelect={onSelectItem}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
@@ -403,7 +418,9 @@ const SmartRecommendations = memo(function SmartRecommendations({
                   ? `${strings.featuredOther} (${data.items.length})`
                   : isMorning
                     ? strings.breakfastHighlights
-                    : strings.worldCuisineHighlights}
+                    : isDinner
+                      ? strings.dinnerHighlights
+                      : strings.worldCuisineHighlights}
               </span>
               <span className="text-[11px] font-medium text-[#A19A91]">
                 {strings.swipe}
@@ -465,7 +482,7 @@ const SmartRecommendations = memo(function SmartRecommendations({
                 onNavigateCategory(link.categoryId, link.subcategory || null)
               }
               className={`inline-flex shrink-0 items-center gap-1 rounded-xl px-3.5 py-2 text-xs font-semibold transition-transform active:scale-[0.96] ${
-                isEvening && !data.isAdminCurated
+                isNight && !data.isAdminCurated
                   ? 'bg-[#181716] text-white hover:bg-[#2E2C29]'
                   : 'border border-[#E5E1D9] bg-white text-[#272626] hover:border-[#CA2F2D]/40 hover:text-[#CA2F2D]'
               }`}
