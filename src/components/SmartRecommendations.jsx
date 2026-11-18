@@ -1,11 +1,10 @@
-import { memo, useEffect, useMemo, useRef } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   Wine,
   Sparkles,
   ChevronRight,
-  Plus,
   Clock,
-  Tag,
+  Martini,
 } from 'lucide-react';
 import {
   TIME_SLOT_IDS,
@@ -19,17 +18,15 @@ import {
   useLanguage,
 } from '../context/LanguageContext';
 import LazyImage from './LazyImage';
-import ProductCard from './ProductCard';
 
-const SpotlightHeroCard = memo(function SpotlightHeroCard({
-  spotlight,
+const SpotlightHeroSlide = memo(function SpotlightHeroSlide({
+  item,
+  index,
   isMorning,
   lang,
   localeData,
   onSelectItem,
 }) {
-  if (!spotlight?.item) return null;
-  const { item, badge, highlightNote } = spotlight;
   const title = getLocalizedItemTitle(item, lang, localeData);
   const description = getLocalizedItemDesc(item, lang, localeData);
 
@@ -44,30 +41,73 @@ const SpotlightHeroCard = memo(function SpotlightHeroCard({
           onSelectItem(item);
         }
       }}
-      className="gpu-card group relative mt-3.5 cursor-pointer overflow-hidden rounded-3xl bg-[#181716] ring-1 ring-black/8 transition-transform duration-150 active:scale-[0.985]"
+      className="gpu-card snap-card group relative w-[88vw] max-w-[560px] shrink-0 cursor-pointer overflow-hidden rounded-3xl bg-[#181716] ring-1 ring-black/8 transition-transform duration-150 active:scale-[0.985]"
     >
       <div className="relative aspect-[16/10] w-full overflow-hidden sm:aspect-[16/9]">
-        <LazyImage
-          src={item.image}
-          alt={title}
-          width={640}
-          height={400}
-          sizes="(max-width: 672px) 94vw, 640px"
-          priority
-          containerClassName="h-full w-full"
-          fallbackIconSize={34}
-        />
+        {item.image ? (
+          <LazyImage
+            src={item.image}
+            alt={title}
+            width={640}
+            height={400}
+            sizes="(max-width: 672px) 88vw, 560px"
+            priority={index < 2}
+            containerClassName="h-full w-full"
+            fallbackIconSize={34}
+          />
+        ) : item.visualTheme === 'wine' ? (
+          <div className="flex h-full w-full flex-col items-center justify-center bg-gradient-to-br from-[#5B0F20] via-[#7E182E] to-[#23060C] pb-14 text-white">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/12 ring-1 ring-white/25">
+              <Wine size={32} strokeWidth={1.6} className="text-amber-200" />
+            </div>
+            <span className="mt-2.5 text-[10.5px] font-bold tracking-[0.22em] text-amber-200/90 uppercase">
+              Sommelier Selection
+            </span>
+          </div>
+        ) : item.visualTheme === 'cocktail' ? (
+          <div className="flex h-full w-full flex-col items-center justify-center bg-gradient-to-br from-[#181716] via-[#4A1718] to-[#B02422] pb-14 text-white">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/12 ring-1 ring-white/25">
+              <Martini size={32} strokeWidth={1.6} className="text-amber-300" />
+            </div>
+            <span className="mt-2.5 text-[10.5px] font-bold tracking-[0.22em] text-amber-200/90 uppercase">
+              Signature Bar
+            </span>
+          </div>
+        ) : (
+          <LazyImage
+            src={item.image}
+            alt={title}
+            width={640}
+            height={400}
+            sizes="(max-width: 672px) 88vw, 560px"
+            priority={index < 2}
+            containerClassName="h-full w-full"
+            fallbackIconSize={34}
+          />
+        )}
 
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/88 via-black/35 to-transparent" />
+        {/* Editorial Gradient Scrim */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/88 via-black/32 to-transparent" />
 
+        {/* Top Badges */}
         <div className="absolute inset-x-3.5 top-3.5 flex items-center justify-between gap-2">
           <span
             className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-bold tracking-wide text-white ${
-              isMorning ? 'bg-amber-600' : 'bg-[#CA2F2D]'
+              item.visualTheme === 'wine'
+                ? 'bg-[#8E1B33]'
+                : isMorning
+                  ? 'bg-amber-600'
+                  : 'bg-[#CA2F2D]'
             }`}
           >
-            <Sparkles size={11} />
-            {badge}
+            {item.visualTheme === 'wine' ? (
+              <Wine size={11} />
+            ) : item.visualTheme === 'cocktail' ? (
+              <Martini size={11} />
+            ) : (
+              <Sparkles size={11} />
+            )}
+            {item.recommendationTag}
           </span>
           {item.calories && (
             <span className="rounded-full bg-black/72 px-2.5 py-1 text-[11px] font-medium text-white">
@@ -76,16 +116,17 @@ const SpotlightHeroCard = memo(function SpotlightHeroCard({
           )}
         </div>
 
+        {/* Bottom Content Overlay */}
         <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
-          {highlightNote && (
+          {item.highlightNote && (
             <p className="text-[11px] font-medium tracking-wide text-white/80">
-              {highlightNote}
+              {item.highlightNote}
             </p>
           )}
           <div className="mt-1 flex items-end justify-between gap-3">
             <div className="min-w-0">
               <h3
-                className="truncate text-[23px] leading-tight font-bold text-white drop-shadow-xs sm:text-[26px]"
+                className="truncate text-[22px] leading-tight font-bold text-white drop-shadow-xs sm:text-[26px]"
                 style={{ fontFamily: 'var(--font-display)' }}
               >
                 {title}
@@ -171,162 +212,6 @@ const CuratedSlideCard = memo(function CuratedSlideCard({
   );
 });
 
-const PairingSlideCard = memo(function PairingSlideCard({
-  pairing,
-  index,
-  lang,
-  localeData,
-  strings,
-  onSelectItem,
-}) {
-  const {
-    food,
-    cocktail,
-    badge,
-    accentLabel,
-    headline,
-    sommelierNote,
-    regularTotalFormatted,
-    comboPriceFormatted,
-    savingsFormatted,
-    discountPercent,
-  } = pairing;
-
-  const hasDiscount = discountPercent > 0 && Boolean(savingsFormatted);
-  const foodTitle = getLocalizedItemTitle(food, lang, localeData);
-  const cocktailTitle = getLocalizedItemTitle(cocktail, lang, localeData);
-  const cocktailDesc = getLocalizedItemDesc(cocktail, lang, localeData);
-
-  return (
-    <article className="gpu-card snap-card flex w-[85vw] max-w-[360px] shrink-0 flex-col overflow-hidden rounded-3xl bg-[#1A1918] text-white ring-1 ring-white/10">
-      <div
-        role="button"
-        tabIndex={0}
-        onClick={() => onSelectItem(food)}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            onSelectItem(food);
-          }
-        }}
-        className="group relative aspect-[16/10] w-full cursor-pointer overflow-hidden"
-      >
-        <LazyImage
-          src={food.image}
-          alt={headline}
-          width={360}
-          height={225}
-          sizes="360px"
-          priority={index < 2}
-          containerClassName="h-full w-full"
-        />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1A1918] via-black/35 to-transparent" />
-
-        <div className="absolute inset-x-3 top-3 flex items-center justify-between gap-2">
-          <span className="inline-flex items-center gap-1 rounded-full bg-[#CA2F2D] px-2.5 py-1 text-[10.5px] font-bold tracking-wide text-white">
-            {hasDiscount ? <Tag size={11} /> : <Wine size={11} />}
-            {badge}
-          </span>
-          <span className="rounded-full bg-black/72 px-2.5 py-1 text-[10.5px] font-semibold text-amber-200">
-            {accentLabel}
-          </span>
-        </div>
-
-        <div className="absolute inset-x-0 bottom-0 px-4 pb-2.5">
-          <h3
-            className="text-[20px] leading-snug font-bold text-white"
-            style={{ fontFamily: 'var(--font-display)' }}
-          >
-            {headline}
-          </h3>
-        </div>
-      </div>
-
-      <div className="flex flex-1 flex-col justify-between p-4 pt-2">
-        <p className="text-[12px] leading-relaxed text-[#C7C1B8]">
-          {sommelierNote}
-        </p>
-
-        <div className="mt-3.5 space-y-2">
-          <button
-            type="button"
-            onClick={() => onSelectItem(food)}
-            className="flex w-full items-center justify-between gap-2 rounded-2xl border border-white/10 bg-white/6 px-3 py-2.5 text-left transition-transform hover:bg-white/12 active:scale-[0.98]"
-          >
-            <div className="min-w-0">
-              <span className="block text-[10px] font-semibold tracking-wider text-amber-300/90 uppercase">
-                {strings.steakLabel}
-              </span>
-              <span className="block truncate text-xs font-bold text-white">
-                {foodTitle}
-              </span>
-            </div>
-            <span className="shrink-0 text-xs font-bold text-white/95">
-              {food.priceFormatted}
-            </span>
-          </button>
-
-          <div className="flex items-center justify-center">
-            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#CA2F2D]/25 text-[#F0716F]">
-              <Plus size={12} strokeWidth={2.5} />
-            </span>
-          </div>
-
-          <button
-            type="button"
-            onClick={() => onSelectItem(cocktail)}
-            className="flex w-full items-center justify-between gap-2 rounded-2xl border border-white/10 bg-white/6 px-3 py-2.5 text-left transition-transform hover:bg-white/12 active:scale-[0.98]"
-          >
-            <div className="min-w-0">
-              <span className="block text-[10px] font-semibold tracking-wider text-[#F28482] uppercase">
-                {strings.cocktailLabel}
-              </span>
-              <span className="block truncate text-xs font-bold text-white">
-                {cocktailTitle}
-              </span>
-              {cocktailDesc && (
-                <span className="block truncate text-[10.5px] text-[#A9A299]">
-                  {cocktailDesc}
-                </span>
-              )}
-            </div>
-            <span className="shrink-0 text-xs font-bold text-white/95">
-              {cocktail.priceFormatted}
-            </span>
-          </button>
-        </div>
-
-        {comboPriceFormatted && (
-          <div className="mt-3.5 flex items-end justify-between gap-2 border-t border-white/10 pt-3">
-            <div>
-              <span className="block text-[10.5px] font-medium text-[#A9A299]">
-                {hasDiscount ? strings.comboSpecialPrice : strings.specialRecTotal}
-              </span>
-              {hasDiscount && (
-                <span className="mt-0.5 inline-flex items-center rounded-md bg-emerald-500/18 px-1.5 py-0.5 text-[10px] font-bold text-emerald-300">
-                  {lang === 'en'
-                    ? `${strings.advantage} ${savingsFormatted}`
-                    : `${savingsFormatted} ${strings.advantage}`}
-                </span>
-              )}
-            </div>
-            <div className="text-right">
-              {hasDiscount && regularTotalFormatted && (
-                <span className="block text-[11px] font-medium text-[#8F8980] line-through">
-                  {regularTotalFormatted}
-                </span>
-              )}
-              <span className="text-lg leading-none font-extrabold tracking-tight text-amber-300">
-                {comboPriceFormatted}
-              </span>
-            </div>
-          </div>
-        )}
-      </div>
-    </article>
-  );
-});
-
 const SmartRecommendations = memo(function SmartRecommendations({
   onSelectItem,
   onNavigateCategory,
@@ -334,120 +219,141 @@ const SmartRecommendations = memo(function SmartRecommendations({
   const { activeSlot, currentTimeLabel } = useTimeSlot();
   const { index: menuIndex } = useMenu();
   const { lang, localeData, strings } = useLanguage();
+  const heroCarouselRef = useRef(null);
   const carouselRef = useRef(null);
+  const [activeHeroIdx, setActiveHeroIdx] = useState(0);
 
   const data = useMemo(
     () => getRecommendationsForSlot(activeSlot, menuIndex, lang, localeData),
     [activeSlot, menuIndex, lang, localeData]
   );
 
+  const spotlights = data.spotlights || [];
+
   useEffect(() => {
-    if (carouselRef.current) {
-      carouselRef.current.scrollLeft = 0;
-    }
+    setActiveHeroIdx(0);
+    if (heroCarouselRef.current) heroCarouselRef.current.scrollLeft = 0;
+    if (carouselRef.current) carouselRef.current.scrollLeft = 0;
   }, [activeSlot]);
+
+  const handleHeroScroll = useCallback(() => {
+    const el = heroCarouselRef.current;
+    if (!el || spotlights.length <= 1) return;
+    const firstCard = el.firstElementChild;
+    const step = (firstCard?.clientWidth || el.clientWidth * 0.88) + 12;
+    const idx = Math.round(Math.abs(el.scrollLeft) / step);
+    const clamped = Math.max(0, Math.min(spotlights.length - 1, idx));
+    setActiveHeroIdx(clamped);
+  }, [spotlights.length]);
+
+  const scrollToHeroSlide = useCallback((idx) => {
+    const el = heroCarouselRef.current;
+    if (!el) return;
+    const card = el.children[idx];
+    if (card) {
+      el.scrollTo({
+        left: card.offsetLeft - 16,
+        behavior: 'smooth',
+      });
+    }
+  }, []);
 
   const isNight = activeSlot === TIME_SLOT_IDS.NIGHT;
   const isMorning = activeSlot === TIME_SLOT_IDS.MORNING;
   const isDinner = activeSlot === TIME_SLOT_IDS.DINNER;
 
   return (
-    <section
-      aria-label={data.title}
-      className="pt-4 pb-2"
-    >
+    <section aria-label={data.title} className="pt-4 pb-2">
+      {/* Header Container */}
       <div className="px-4">
-        <div className="flex items-center">
+        <div className="flex items-center justify-between gap-2">
           <div className="inline-flex select-none items-center gap-1.5 rounded-full border border-[#E7E3DC] bg-white px-2.5 py-1 text-[11px] font-semibold text-[#4F4A44] shadow-[0_1px_2px_rgba(0,0,0,0.03)]">
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" />
             <Clock size={11} className="text-[#8E877E]" />
             <span>{currentTimeLabel}</span>
           </div>
+          {spotlights.length > 1 && (
+            <span className="text-[11px] font-medium text-[#A19A91]">
+              {strings.swipe}
+            </span>
+          )}
         </div>
 
-        <div key={`${activeSlot}-${lang}`} className="animate-fade-in">
-          <div className="mt-3">
-            <p className="text-[11px] font-bold tracking-[0.14em] text-[#CA2F2D] uppercase">
-              {data.eyebrow}
-            </p>
-            <h2
-              className="mt-0.5 text-[27px] leading-tight font-bold text-[#181716]"
-              style={{ fontFamily: 'var(--font-display)' }}
-            >
-              {data.title}
-            </h2>
-            <p className="mt-1 text-xs leading-relaxed text-[#6E6860]">
-              {data.subtitle}
-            </p>
-          </div>
-
-          {data.mode === 'featured' && data.spotlight && (
-            <SpotlightHeroCard
-              spotlight={data.spotlight}
-              isMorning={isMorning}
-              lang={lang}
-              localeData={localeData}
-              onSelectItem={onSelectItem}
-            />
-          )}
-
-          {data.mode === 'featured' && data.fixedItems?.length > 0 && (
-            <div className="gpu-list mt-3.5 flex flex-col gap-2.5">
-              {data.fixedItems.map((item, idx) => (
-                <ProductCard
-                  key={item.id}
-                  item={item}
-                  priority={idx < 2}
-                  onSelect={onSelectItem}
-                />
-              ))}
-            </div>
-          )}
+        <div key={`${activeSlot}-${lang}`} className="animate-fade-in mt-3">
+          <p className="text-[11px] font-bold tracking-[0.14em] text-[#CA2F2D] uppercase">
+            {data.eyebrow}
+          </p>
+          <h2
+            className="mt-0.5 text-[27px] leading-tight font-bold text-[#181716]"
+            style={{ fontFamily: 'var(--font-display)' }}
+          >
+            {data.title}
+          </h2>
+          <p className="mt-1 text-xs leading-relaxed text-[#6E6860]">
+            {data.subtitle}
+          </p>
         </div>
       </div>
 
-      {data.mode === 'featured' ? (
-        data.items.length > 0 && (
+      {/* Big 4-Slide Swipeable Hero Spotlight Carousel */}
+      {spotlights.length > 0 && (
+        <div key={`hero-${activeSlot}-${lang}`} className="animate-fade-in mt-3.5">
           <div
-            key={`carousel-${activeSlot}-${data.isAdminCurated ? 'admin' : 'auto'}`}
-            className="animate-fade-in mt-3.5"
+            ref={heroCarouselRef}
+            onScroll={handleHeroScroll}
+            className="gpu-list no-scrollbar touch-scroll-x flex gap-3 overflow-x-auto px-4 pb-1"
           >
-            <div className="mb-2 flex items-center justify-between px-4">
-              <span className="text-[11px] font-bold tracking-wider text-[#8C857C] uppercase">
-                {data.isAdminCurated
-                  ? `${strings.featuredOther} (${data.items.length})`
-                  : isMorning
-                    ? strings.breakfastHighlights
-                    : isDinner
-                      ? strings.dinnerHighlights
-                      : strings.worldCuisineHighlights}
-              </span>
-              <span className="text-[11px] font-medium text-[#A19A91]">
-                {strings.swipe}
-              </span>
-            </div>
-            <div
-              ref={carouselRef}
-              className="gpu-list no-scrollbar touch-scroll-x flex gap-3 overflow-x-auto px-4 pb-2"
-            >
-              {data.items.map((item, idx) => (
-                <CuratedSlideCard
+            {spotlights.map((item, idx) => (
+              <SpotlightHeroSlide
+                key={item.id}
+                item={item}
+                index={idx}
+                isMorning={isMorning}
+                lang={lang}
+                localeData={localeData}
+                onSelectItem={onSelectItem}
+              />
+            ))}
+          </div>
+
+          {/* Crisp Slide Dots Indicator */}
+          {spotlights.length > 1 && (
+            <div className="mt-2.5 flex items-center justify-center gap-1.5">
+              {spotlights.map((item, idx) => (
+                <button
                   key={item.id}
-                  item={item}
-                  index={idx}
-                  lang={lang}
-                  localeData={localeData}
-                  onSelectItem={onSelectItem}
+                  type="button"
+                  onClick={() => scrollToHeroSlide(idx)}
+                  aria-label={`Slide ${idx + 1}`}
+                  className={`h-1.5 rounded-full transition-all duration-200 ${
+                    idx === activeHeroIdx
+                      ? 'w-5 bg-[#CA2F2D]'
+                      : 'w-1.5 bg-[#D6D1C8]'
+                  }`}
                 />
               ))}
             </div>
-          </div>
-        )
-      ) : (
-        <div key={`carousel-${activeSlot}`} className="animate-fade-in mt-3.5">
+          )}
+        </div>
+      )}
+
+      {/* Lower 4-Slide Curated Highlights Carousel */}
+      {data.items.length > 0 && (
+        <div
+          key={`carousel-${activeSlot}-${data.isAdminCurated ? 'admin' : 'auto'}`}
+          className="animate-fade-in mt-4"
+        >
           <div className="mb-2 flex items-center justify-between px-4">
             <span className="text-[11px] font-bold tracking-wider text-[#8C857C] uppercase">
-              {strings.eveningCombosHeading} ({data.pairings.length})
+              {data.isAdminCurated
+                ? `${strings.featuredOther} (${data.items.length})`
+                : isMorning
+                  ? strings.breakfastHighlights
+                  : isDinner
+                    ? strings.dinnerHighlights
+                    : isNight
+                      ? strings.eveningCombosHeading
+                      : strings.worldCuisineHighlights}
             </span>
             <span className="text-[11px] font-medium text-[#A19A91]">
               {strings.swipe}
@@ -455,16 +361,15 @@ const SmartRecommendations = memo(function SmartRecommendations({
           </div>
           <div
             ref={carouselRef}
-            className="gpu-list no-scrollbar touch-scroll-x flex gap-3.5 overflow-x-auto px-4 pb-2"
+            className="gpu-list no-scrollbar touch-scroll-x flex gap-3 overflow-x-auto px-4 pb-2"
           >
-            {data.pairings.map((pairing, idx) => (
-              <PairingSlideCard
-                key={pairing.id}
-                pairing={pairing}
+            {data.items.map((item, idx) => (
+              <CuratedSlideCard
+                key={item.id}
+                item={item}
                 index={idx}
                 lang={lang}
                 localeData={localeData}
-                strings={strings}
                 onSelectItem={onSelectItem}
               />
             ))}
@@ -472,6 +377,7 @@ const SmartRecommendations = memo(function SmartRecommendations({
         </div>
       )}
 
+      {/* Quick Category Jump Chips */}
       {data.quickLinks?.length > 0 && (
         <div className="no-scrollbar touch-scroll-free mt-2.5 flex items-center gap-2 overflow-x-auto px-4 pb-2">
           {data.quickLinks.map((link) => (
