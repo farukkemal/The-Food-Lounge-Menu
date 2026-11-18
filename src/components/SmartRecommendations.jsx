@@ -6,7 +6,6 @@ import {
   Sparkles,
   ChevronRight,
   Plus,
-  RotateCcw,
   Clock,
   Tag,
 } from 'lucide-react';
@@ -314,14 +313,7 @@ const SmartRecommendations = memo(function SmartRecommendations({
   onSelectItem,
   onNavigateCategory,
 }) {
-  const {
-    activeSlot,
-    liveSlot,
-    isManualOverride,
-    currentTimeLabel,
-    setManualSlot,
-    resetToLive,
-  } = useTimeSlot();
+  const { activeSlot, currentTimeLabel } = useTimeSlot();
 
   const { index: menuIndex } = useMenu();
   const carouselRef = useRef(null);
@@ -331,7 +323,7 @@ const SmartRecommendations = memo(function SmartRecommendations({
     [activeSlot, menuIndex]
   );
 
-  // Instant scroll reset on time-slot switch (0ms feel)
+  // Instant scroll reset on automatic time-slot boundary change
   useEffect(() => {
     if (carouselRef.current) {
       carouselRef.current.scrollLeft = 0;
@@ -348,58 +340,38 @@ const SmartRecommendations = memo(function SmartRecommendations({
     >
       {/* Header Container */}
       <div className="px-4">
-        {/* Top Row: Live Status + Compact Time Slot Switcher */}
+        {/* Top Row: Live System Clock + Read-Only Automatic Time-Slot Indicator */}
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <div className="inline-flex items-center gap-1.5 rounded-full border border-[#E7E3DC] bg-white px-2.5 py-1 text-[11px] font-semibold text-[#4F4A44] shadow-[0_1px_2px_rgba(0,0,0,0.03)]">
-            <span
-              className={`h-1.5 w-1.5 rounded-full ${
-                isManualOverride ? 'bg-amber-500' : 'bg-emerald-500 animate-pulse'
-              }`}
-            />
+          <div className="inline-flex select-none items-center gap-1.5 rounded-full border border-[#E7E3DC] bg-white px-2.5 py-1 text-[11px] font-semibold text-[#4F4A44] shadow-[0_1px_2px_rgba(0,0,0,0.03)]">
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" />
             <Clock size={11} className="text-[#8E877E]" />
             <span>{currentTimeLabel}</span>
-            {isManualOverride && (
-              <button
-                type="button"
-                onClick={resetToLive}
-                className="ml-1 inline-flex items-center gap-0.5 text-[10.5px] font-bold text-[#CA2F2D] active:opacity-75 hover:underline"
-                title="Gerçek saate dön"
-              >
-                <RotateCcw size={10} />
-                Canlıya Dön
-              </button>
-            )}
           </div>
 
-          {/* Segmented Time Switcher (Defaults to live hour; instant 0ms switching) */}
+          {/* Non-Interactive Visual Status Indicator (Strict System Clock Mode) */}
           <div
-            role="tablist"
-            aria-label="Zaman dilimi seçimi"
-            className="inline-flex items-center rounded-full border border-[#E5E1D9] bg-[#EFECE6]/90 p-0.5"
+            aria-label="Aktif zaman dilimi göstergesi"
+            className="pointer-events-none inline-flex select-none items-center rounded-full border border-[#E5E1D9] bg-[#EFECE6]/90 p-0.5"
           >
             {TIME_SLOT_LIST.map((slot) => {
               const Icon = SLOT_ICONS[slot.id];
-              const isSelected = activeSlot === slot.id;
-              const isLive = liveSlot === slot.id;
+              const isCurrent = activeSlot === slot.id;
               return (
-                <button
+                <span
                   key={slot.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={isSelected}
-                  onClick={() => setManualSlot(slot.id)}
-                  className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-semibold transition-all active:scale-95 ${
-                    isSelected
-                      ? 'bg-[#181716] text-white shadow-xs'
-                      : 'text-[#5C5750] hover:text-[#181716]'
+                  aria-current={isCurrent ? 'time' : undefined}
+                  className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-semibold transition-all ${
+                    isCurrent
+                      ? 'bg-[#181716] text-white shadow-[0_2px_8px_rgba(24,23,22,0.22)] ring-1 ring-white/15'
+                      : 'text-[#9A938A] opacity-65'
                   }`}
                 >
                   <Icon size={11} />
                   <span>{slot.shortLabel}</span>
-                  {isLive && !isSelected && (
-                    <span className="h-1 w-1 rounded-full bg-emerald-500" />
+                  {isCurrent && (
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
                   )}
-                </button>
+                </span>
               );
             })}
           </div>

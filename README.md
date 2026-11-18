@@ -41,7 +41,6 @@ Varsayılan adresler:
 - **Müşteri QR Menü:** `http://localhost:5173/`
 - **Masa Parametreli Menü Örneği:** `http://localhost:5173/?table=5`
 - **Admin Paneli:** `http://localhost:5173/admin` (`admin` / `admin123`)
-- **Zaman Dilimi Hızlı Önizleme:** `/?slot=morning` · `/?slot=afternoon` · `/?slot=evening`
 
 ### Kullanılabilir Komutlar
 

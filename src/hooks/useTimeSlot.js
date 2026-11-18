@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export const TIME_SLOT_IDS = {
   MORNING: 'morning',
@@ -34,10 +34,10 @@ export const TIME_SLOT_LIST = [
 ];
 
 /**
- * Pure time-based rule resolver:
+ * Strict automatic time-based rule resolver (based strictly on system clock):
  * - 03:00 - 15:00 -> morning (Kahvaltı Keyfi)
- * - 15:00 - 19:00 -> afternoon (Dünya Mutfağı, Makarna, Atıştırmalık, Hafif Tabaklar)
- * - 19:00 - 00:00 (ve 00:00 - 03:00 geç saat devamı) -> evening (Steak & Kokteyl Komboları)
+ * - 15:00 - 19:00 -> afternoon (Dünya Mutfağı)
+ * - 19:00 - 00:00 (ve 00:00 - 03:00 gece devamı) -> evening (Kokteyl + Biftek Komboları)
  */
 export function getTimeSlotForHour(hour) {
   if (hour >= 3 && hour < 15) return TIME_SLOT_IDS.MORNING;
@@ -52,61 +52,21 @@ function formatClock(date) {
   });
 }
 
-function getInitialOverrideFromUrl() {
-  if (typeof window === 'undefined') return null;
-  const params = new URLSearchParams(window.location.search);
-  const slotParam = params.get('slot');
-  if (slotParam && Object.values(TIME_SLOT_IDS).includes(slotParam)) {
-    return slotParam;
-  }
-  const hourParam = params.get('hour');
-  if (hourParam !== null) {
-    const parsed = Number.parseInt(hourParam, 10);
-    if (!Number.isNaN(parsed) && parsed >= 0 && parsed <= 23) {
-      return getTimeSlotForHour(parsed);
-    }
-  }
-  return null;
-}
-
 export function useTimeSlot() {
   const [now, setNow] = useState(() => new Date());
-  const [manualSlot, setManualSlotState] = useState(() => getInitialOverrideFromUrl());
 
   useEffect(() => {
     const timer = window.setInterval(() => {
       setNow(new Date());
-    }, 60_000);
+    }, 30_000);
     return () => window.clearInterval(timer);
   }, []);
 
-  const hour = now.getHours();
-  const liveSlot = getTimeSlotForHour(hour);
-  const activeSlot = manualSlot || liveSlot;
-  const isManualOverride = Boolean(manualSlot && manualSlot !== liveSlot);
-
-  const setManualSlot = useCallback(
-    (slotId) => {
-      if (slotId === liveSlot) {
-        setManualSlotState(null);
-      } else {
-        setManualSlotState(slotId);
-      }
-    },
-    [liveSlot]
-  );
-
-  const resetToLive = useCallback(() => {
-    setManualSlotState(null);
-  }, []);
+  const activeSlot = getTimeSlotForHour(now.getHours());
 
   return {
     activeSlot,
-    liveSlot,
     slotMeta: TIME_SLOT_META[activeSlot],
-    isManualOverride,
     currentTimeLabel: formatClock(now),
-    setManualSlot,
-    resetToLive,
   };
 }
