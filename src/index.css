@@ -1,0 +1,151 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: "Cormorant Garamond", ui-serif, Georgia, serif;
+  --color-lounge-dark: #181716;
+  --color-lounge-charcoal: #272626;
+  --color-lounge-accent: #CA2F2D;
+  --color-lounge-accent-hover: #B02422;
+  --color-lounge-surface: #F8F7F4;
+  --color-lounge-border: #EBE8E2;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-lounge-surface);
+    color: var(--color-lounge-dark);
+    overflow-x: hidden;
+    overscroll-behavior-y: none;
+  }
+
+  button,
+  a,
+  [role="button"] {
+    touch-action: manipulation;
+  }
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Silky mobile touch momentum scrolling */
+.touch-scroll-free {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  touch-action: pan-x pan-y;
+}
+
+.touch-scroll-x {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 1rem;
+  touch-action: pan-x pan-y;
+}
+
+.snap-card {
+  scroll-snap-align: start;
+  scroll-snap-stop: normal;
+}
+
+/* Safe-area bottom padding for iOS Safari home bar */
+.pb-safe {
+  padding-bottom: max(1.25rem, env(safe-area-inset-bottom));
+}
+
+/* Performance: skip offscreen layout/paint for long lists */
+.cv-auto-card {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 116px;
+}
+
+.cv-auto-category {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 168px;
+}
+
+@keyframes sheet-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes shake-x {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  20% { transform: translate3d(-6px, 0, 0); }
+  40% { transform: translate3d(6px, 0, 0); }
+  60% { transform: translate3d(-4px, 0, 0); }
+  80% { transform: translate3d(4px, 0, 0); }
+}
+
+.animate-sheet-up {
+  will-change: transform, opacity;
+  animation: sheet-up 210ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-fade-in {
+  animation: fade-in 160ms ease-out forwards;
+}
+
+.animate-shake {
+  animation: shake-x 320ms ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-sheet-up,
+  .animate-fade-in,
+  .animate-shake {
+    animation: none;
+  }
+}
+
+/* Clean print layout for Admin Table QR Codes */
+@media print {
+  body {
+    background: #ffffff !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-qr-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 14px !important;
+  }
+  .print-qr-card {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    box-shadow: none !important;
+    border: 1px solid #d4d0c8 !important;
+  }
+}
