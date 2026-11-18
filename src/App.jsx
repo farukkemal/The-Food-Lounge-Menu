@@ -9,6 +9,7 @@ import CategoryShowcase from './components/CategoryShowcase';
 import ProductCard from './components/ProductCard';
 import ProductModal from './components/ProductModal';
 import InfoModal from './components/InfoModal';
+import SplashScreen from './components/SplashScreen';
 
 // Code-split Admin bundle so QR customers never download admin/qrcode JS
 const AdminLogin = lazy(() => import('./components/admin/AdminLogin'));
@@ -314,7 +315,9 @@ function CustomerMenuView({ onOpenAdmin }) {
 }
 
 export default function App() {
+  const { isReady } = useMenu();
   const [isAdminRoute, setIsAdminRoute] = useState(() => isAdminLocation());
+  const [showSplash] = useState(() => !isAdminLocation());
   const [auth, setAuth] = useState(() => readStoredAuth());
 
   useEffect(() => {
@@ -357,5 +360,10 @@ export default function App() {
     );
   }
 
-  return <CustomerMenuView onOpenAdmin={() => navigate('/admin')} />;
+  return (
+    <>
+      {showSplash && <SplashScreen isReady={isReady} />}
+      <CustomerMenuView onOpenAdmin={() => navigate('/admin')} />
+    </>
+  );
 }

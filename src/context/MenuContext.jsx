@@ -23,6 +23,7 @@ const SYNC_CHANNEL = 'the-food-lounge-menu-sync';
 
 export function MenuProvider({ children }) {
   const [menuData, setMenuData] = useState(() => getInitialMenuData());
+  const [isReady, setIsReady] = useState(false);
   const [saving, setSaving] = useState(false);
   const [lastSavedAt, setLastSavedAt] = useState(null);
   const [persistenceMode, setPersistenceMode] = useState('file');
@@ -39,6 +40,8 @@ export function MenuProvider({ children }) {
       setMenuData(live);
     } catch {
       // keep initial/cached data silently if running statically
+    } finally {
+      setIsReady(true);
     }
   }, []);
 
@@ -270,6 +273,7 @@ export function MenuProvider({ children }) {
     () => ({
       menuData,
       index,
+      isReady,
       saving,
       lastSavedAt,
       persistenceMode,
@@ -285,6 +289,7 @@ export function MenuProvider({ children }) {
     [
       menuData,
       index,
+      isReady,
       saving,
       lastSavedAt,
       persistenceMode,
