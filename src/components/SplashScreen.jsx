@@ -121,28 +121,31 @@ const SplashScreen = memo(function SplashScreen({ isReady }) {
               Dil Seçiniz • Select Language
             </p>
 
-            <div className="mt-5 grid grid-cols-1 gap-2.5">
-              {SUPPORTED_LANGUAGES.map((item) => {
+            <div className="mt-5 grid grid-cols-2 gap-2.5">
+              {SUPPORTED_LANGUAGES.map((item, idx) => {
                 const isLastSelected = lang === item.code;
+                const isFirst = idx === 0;
                 return (
                   <button
                     key={item.code}
                     type="button"
                     onClick={() => handleSelectLanguage(item.code)}
-                    className={`flex w-full items-center justify-between rounded-2xl border px-4 py-3 text-left transition-transform duration-150 active:scale-[0.975] ${
+                    className={`flex items-center justify-between rounded-2xl border px-3.5 py-2.5 text-left transition-transform duration-150 active:scale-[0.97] ${
+                      isFirst ? 'col-span-2 py-3 px-4' : ''
+                    } ${
                       isLastSelected
                         ? 'border-white bg-white text-[#181716] shadow-[0_8px_24px_rgba(0,0,0,0.2)]'
                         : 'border-white/28 bg-white/12 text-white hover:bg-white/20'
                     }`}
                   >
-                    <span className="flex items-center gap-3">
-                      <LanguageFlag code={item.code} width={22} height={16} />
-                      <span className="text-[15px] font-bold tracking-wide">
+                    <span className="flex min-w-0 items-center gap-2.5">
+                      <LanguageFlag code={item.code} width={20} height={14} />
+                      <span className="truncate text-[14px] font-bold tracking-wide">
                         {item.nativeName}
                       </span>
                     </span>
                     <span
-                      className={`rounded-lg px-2 py-0.5 text-[11px] font-bold tracking-wider ${
+                      className={`shrink-0 rounded-lg px-1.5 py-0.5 text-[10.5px] font-bold tracking-wider ${
                         isLastSelected
                           ? 'bg-[#CA2F2D]/12 text-[#CA2F2D]'
                           : 'bg-black/20 text-white/90'

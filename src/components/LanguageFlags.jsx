@@ -3,9 +3,11 @@ import { memo } from 'react';
 export const SUPPORTED_LANGUAGES = [
   { code: 'tr', short: 'TR', nativeName: 'Türkçe', dir: 'ltr' },
   { code: 'en', short: 'EN', nativeName: 'English', dir: 'ltr' },
+  { code: 'de', short: 'DE', nativeName: 'Deutsch', dir: 'ltr' },
+  { code: 'es', short: 'ES', nativeName: 'Español', dir: 'ltr' },
+  { code: 'ru', short: 'RU', nativeName: 'Русский', dir: 'ltr' },
   { code: 'ar', short: 'AR', nativeName: 'العربية', dir: 'rtl' },
   { code: 'zh', short: 'ZH', nativeName: '中文', dir: 'ltr' },
-  { code: 'ru', short: 'RU', nativeName: 'Русский', dir: 'ltr' },
 ];
 
 export const LanguageFlag = memo(function LanguageFlag({
@@ -35,6 +37,28 @@ export const LanguageFlag = memo(function LanguageFlag({
         <path d="M0,0 L60,40 M60,0 L0,40" stroke="#C8102E" strokeWidth="3.2" />
         <path d="M30,0 V40 M0,20 H60" stroke="#FFFFFF" strokeWidth="11" />
         <path d="M30,0 V40 M0,20 H60" stroke="#C8102E" strokeWidth="6.5" />
+      </svg>
+    );
+  }
+
+  if (code === 'de') {
+    return (
+      <svg width={width} height={height} viewBox="0 0 30 20" aria-hidden="true" className={baseClass}>
+        <rect width="30" height="6.67" y="0" fill="#000000" />
+        <rect width="30" height="6.67" y="6.67" fill="#DD0000" />
+        <rect width="30" height="6.67" y="13.33" fill="#FFCE00" />
+      </svg>
+    );
+  }
+
+  if (code === 'es') {
+    return (
+      <svg width={width} height={height} viewBox="0 0 30 20" aria-hidden="true" className={baseClass}>
+        <rect width="30" height="5" y="0" fill="#AA151B" />
+        <rect width="30" height="10" y="5" fill="#F1BF00" />
+        <rect width="30" height="5" y="15" fill="#AA151B" />
+        <rect x="7.5" y="7.5" width="3.5" height="5" rx="0.8" fill="#AA151B" />
+        <circle cx="9.25" cy="9.5" r="0.9" fill="#F1BF00" />
       </svg>
     );
   }

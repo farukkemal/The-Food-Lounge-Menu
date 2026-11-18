@@ -118,8 +118,14 @@ function CustomerMenuView({ onOpenAdmin }) {
     return Array.from(groups.entries());
   }, [activeCategory, activeSubcategoriesForCategory, activeSubcategory, displayedItems]);
 
+  const isCategoryView = activeCategoryId !== 'all';
+
   return (
-    <div className="min-h-dvh bg-[#F8F7F4] text-[#181716]">
+    <div
+      className={`min-h-dvh text-[#181716] transition-colors duration-200 ${
+        isCategoryView ? 'bg-[#FBECEF]' : 'bg-[#F8F7F4]'
+      }`}
+    >
       <div className="sticky top-0 z-30 shadow-[0_1px_8px_rgba(24,23,22,0.04)]">
         <Header
           restaurantName={restaurant.name}

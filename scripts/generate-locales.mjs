@@ -90,6 +90,60 @@ const CATEGORY_TRANSLATIONS = {
     'cat-103': 'ТРАВЯНЫЕ ЧАИ',
     'cat-123': 'АЛКОГОЛЬНЫЕ НАПИТКИ',
   },
+  de: {
+    'cat-82': 'FRÜHSTÜCK',
+    'cat-133': 'NEUE KREATIONEN',
+    'cat-83': 'VORSPEISEN',
+    'cat-84': 'SALATE',
+    'cat-85': 'DIÄT-MENÜ · RISOTTO · NUDELN',
+    'cat-86': 'PASTA',
+    'cat-87': 'PIZZA',
+    'cat-88': 'BURGER',
+    'cat-89': 'TEX-MEX & FAJITA',
+    'cat-90': 'KINDERMENÜ',
+    'cat-91': 'BOWLS',
+    'cat-92': 'HÄHNCHENGERICHTE',
+    'cat-124': 'FLEISCHGERICHTE & STEAKS',
+    'cat-93': 'ANATOLISCHE SPEZIALITÄTEN',
+    'cat-94': 'FISCH & MEERESFRÜCHTE',
+    'cat-95': 'DESSERTS',
+    'cat-96': 'ERFRISCHUNGSGETRÄNKE',
+    'cat-97': 'FRISCHE FRUCHTSÄFTE',
+    'cat-98': 'LIMONADEN',
+    'cat-99': 'FROZENS',
+    'cat-100': 'MILCHSHAKES',
+    'cat-101': 'HEISSGETRÄNKE',
+    'cat-102': 'EISKAFEE',
+    'cat-103': 'KRÄUTERTEES',
+    'cat-123': 'ALKOHOLISCHE GETRÄNKE',
+  },
+  es: {
+    'cat-82': 'DESAYUNOS',
+    'cat-133': 'NUEVOS SABORES',
+    'cat-83': 'ENTRANTES',
+    'cat-84': 'ENSALADAS',
+    'cat-85': 'MENÚ DIET · RISOTTO · NOODLES',
+    'cat-86': 'PASTAS',
+    'cat-87': 'PIZZAS',
+    'cat-88': 'HAMBURGUESAS',
+    'cat-89': 'TEX-MEX Y FAJITAS',
+    'cat-90': 'MENÚ INFANTIL',
+    'cat-91': 'BOWLS',
+    'cat-92': 'PLATOS DE POLLO',
+    'cat-124': 'CARNES Y STEAKS',
+    'cat-93': 'SABORES DE ANATOLIA',
+    'cat-94': 'PESCADOS Y MARISCOS',
+    'cat-95': 'POSTRES',
+    'cat-96': 'REFRESCOS',
+    'cat-97': 'ZUMOS NATURALES',
+    'cat-98': 'LIMONADAS',
+    'cat-99': 'FROZENS',
+    'cat-100': 'BATIDOS',
+    'cat-101': 'BEBIDAS CALIENTES',
+    'cat-102': 'CAFÉS HELADOS',
+    'cat-103': 'INFUSIONES',
+    'cat-123': 'BEBIDAS ALCOHÓLICAS',
+  },
 };
 
 const SUBCATEGORY_TRANSLATIONS = {
@@ -165,12 +219,62 @@ const SUBCATEGORY_TRANSLATIONS = {
     'TEKİLA': 'ТЕКИЛА',
     'ŞİŞE RAKILAR': 'РАКЫ (БУТ.)',
   },
+  de: {
+    'BİRALAR': 'BIERE',
+    'KOKTEYLLER': 'COCKTAILS',
+    'SHOTLAR': 'SHOTS',
+    'WİSKYLER': 'WHISKYS',
+    'CIN': 'GIN',
+    'VODKALAR': 'WODKAS',
+    'RAKILAR': 'RAKI',
+    'LİKÖRLER': 'LIKÖRE',
+    'KIRMIZI ŞARAPLAR': 'ROTWEINE',
+    'BEYAZ ŞARAPLAR': 'WEISSWEINE',
+    'ROSE VE BLUSHLAR': 'ROSÉ & BLUSH',
+    'ŞİŞE SCOTCH WHISKEY': 'SCOTCH WHISKY (FLASCHE)',
+    'ŞİŞE AMERİCAN WİSKEY': 'AMERICAN WHISKEY (FLASCHE)',
+    'ŞİŞE CİNLER': 'GIN (FLASCHE)',
+    'SANGRİALAR': 'SANGRIAS',
+    'ŞİŞE VODKA': 'WODKA (FLASCHE)',
+    'ŞİŞE TEKİLA': 'TEQUILA (FLASCHE)',
+    'APERATİVE': 'APERITIFS',
+    'ROMLAR': 'RUM',
+    'DOUBLE WİSKYLER': 'DOPPELTER WHISKY',
+    'TEKİLA': 'TEQUILA',
+    'ŞİŞE RAKILAR': 'RAKI (FLASCHE)',
+  },
+  es: {
+    'BİRALAR': 'CERVEZAS',
+    'KOKTEYLLER': 'CÓCTELES',
+    'SHOTLAR': 'CHUPITOS',
+    'WİSKYLER': 'WHISKYS',
+    'CIN': 'GINEBRA',
+    'VODKALAR': 'VODKAS',
+    'RAKILAR': 'RAKI',
+    'LİKÖRLER': 'LICORES',
+    'KIRMIZI ŞARAPLAR': 'VINOS TINTOS',
+    'BEYAZ ŞARAPLAR': 'VINOS BLANCOS',
+    'ROSE VE BLUSHLAR': 'ROSADOS Y BLUSH',
+    'ŞİŞE SCOTCH WHISKEY': 'WHISKY ESCOCÉS (BOTELLA)',
+    'ŞİŞE AMERİCAN WİSKEY': 'WHISKEY AMERICANO (BOTELLA)',
+    'ŞİŞE CİNLER': 'GINEBRA (BOTELLA)',
+    'SANGRİALAR': 'SANGRÍAS',
+    'ŞİŞE VODKA': 'VODKA (BOTELLA)',
+    'ŞİŞE TEKİLA': 'TEQUILA (BOTELLA)',
+    'APERATİVE': 'APERITIVOS',
+    'ROMLAR': 'RONES',
+    'DOUBLE WİSKYLER': 'WHISKY DOBLE',
+    'TEKİLA': 'TEQUILA',
+    'ŞİŞE RAKILAR': 'RAKI (BOTELLA)',
+  },
 };
 
 const TARGET_API_CODE = {
   ar: 'ar',
   zh: 'zh-CN',
   ru: 'ru',
+  de: 'de',
+  es: 'es',
 };
 
 function sleep(ms) {
@@ -260,10 +364,13 @@ async function main() {
       text: item.description,
     }));
 
-  const allEntries = [...titleEntries, ...descEntries];
-  console.log(`Translating ${titleEntries.length} titles + ${descEntries.length} descriptions into AR, ZH, RU...`);
+  const requestedLangs = process.argv.slice(2).filter((l) => TARGET_API_CODE[l]);
+  const langsToRun = requestedLangs.length > 0 ? requestedLangs : ['ar', 'zh', 'ru', 'de', 'es'];
 
-  for (const lang of ['ar', 'zh', 'ru']) {
+  const allEntries = [...titleEntries, ...descEntries];
+  console.log(`Translating ${titleEntries.length} titles + ${descEntries.length} descriptions into ${langsToRun.map((l) => l.toUpperCase()).join(', ')}...`);
+
+  for (const lang of langsToRun) {
     console.log(`\nStarting ${lang.toUpperCase()}...`);
     const translatedMap = await translateBatch(allEntries, lang);
 

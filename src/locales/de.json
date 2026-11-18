@@ -1,0 +1,1995 @@
+{
+  "categories": {
+    "cat-82": "FRÜHSTÜCK",
+    "cat-133": "NEUE KREATIONEN",
+    "cat-83": "VORSPEISEN",
+    "cat-84": "SALATE",
+    "cat-85": "DIÄT-MENÜ · RISOTTO · NUDELN",
+    "cat-86": "PASTA",
+    "cat-87": "PIZZA",
+    "cat-88": "BURGER",
+    "cat-89": "TEX-MEX & FAJITA",
+    "cat-90": "KINDERMENÜ",
+    "cat-91": "BOWLS",
+    "cat-92": "HÄHNCHENGERICHTE",
+    "cat-124": "FLEISCHGERICHTE & STEAKS",
+    "cat-93": "ANATOLISCHE SPEZIALITÄTEN",
+    "cat-94": "FISCH & MEERESFRÜCHTE",
+    "cat-95": "DESSERTS",
+    "cat-96": "ERFRISCHUNGSGETRÄNKE",
+    "cat-97": "FRISCHE FRUCHTSÄFTE",
+    "cat-98": "LIMONADEN",
+    "cat-99": "FROZENS",
+    "cat-100": "MILCHSHAKES",
+    "cat-101": "HEISSGETRÄNKE",
+    "cat-102": "EISKAFEE",
+    "cat-103": "KRÄUTERTEES",
+    "cat-123": "ALKOHOLISCHE GETRÄNKE"
+  },
+  "subcategories": {
+    "BİRALAR": "BIERE",
+    "KOKTEYLLER": "COCKTAILS",
+    "SHOTLAR": "SHOTS",
+    "WİSKYLER": "WHISKYS",
+    "CIN": "GIN",
+    "VODKALAR": "WODKAS",
+    "RAKILAR": "RAKI",
+    "LİKÖRLER": "LIKÖRE",
+    "KIRMIZI ŞARAPLAR": "ROTWEINE",
+    "BEYAZ ŞARAPLAR": "WEISSWEINE",
+    "ROSE VE BLUSHLAR": "ROSÉ & BLUSH",
+    "ŞİŞE SCOTCH WHISKEY": "SCOTCH WHISKY (FLASCHE)",
+    "ŞİŞE AMERİCAN WİSKEY": "AMERICAN WHISKEY (FLASCHE)",
+    "ŞİŞE CİNLER": "GIN (FLASCHE)",
+    "SANGRİALAR": "SANGRIAS",
+    "ŞİŞE VODKA": "WODKA (FLASCHE)",
+    "ŞİŞE TEKİLA": "TEQUILA (FLASCHE)",
+    "APERATİVE": "APERITIFS",
+    "ROMLAR": "RUM",
+    "DOUBLE WİSKYLER": "DOPPELTER WHISKY",
+    "TEKİLA": "TEQUILA",
+    "ŞİŞE RAKILAR": "RAKI (FLASCHE)"
+  },
+  "items": {
+    "tfl-001": {
+      "title": "TÜRKISCHES SERPME-FRÜHSTÜCK",
+      "description": "Ezine-Weißkäse, alter Kashar-Käse, frischer Kashar-Käse, Chechil-Käse, Kirschquark, Honig, Clotted Cream, Nutella, zwei Sorten Marmelade, Butter, Wurst mit Tomatenmark (Hühnerfleisch), Bratkartoffeln, gebratene Paprika, gegrillter Halloumi, schwarzgrüne Oliven, Bleistiftteig, gegrillter Soudjouk (Rindfleisch), Acuka, Tomaten- und Gurkenaufschnitt, Spiegelei, Bagel, unbegrenzter Tee. Es ist für mindestens 2 Personen vorbereitet."
+    },
+    "tfl-002": {
+      "title": "FRÜHSTÜCK FÜR EINZELN",
+      "description": "Ezine-Weißkäse, alter Kashar-Käse, Chechil-Käse, Butter, Honig, Marmelade, Nutella, frisches Obst der Saison, schwarze und grüne Oliven, Aufschnitt aus Tomaten und Gurken, gekochte Eier, zwei aufgebrühte Teesorten."
+    },
+    "tfl-003": {
+      "title": "LEICHTES FRÜHSTÜCK",
+      "description": "Avocado, gegrillter Halloumi, Ezine-Weißkäse, frischer Kashar-Käse, gekochtes Ei, Tomaten- und Gurkenaufschnitt, frische Kräuter, Quinoa."
+    },
+    "tfl-004": {
+      "title": "HEISSES FRÜHSTÜCK",
+      "description": "Ofenkartoffeln mit Milch und Sahne, gegrillter Soudjouk (Rind), gegrillter Halloumi, Wurst (Hühnerfleisch), Kalbsschinken (Rind), Augenei, Bleistiftteig, Bagel, gegrillte Tomaten und Paprika."
+    },
+    "tfl-005": {
+      "title": "Spiegeleier mit Wurst",
+      "description": "Opium-Rinderwurst"
+    },
+    "tfl-006": {
+      "title": "EYE EGG AUF DEM FELD",
+      "description": "Zwei Eier, Afyon-Rinderwurst, Butter."
+    },
+    "tfl-007": {
+      "title": "GEBRATENE EIER",
+      "description": "Roastbeef, zwei Eier"
+    },
+    "tfl-008": {
+      "title": "Rühreier mit geräuchertem Fleisch",
+      "description": "Geräucherte Rinderrippchen, frisches Gemüse, Tomaten. Aus drei Eiern."
+    },
+    "tfl-009": {
+      "title": "POCHIERTE EIER MIT AVACADO-SAUCE",
+      "description": "Auf Sauerteigbrot, Avocadosauce, Rinderschinken, pochiertem Ei, Schwarzkümmel, frischen Kräutern, Tomaten, Gurken und Aufschnitt mit Pestosauce."
+    },
+    "tfl-010": {
+      "title": "FELD SAUGEN",
+      "description": "Afyoner Rinderwurst, Butter."
+    },
+    "tfl-011": {
+      "title": "FIT-OMELET",
+      "description": "Gekochtes Gemüse, frisches Gemüse,"
+    },
+    "tfl-012": {
+      "title": "OMELETT MIT CHEDGE-KÄSE",
+      "description": "Drei Eier, frischer Kashar-Käse, frisches Gemüse."
+    },
+    "tfl-013": {
+      "title": "PILZOMELETT",
+      "description": "Drei Eier, Pilze, frisches Gemüse."
+    },
+    "tfl-014": {
+      "title": "KÄSE-KRÄUTER-OMELETT",
+      "description": "Drei Eier, Feta-Käse, frische Kräuter, gemischtes Gemüse."
+    },
+    "tfl-015": {
+      "title": "SPANISCHES OMELETT",
+      "description": "Kartoffeln, frische Kräuter, frisches Gemüse"
+    },
+    "tfl-016": {
+      "title": "GEMISCHTES OMELETT",
+      "description": "Wurst, Pilze, bunte Paprika und Mozzarella-Käse"
+    },
+    "tfl-017": {
+      "title": "OMELETT MIT ZUCKER",
+      "description": "Rinderwurst, frisches Gemüse"
+    },
+    "tfl-018": {
+      "title": "EINFACHES OMELETT",
+      "description": "mit Tomaten und Gemüse"
+    },
+    "tfl-019": {
+      "title": "MENEMEN",
+      "description": "Zwei Eier, Tomate, grüne Paprika."
+    },
+    "tfl-020": {
+      "title": "SPINAT-Cheddar-Fladenbrot",
+      "description": "Schwarze und grüne Oliven, Tomaten, frisches Gemüse."
+    },
+    "tfl-021": {
+      "title": "Cheddar-Fladenbrot",
+      "description": "Schwarze und grüne Oliven, Tomaten, frisches Gemüse."
+    },
+    "tfl-022": {
+      "title": "GEHACKTE KARTOFFELPANAKES",
+      "description": ""
+    },
+    "tfl-023": {
+      "title": "BÄCKEREI",
+      "description": "Nutella, Honigcreme"
+    },
+    "tfl-024": {
+      "title": "TRABZON-SITZSITZE",
+      "description": ""
+    },
+    "tfl-025": {
+      "title": "LOUNGE BAZLAMA",
+      "description": "160 Gramm Fladenbrot mit Rinderwurst, frischem Kashar-Käse, handgemachter Acuka-Sauce, würzigen Kartoffeln und Tomaten, Gurken und Aufschnitt."
+    },
+    "tfl-026": {
+      "title": "BAZLAMA MIT VIEL KÄSE",
+      "description": "160 Gramm Fladenbrot, frischer Kashar-Käse, Cheddar-Käse, würzige Kartoffeln, Tomaten- und Gurkenaufschnitt"
+    },
+    "tfl-027": {
+      "title": "GERÖSTETES BAZLAMA",
+      "description": "160 Gramm Fladenbrot, gebratenes Rindfleisch, frischer Kashar-Käse, würzige Kartoffeln und Tomaten, Gurken und Aufschnitt"
+    },
+    "tfl-028": {
+      "title": "VOLLSTÄNDIGER MEDITERRANER GESCHMACK",
+      "description": "135 Gramm Vollkorntoast, Weißkäse, frischer Thymian, Tomate und mediterranes Gemüse"
+    },
+    "tfl-029": {
+      "title": "TOAST MIT VIEL CHEDGE",
+      "description": ""
+    },
+    "tfl-030": {
+      "title": "SUCUK-Cheddar-Toast",
+      "description": "Würzige Bratkartoffeln, Tomaten- und Gurkenaufschnitt."
+    },
+    "tfl-031": {
+      "title": "MÜSLISCHÜSSEL MIT GETROCKNETEN FRÜCHTEN",
+      "description": "Trockenfrüchte, Joghurt, Naturmüsli und Chiasamen"
+    },
+    "tfl-032": {
+      "title": "FRUCHT-GRANOLA-SCHÜSSEL",
+      "description": "Frisches Obst der Saison, Joghurt, Müsli und Chiasamen"
+    },
+    "tfl-033": {
+      "title": "PFANNKUCHEN",
+      "description": "Honig, Nutella, frische Früchte."
+    },
+    "tfl-034": {
+      "title": "LOUNGE BAZLAMA",
+      "description": "160 Gramm Fladenbrot, Rinderwurst, frischer Kashar-Käse, handgemachte Acuka-Sauce, würzige Kartoffeln und Aufschnitt aus Tomaten und Gurken"
+    },
+    "tfl-035": {
+      "title": "BAZLAMA MIT VIEL KÄSE",
+      "description": "160 Gramm Fladenbrot, frischer Kashar-Käse, Cheddar-Käse, würzige Kartoffeln und Tomaten, Gurken und Aufschnitt"
+    },
+    "tfl-036": {
+      "title": "GERÖSTETES BAZLAMA",
+      "description": "160 Gramm Fladenbrot, gebratenes Rindfleisch, frischer Cheddar-Käse, würzige Kartoffeln und Tomaten, Gurken und Aufschnitt"
+    },
+    "tfl-037": {
+      "title": "VOLLSTÄNDIGER MEDITERRANER GESCHMACK",
+      "description": "135 Gramm Vollkorntoast, Weißkäse, frischer Thymian, Tomate und mediterranes Gemüse"
+    },
+    "tfl-038": {
+      "title": "DER LEBENSMITTELRING-1",
+      "description": "Chicken Wrap, knusprige Hähnchenstücke, Zwiebelringe, Mozzarellasticks, Mac-Chess und Brokkolibällchen, überbackene Kartoffeln, Honigsenf, süßes Chili und Ranch-Sauce"
+    },
+    "tfl-039": {
+      "title": "DER LEBENSMITTELRING-2",
+      "description": "Beef-Burger, knusprige Hähnchenstücke, Zwiebelringe, Mozzarella-Sticks, Mac-Chess und Brokkoli-Bällchen, überbackene Kartoffeln, Honig-Senf, süßes Chili und Ranch-Sauce"
+    },
+    "tfl-040": {
+      "title": "DER LEBENSMITTELRING-3",
+      "description": "Beef-Burger, Hühnchen-Wrap, knusprige Hähnchenstücke, Zwiebelringe, Mozzarella-Sticks, Mac-Chess und Brokkoli-Bällchen, mit überbackenen Kartoffeln, Honig-Senf, süßem Chili und Ranch-Sauce"
+    },
+    "tfl-041": {
+      "title": "MOZERELLA-STICK",
+      "description": ""
+    },
+    "tfl-042": {
+      "title": "RISOTTO DI FUNGHI",
+      "description": "Risotto mit Reis, Austern und Pilzen, Weißwein, Sahnesauce und Parmesankäse"
+    },
+    "tfl-043": {
+      "title": "RISOTTO DI MARE",
+      "description": "Risotto mit Reis, Garnelen, Calamari, Muscheln, Weißwein, Sahnesauce und Parmesankäse"
+    },
+    "tfl-044": {
+      "title": "RISOTTO-SPARGEL",
+      "description": "Risotto mit Reis, frischem Spargel, Weißwein, Sahnesauce und Basilikum"
+    },
+    "tfl-045": {
+      "title": "MEERESFRÜCHTE TAGLITELLI",
+      "description": "Taglitelli-Nudeln, Garnelen, Calamari, Muscheln, Kapern, Tomatensauce, Pestosauce und Parmesankäse"
+    },
+    "tfl-046": {
+      "title": "SPAGHETTI HIER",
+      "description": "Spaghettinudeln, Buratta-Käse, Tomatensauce und Pestosauce"
+    },
+    "tfl-047": {
+      "title": "CHİCKEN RIGATONNIA",
+      "description": "Rigatonni-Nudeln, gegrilltes Hähnchenfilet, Tomatensauce, Sahnesauce und Parmesankäse"
+    },
+    "tfl-048": {
+      "title": "CHİCKEN MAC UND KÄSE",
+      "description": "Pipettennudeln, knuspriges Hähnchen, Mozzarella-Käse, Parmesankäse, Cheedar-Sauce, Sahnesauce und Pesto-Sauce"
+    },
+    "tfl-049": {
+      "title": "QUESEDILLA MIT FLEISCH",
+      "description": "mit Tortillabrot, Rinderfilet, farbigen Paprika, Zuchtpilzen, Mais, mexikanischen Bohnen, Mozzarella-Käse, würzigen Kartoffeln, Zwiebeln, Sauerrahm, Guaconola-Sauce, mexikanischer Sauce"
+    },
+    "tfl-050": {
+      "title": "QUESEDILLA MIT HUHN",
+      "description": "mit Tortillabrot, Hähnchenfilet, farbigen Paprika, Zuchtpilzen, Mais, mexikanischen Bohnen, Mozzarella-Käse, würzigen Kartoffeln, Zwiebeln, Sauerrahm, Guaconola-Sauce, mexikanischer Sauce"
+    },
+    "tfl-051": {
+      "title": "QUESEDILLA RIPPEN",
+      "description": "mit Tortillabrot, langsam gegartem Rippenfleisch, farbigen Paprika, Zuchtpilzen, Mozzarella-Käse, Cheedar-Käse, würzigen Kartoffeln, Zwiebeln, Sauerrahm, Guaconola-Sauce, mexikanischer Sauce"
+    },
+    "tfl-052": {
+      "title": "EINE SCHÜSSEL GEGRILLTER LACHS",
+      "description": "gegrillter Lachs, Edamerbohnen, Avocado, eingelegte Zwiebeln, eingelegter Rotkohl, Kirschtomaten, Karotten und Gemüse der Saison"
+    },
+    "tfl-053": {
+      "title": "GEBRATENES HUHN",
+      "description": "200 Gramm Hähnchenschenkel, bunte Paprika, Schalotten, Knoblauch, Kirschtomaten"
+    },
+    "tfl-054": {
+      "title": "LAMMKOTELETTEN",
+      "description": "Lammkoteletts, Kartoffelpüree, gekochtes Gemüse, frischer Spargel, mit Demi-Gloce-Sauce"
+    },
+    "tfl-055": {
+      "title": "DELIGHT TOPFILE IN BUTTER",
+      "description": "Rinderfilet mariniert mit Spezialsaucen, Butter, frischen Gewürzen, Knoblauch, Kirschtomaten und Fladenbrot"
+    },
+    "tfl-056": {
+      "title": "LACHS SPARGEL",
+      "description": "gegrillter Lachs, frischer Spargel, Babykartoffeln, mit Chimicurri-Sauce"
+    },
+    "tfl-057": {
+      "title": "SCHOKOLADEN-BROWNIE",
+      "description": ""
+    },
+    "tfl-058": {
+      "title": "CREMEPUFF",
+      "description": ""
+    },
+    "tfl-059": {
+      "title": "SNACKKORB",
+      "description": "Panierte Hähnchenscheiben, Fingerling-Kartoffeln, Auberginen-Amulett-Gebäck, Bleistift-Gebäck, Wurst, gebratener Ziegenkäse, Mozzarella-Stick, Honig-Senf-Sauce, süße Chili-Sauce."
+    },
+    "tfl-060": {
+      "title": "KNUSPRIGES HÄHNCHEN",
+      "description": "Panierte Hähnchenscheiben, würzige Kartoffelpfanne, Honig-Senf-Sauce."
+    },
+    "tfl-061": {
+      "title": "COMBO-FALL",
+      "description": "Käseburger, scharfe Hähnchenflügel, scharfe knusprige Hähnchenscheiben, knuspriger Brokkoli, knusprige Mac&Cheese-Bällchen, Zwiebelringe, scharfe Pommes Frites, Cheddarsauce, süße Chilisauce, Honig-Senf-Sauce."
+    },
+    "tfl-062": {
+      "title": "SEAS BELK",
+      "description": "Seebarsch-Fischringe, gemischt mit Sesamkörnern, würzigen Kartoffeln, Soja und Remoulade"
+    },
+    "tfl-063": {
+      "title": "GEBRATENE MANTI",
+      "description": "HANDGEMACHTES USBEKISCHES MANTI MIT JOGHURT UND TOMATENSAUCE"
+    },
+    "tfl-064": {
+      "title": "GARNELENAUFLAUF",
+      "description": "Tomaten, grüne Paprika, rote Paprika, Knoblauch, Tomatensauce."
+    },
+    "tfl-065": {
+      "title": "BUTTERGARNELEN",
+      "description": "In Butter sautierte Garnelen mit Knoblauchsauce"
+    },
+    "tfl-066": {
+      "title": "SUPPE DES TAGES",
+      "description": "Verschiedene Geschmacksrichtungen, die sich jeden Tag ändern. 275-"
+    },
+    "tfl-067": {
+      "title": "MINESTRONE-SUPPE",
+      "description": "Frisches Gemüse, Nudeln, Brühe, Petersilie."
+    },
+    "tfl-068": {
+      "title": "NACHOS MIT FLEISCH",
+      "description": "Tortillachips, Rinderfilet, gemischtes Fajita-Gemüse, Sauerrahmsoße, scharfe Soße, Guacamolesoße, Cheddar-Käse, geriebener Mozzarella."
+    },
+    "tfl-069": {
+      "title": "NACHOS MIT KÄSE",
+      "description": "Tortillachips, gemischtes Fajita-Gemüse, geriebener Mozzarella, Cheddar-Käse, Sauerrahmsoße, scharfe Soße, Guacamolesoße"
+    },
+    "tfl-070": {
+      "title": "NACHOS HUHN",
+      "description": "Tortillachips, Hühnchen, gemischtes Fajita-Gemüse, Sauerrahmsauce, scharfe Sauce, Guacamolesauce, Cheddar-Käse, geriebener Mozzarella."
+    },
+    "tfl-071": {
+      "title": "KÄSETELLER",
+      "description": "Roquefort, Emmantel, Edamer, geräucherter Käse, Parmesan, gereifter Cheddar-Käse, geräucherte Rinderrippchen, frische Weintrauben, Peperoni-Marmelade, Grissini."
+    },
+    "tfl-072": {
+      "title": "GEMÜSETELLER",
+      "description": "Avocado, Weißkohl, Blumenkohl, eingelegte Rüben, Karotten, Brokkoli, Spargel, gemischtes Gemüse."
+    },
+    "tfl-073": {
+      "title": "WÜRZIGE KARTOFFELN",
+      "description": "mit leckeren Soßen"
+    },
+    "tfl-074": {
+      "title": "GEFÜLLTER CHICE MIT FLEISCH",
+      "description": "Fleischiger Mangold, Zitrone, Sahnesauce, Pestosauce und Rucola"
+    },
+    "tfl-075": {
+      "title": "FALAFEL-FLEISCHBÄLLCHEN",
+      "description": "Falafel-Rinderfleischbällchen, mediterranes Gemüse mit Tahinisauce"
+    },
+    "tfl-076": {
+      "title": "FISCH UND CHİPS",
+      "description": "Panierte Wolfsbarschscheiben, würzige Bratkartoffeln, süße Chilisauce, Honig-Senf-Sauce."
+    },
+    "tfl-077": {
+      "title": "MOZERELLA-TOMATEN",
+      "description": "Gemischtes Gemüse, Mozzarella in Wasser, Tomaten."
+    },
+    "tfl-078": {
+      "title": "GEBÄCK",
+      "description": "Gebäck eingewickelt in frischen Teig und mediterranes Gemüse"
+    },
+    "tfl-079": {
+      "title": "ZWIEBELRINGE",
+      "description": ""
+    },
+    "tfl-080": {
+      "title": "DER LEBENSMITTELRING-1",
+      "description": "Chicken Wrap, knusprige Hähnchenstücke, Zwiebelringe, Mozzarellasticks, Mac-Chess und Brokkolibällchen, überbackene Kartoffeln, Honigsenf, süßes Chili und Ranch-Sauce"
+    },
+    "tfl-081": {
+      "title": "DER LEBENSMITTELRING-2",
+      "description": "Beef-Burger, knusprige Hähnchenstücke, Zwiebelringe, Mozzarella-Sticks, Mac-Chess und Brokkoli-Bällchen, überbackene Kartoffeln, Honig-Senf, süßes Chili und Ranch-Sauce"
+    },
+    "tfl-082": {
+      "title": "DER LEBENSMITTELRING-3",
+      "description": "Beef-Burger, Hühnchen-Wrap, knusprige Hähnchenstücke, Zwiebelringe, Mozzarella-Sticks, Mac-Chess und Brokkoli-Bällchen, überbackene Kartoffeln, Honig-Senf, süßes Chili und Ranch-Sauce"
+    },
+    "tfl-083": {
+      "title": "MOZERELLA-STICK",
+      "description": ""
+    },
+    "tfl-084": {
+      "title": "KNUSPRIGER HÜHNERSALAT",
+      "description": "Panierte Hähnchenscheiben, gemischtes Gemüse, grüner Apfel, Babymais, Tomate, Karotte, Honig-Senf-Sauce."
+    },
+    "tfl-085": {
+      "title": "FALAFEL-SALAT",
+      "description": "handgemachte Falafelbällchen, mediterranes Gemüse, geschnittene Oliven, Maiskörner"
+    },
+    "tfl-086": {
+      "title": "LÖFFELSALAT",
+      "description": "Tomate, Gurke, grüner Pfeffer, Dill, Petersilie, Walnuss, geriebener Ezine-Weißkäse, Granatapfelsirupöl und Zitronensauce. 395 kcal+"
+    },
+    "tfl-087": {
+      "title": "GEGRILLTER HÜHNERSALAT",
+      "description": "Mediterranes Gemüse, schwarze Scheiben, Oliven, Mais, Cocktailtomate, Gurke mit Öl und Zitronensauce"
+    },
+    "tfl-088": {
+      "title": "SAISONSALAT",
+      "description": "Gemischtes Gemüse, Karotten, Rotkohl, Tomate, Gurke, Mais, Olivenöl-Zitronensauce."
+    },
+    "tfl-089": {
+      "title": "QUINOA-SALAT MIT FLEISCHBÄLLCHEN",
+      "description": "Gemüse, gegrillte Fleischbällchen, Quinoa, gekochte Kichererbsen, Tomaten, Gurken"
+    },
+    "tfl-090": {
+      "title": "FRUCHT- UND GETREIDESALAT",
+      "description": "Frische und getrocknete Früchte, Gemüse, Walnüsse, Weißkäse, Weizen, Granatapfelsirupsauce"
+    },
+    "tfl-091": {
+      "title": "LACHSALAT MIT ORANGENSAUCE",
+      "description": "Gemischtes Gemüse, Karotten, Orangenscheiben, mexikanische Bohnen, Tomaten, Gurken, gegrillter Lachs, Orangenvinaigrette-Sauce."
+    },
+    "tfl-092": {
+      "title": "THUNFISCHSALAT",
+      "description": "Gemischtes Gemüse, Karotten, eingelegte rote Zwiebeln, Mais, Gurke, Tomate, Thunfisch, Olivenöl-Zitronensauce."
+    },
+    "tfl-093": {
+      "title": "ZIEGENKÄSESALAT",
+      "description": "Gemischtes Gemüse, Karotten, Babymais, Gurke, Tomate, Erdbeere, gebratener Ziegenkäse, Öl-Zitronen-Sauce."
+    },
+    "tfl-094": {
+      "title": "GRIECHISCHER SALAT",
+      "description": "Kirschtomaten, Gurke, rote Zwiebel, grüne Paprika, grüne Oliven, Feta-Käse, Granatapfelöl und Zitronensauce."
+    },
+    "tfl-095": {
+      "title": "Rucola-SALAT MIT WALNUSS",
+      "description": "Rucola, Walnüsse, geriebener Weißkäse, mit Granatapfelsauce"
+    },
+    "tfl-096": {
+      "title": "GEGRILLTER HÜHNCHEN-CAESAR-SALAT",
+      "description": "Frische Salatblätter, gegrillte Hähnchenscheiben, Croutons, Caesar-Sauce, Parmesanscheiben."
+    },
+    "tfl-097": {
+      "title": "GERÄUCHERTER LACHS MIT QUINOA",
+      "description": "Gemischtes Gemüse, geräucherter Lachs, Babymais, Tomate, Gurke, Avocado, Quinoa, Vinaigrette-Sauce."
+    },
+    "tfl-098": {
+      "title": "KLASSISCHER CAESAR-SALAT",
+      "description": "Frische Salatblätter, Croutons, Caesar-Sauce, Parmesanscheiben."
+    },
+    "tfl-099": {
+      "title": "Filetkohl",
+      "description": "Sautierte Rinderfiletscheiben, Zucchini, Brokkoli, Karotten, Blumenkohl, Weißkohl, Steinpilze, süße Chilisauce."
+    },
+    "tfl-100": {
+      "title": "GARNELENNUDEL",
+      "description": "Garnelen, Zucchini, Karotte, Weißkohl, Babymais, Sojasauce, Austernsauce, Süß- und Chilisauce"
+    },
+    "tfl-101": {
+      "title": "NUDELN MIT GEMÜSE",
+      "description": "Zucchini, Karotten, Weißkohl, Babymais, Sojasauce, Austernsauce, Süß- und Chilisauce."
+    },
+    "tfl-102": {
+      "title": "NUDELN MIT FLEISCH",
+      "description": "Rinderfiletscheiben, Zucchini, Karotten, Weißkohl, Babymais, Sojasauce, Austernsauce, Süß- und Chilisauce"
+    },
+    "tfl-103": {
+      "title": "HÜHNERNUDELN",
+      "description": "Hähnchenscheiben, Zucchini, Karotten, Weißkohl, Babymais, Sojasauce, Austernsauce, Süß- und Chilisauce."
+    },
+    "tfl-104": {
+      "title": "DIÄT MIT GEGRILLTEM HÜHNCHEN",
+      "description": "Gegrilltes Hähnchenfilet, gekochtes Gemüse, gemischtes Gemüse, Kirschtomaten, mit Joghurt"
+    },
+    "tfl-105": {
+      "title": "HÜHNERKOHL",
+      "description": "Sautierte Hähnchenscheiben, Zucchini, Karotten, Blumenkohl, Brokkoli, Weißkohl, Steinpilze, süße Chilisauce."
+    },
+    "tfl-106": {
+      "title": "RISOTTO DI FUNGHI",
+      "description": "Risotto mit Reis, Austern und Pilzen, Weißwein, Sahnesauce und Parmesankäse"
+    },
+    "tfl-107": {
+      "title": "RISOTTO DI MARE",
+      "description": "Risotto mit Reis, Garnelen, Calamari, Muscheln, Weißwein, Sahnesauce und Parmesankäse"
+    },
+    "tfl-108": {
+      "title": "RISOTTO-SPARGEL",
+      "description": "Risotto mit Reis, frischem Spargel, Weißwein, Sahnesauce und Basilikum"
+    },
+    "tfl-109": {
+      "title": "FOOD MANTI",
+      "description": ""
+    },
+    "tfl-110": {
+      "title": "GARNELEN-SPGHETTI MIT PESTO-SAUCE",
+      "description": "Spaghettinudeln, Garnelen, mit Pestosauce"
+    },
+    "tfl-111": {
+      "title": "SPAGHETTI BOLONEZE",
+      "description": "Würziges Hackfleisch, Tomatensauce, Parmesankäse."
+    },
+    "tfl-112": {
+      "title": "PENNE MIT HUHN",
+      "description": "Hähnchenscheiben, Pilze, Parmesan, Sahnesauce."
+    },
+    "tfl-113": {
+      "title": "FÜNF KÄSE-RAVIOLI",
+      "description": "Ravioli, Parmesan, mit Sahnesauce"
+    },
+    "tfl-114": {
+      "title": "CASTELLANE TURKA",
+      "description": "Gegrillte Filetscheiben, Knoblauchjoghurt, heißes Öl, Castellano-Nudeln."
+    },
+    "tfl-115": {
+      "title": "HANDGEMACHTES MANTI MIT VIEL FLEISCH",
+      "description": "Handgemachte Ravioli, frische Minze, Joghurt und Buttersauce"
+    },
+    "tfl-116": {
+      "title": "FETTUCINI ALFREDO",
+      "description": "Hähnchenscheiben, Pilze, Parmesan, Sahnesauce."
+    },
+    "tfl-117": {
+      "title": "FETUCCINE DI MANZO",
+      "description": "Gegrillte Filetscheiben, Tomatensauce, Pilze, Parmesankäse."
+    },
+    "tfl-118": {
+      "title": "BÄCKEREI-MAC UND KÄSE",
+      "description": "Cheddar-Sauce, Mozzarella-Käse, Sahne und Pesto-Sauce"
+    },
+    "tfl-119": {
+      "title": "FETTUCIN MIT GARNELEN",
+      "description": "Tomatensauce, Pestosauce, Kapern, Parmesan, Garnelen."
+    },
+    "tfl-120": {
+      "title": "PENNE ARABIAATTA",
+      "description": "Würzige Tomatensauce, geschnittene schwarze Oliven, Parmesankäse"
+    },
+    "tfl-121": {
+      "title": "SPAGHETTI GLUTENFREI",
+      "description": "Blumenkohl, Karotte, Brokkoli, Tomatensauce"
+    },
+    "tfl-122": {
+      "title": "MEERESFRÜCHTE TAGLITELLI",
+      "description": "Taglitelli-Nudeln, Garnelen, Calamari, Muscheln, Kapern, Tomatensauce, Pestosauce und Parmesankäse"
+    },
+    "tfl-123": {
+      "title": "SPAGHETTI HIER",
+      "description": "Spaghettinudeln, Buratta-Käse, Tomatensauce und Pestosauce"
+    },
+    "tfl-124": {
+      "title": "CHİCKEN MAC UND KÄSE",
+      "description": "mit Pipettennudeln, knusprigem Hähnchen, Mozzarella-Käse, Parmesankäse, Cheedar-Sauce, Sahnesauce und Pesto-Sauce"
+    },
+    "tfl-125": {
+      "title": "CHİCKEN RIGATONNIA",
+      "description": "Rigatonni-Nudeln, gegrilltes Hähnchenfilet, Tomatensauce, Sahnesauce und Parmesankäse"
+    },
+    "tfl-126": {
+      "title": "CAPRIS PIZZA",
+      "description": "Basilikum-Tomatensauce, Mozzarella, Mozzarella in Wasser, Rucolablätter, Pestosauce."
+    },
+    "tfl-127": {
+      "title": "PIZZA MIT VIER KÄSE",
+      "description": "Roquefort, Cheddar, Mozzarella, Parmesan, Rucolablätter. Sahnesauce."
+    },
+    "tfl-128": {
+      "title": "THUNFISCHPIZZA",
+      "description": "Thunfisch, Mozzarella, lila Zwiebeln, Mais"
+    },
+    "tfl-129": {
+      "title": "MARGARITA-PIZZA",
+      "description": "Tomatensauce, Mozzarella-Käse, Kirschtomaten."
+    },
+    "tfl-130": {
+      "title": "ALLA DIAVOLA PIZZA",
+      "description": "Basilikum-Tomatensauce, Mozzarella, rote Zwiebeln, Rinderwurst, Chilischote, Thymian, Rucolablätter."
+    },
+    "tfl-131": {
+      "title": "BBQ CHICKEN PIZZA",
+      "description": "Basilikum-Tomatensauce, Mozzarella, grüne und rote Paprika, Hähnchenscheiben mit BBQ-Sauce. 1333 lcal*"
+    },
+    "tfl-132": {
+      "title": "RINDRIPPPIZZA",
+      "description": "Tomaten-Basilikum-Sauce, Mozzarella, langsam gegarte Rinderrippchen, grüne Paprika, Chilischoten, Thymian, Rucolablätter."
+    },
+    "tfl-133": {
+      "title": "DELLA CASSA PIZZA",
+      "description": "Basilikum-Tomatensauce, Mozzarella, Rinderwurst, Rinderschinken, geschnittene schwarze Oliven, Pilze, grüner Pfeffer."
+    },
+    "tfl-134": {
+      "title": "FUNGHI-PIZZA",
+      "description": "Basilikum-Tomatensauce, Mozzarella, Pilze, Parmesanscheiben, Trüffelöl, Rucolablätter."
+    },
+    "tfl-135": {
+      "title": "CAPRIS BURGER 160GR",
+      "description": "Gebratener Mozzarella, Basilikum, Salat, Tomate, Gurken, würzige Kartoffeln in Wasser."
+    },
+    "tfl-136": {
+      "title": "KÄSEBURGER 160GR",
+      "description": "Cheddar-Käse, Salat, Gurken, Tomaten, würzige Kartoffelpfanne."
+    },
+    "tfl-137": {
+      "title": "KNUSPRIGER CHICKEN BURGER 120GR",
+      "description": "Paniertes Hähnchen, Koslow-Salat, Rucolablätter, Zwiebelgurke, würzige Bratkartoffeln."
+    },
+    "tfl-138": {
+      "title": "FOOD LOUNGE BURGER",
+      "description": "Langsam gegartes Mohair-Rind, Pilzsorten, Rinderspeck, Cheedar, Burgersauce, Matcha-Kartoffeln"
+    },
+    "tfl-139": {
+      "title": "MEXIKANISCHER BURGER 160GR",
+      "description": "Cheddar-Käse, Jalapenopfeffer, scharfe Soße, Salat, Tomate, würzige Kartoffeln"
+    },
+    "tfl-140": {
+      "title": "CHEF BURGER 160GR",
+      "description": "160 g Hamburger-Fleischbällchen, Rinderschinken, Cheddar-Käse, Tomate, Salat und Burgersauce"
+    },
+    "tfl-141": {
+      "title": "TRIO BURGER 120GR",
+      "description": "3 Stück x 40 g Fleischbällchen. Drei Mini-Burger mit geräucherten Rinderrippen und Cheddar, karamellisierten Zwiebeln und Cheddar, klassischem Cheddar, würzigen Pommes Frites."
+    },
+    "tfl-142": {
+      "title": "DELI BURGER 160GR",
+      "description": "Cheddar-Käse, geräucherte Rinderrippchen, geräucherter Truthahn, Salat, Tomate, Gurken, würzige Bratkartoffeln."
+    },
+    "tfl-143": {
+      "title": "JIZ BURGER",
+      "description": "160 g Hamburger-Fleischbällchen, Cheddar-Sauce, Sahne, Zwiebelringe und würzige Kartoffeln"
+    },
+    "tfl-144": {
+      "title": "HAMBURGER",
+      "description": "Salat, Gurken, Tomaten, würzige Kartoffelpfanne."
+    },
+    "tfl-145": {
+      "title": "CHICKEN WRAP",
+      "description": "Sautierte Hähnchenscheiben, rote und grüne Paprika, Zwiebeln, geschmolzener Käse, Pilze, würzige Kartoffeln in einer Pfanne."
+    },
+    "tfl-146": {
+      "title": "FLEISCHWICKEL",
+      "description": "Sautierte Rindfleischscheiben, rote und grüne Paprika, Zwiebeln, geschmolzener Käse, Pilze, würzige Kartoffelpfanne"
+    },
+    "tfl-147": {
+      "title": "HUHN FAJITA",
+      "description": "Sautiertes Hühnerfleisch, Zwiebeln, bunte Paprika, Sauerrahm, Salsa, Guacamole-Dip-Sauce, Tortilla"
+    },
+    "tfl-148": {
+      "title": "FLEISCH FAJITA",
+      "description": "Sautiertes Filet, Zwiebeln, bunte Paprika, Sauerrahm, Salsa. Guacamole-Dip, Tortilla."
+    },
+    "tfl-149": {
+      "title": "QUESEDILLA MIT FLEISCH",
+      "description": "mit Tortillabrot, Rinderfilet, farbigen Paprika, Zuchtpilzen, Mais, mexikanischen Bohnen, Mozzarella-Käse, würzigen Kartoffeln, Zwiebeln, Sauerrahm, Guaconola-Sauce, mexikanischer Sauce"
+    },
+    "tfl-150": {
+      "title": "QUESEDILLA MIT HUHN",
+      "description": "mit Tortillabrot, Hähnchenfilet, farbigen Paprika, Zuchtpilzen, Mais, mexikanischen Bohnen, Mozzarella-Käse, würzigen Kartoffeln, Zwiebeln, Sauerrahm, Guaconola-Sauce, Mexico-Sauce"
+    },
+    "tfl-151": {
+      "title": "QUESEDILLA RIPPEN",
+      "description": "mit Tortillabrot, langsam gegartem Rippenfleisch, farbigen Paprika, Zuchtpilzen, Mozzarella-Käse, Cheedar-Käse, würzigen Kartoffeln, Zwiebeln, Sauerrahm, Guaconola-Sauce, mexikanischer Sauce"
+    },
+    "tfl-152": {
+      "title": "COMBO-FAJITAS",
+      "description": ""
+    },
+    "tfl-153": {
+      "title": "KINDERFLEISCHBÄLLCHEN",
+      "description": "Drei Fleischbällchen, Reis, Kartoffeln."
+    },
+    "tfl-154": {
+      "title": "KINDER-SPGHETTI",
+      "description": "Butterspaghetti"
+    },
+    "tfl-155": {
+      "title": "KINDERPIZZA",
+      "description": "Tomatensauce, Mozzarella-Käse, Wurst, Wurst, Mais."
+    },
+    "tfl-156": {
+      "title": "KIDS Filet PENNE",
+      "description": "Gegrillte Filetscheiben, Butterpenne."
+    },
+    "tfl-157": {
+      "title": "KİDS BURGER",
+      "description": "zwei Mini-Burger, Pommes Frites."
+    },
+    "tfl-158": {
+      "title": "EINE SCHÜSSEL Filet",
+      "description": "Avocado, Weizen, Kirschtomaten, Edamer, eingelegte Rote Bete, knuspriges Brot."
+    },
+    "tfl-159": {
+      "title": "EINE SCHÜSSEL FALAFEL",
+      "description": "Avocado, Weizen, Kirschtomaten, Edamerbohnen, eingelegte Rote Bete, knuspriges Brot, Tahinisauce."
+    },
+    "tfl-160": {
+      "title": "EINE SCHÜSSEL GARNELEN",
+      "description": "Avocado, Weizen, Kirschtomaten, Edamer, eingelegte Rote Bete, knuspriges Brot."
+    },
+    "tfl-161": {
+      "title": "EINE SCHÜSSEL FLEISCHBÄLLCHEN",
+      "description": "Avocado, Weizen, Kirschtomaten, Edamer, eingelegte Rote Bete, knuspriges Brot."
+    },
+    "tfl-162": {
+      "title": "EINE SCHÜSSEL HUHN",
+      "description": "Avocado, Weizen, Kirschtomaten, Edamer, eingelegte Rote Bete, knuspriges Brot."
+    },
+    "tfl-163": {
+      "title": "EINE SCHÜSSEL GEGRILLTER LACHS",
+      "description": "gegrillter Lachs, Edamerbohnen, Avocado, eingelegte Zwiebeln, eingelegter Rotkohl, Kirschtomaten, Karotten und Gemüse der Saison"
+    },
+    "tfl-164": {
+      "title": "BBQ HUHN",
+      "description": "200 Gramm Gegrillte Hähnchenschenkel, BBQ-Sauce, geröstete bunte Paprika, Reis, würzige Bratkartoffeln."
+    },
+    "tfl-165": {
+      "title": "HÄHNCHEN GEFALLEN",
+      "description": "200 Gramm Hähnchenfiletscheiben, geröstete Auberginen, gekochtes Gemüse, Babykartoffeln."
+    },
+    "tfl-166": {
+      "title": "ASIATISCHES HUHN",
+      "description": "200 g Hähnchenfilet, mit Basmatireis, süßem Chili und scharfer Sauce."
+    },
+    "tfl-167": {
+      "title": "AUFLAUF HÜHNERGRATEN",
+      "description": "220 g Hähnchenschenkel, bunte Paprika, Pilzsauce und Mozzarella-Käse."
+    },
+    "tfl-168": {
+      "title": "HUHN MIT SPINAT",
+      "description": "200 grams Chicken thigh, sautéed spinach, mozzarella, potato wedges, with pesto sauce."
+    },
+    "tfl-169": {
+      "title": "HUHN MIT CURRYSAUCE",
+      "description": "Chicken tenderloin slices, colored peppers, mushrooms, fried potatoes, rice, curry sauce"
+    },
+    "tfl-170": {
+      "title": "EINGEWICKELTES HUHN",
+      "description": "200 g chicken tenderloin, sautéed spinach, mashed potatoes and Mediterranean greens."
+    },
+    "tfl-171": {
+      "title": "MEXIKO-HÄHNCHEN",
+      "description": "200 grams Chicken, colored peppers, Mexican beans, corn, jalapeno pepper, hot sauce on a bed of mashed potatoes."
+    },
+    "tfl-172": {
+      "title": "HUHN MIT STEINPILZEN",
+      "description": "200 Gramm Gegrillte Hähnchenschenkel, gekochtes Gemüse, Reis, Steinpilzsauce."
+    },
+    "tfl-173": {
+      "title": "HÜHNCHEN-LIMONCELLO",
+      "description": "200 g Hähnchenfilet, Kartoffelpüree, Zitronensauce"
+    },
+    "tfl-174": {
+      "title": "TAI TAI HUHN",
+      "description": "200 Gramm panierte knusprige Hähnchenstücke, knusprige Karotten, bunte Paprika, Jalapone-Pfeffer, Kartoffelspalten, Sauerrahmsauce, Sesam"
+    },
+    "tfl-175": {
+      "title": "HÜHNCHEN MIT SÜßER CHILI-SAUCE",
+      "description": "200 Gramm Gegrilltes Hähnchenfilet, gekochtes Gemüse, Babykartoffeln, Süß- und Chilisauce."
+    },
+    "tfl-176": {
+      "title": "CAFE DE PARIS HUHN MIT SAUCE",
+      "description": "200 grams of chicken tenderloin with Cafe de Paris sauce, spicy potatoes and Mediterranean greens."
+    },
+    "tfl-177": {
+      "title": "Gegrilltes Hähnchenfilet",
+      "description": "200 Gramm Hähnchenfiletscheiben, gekochtes Gemüse, Babykartoffeln."
+    },
+    "tfl-178": {
+      "title": "CHINITZEL MIT PILZSAUCE",
+      "description": "Panierte Hähnchenbrust, Steinpilze und Zuchtpilze, serviert mit Sahne und Parmesanpulver"
+    },
+    "tfl-179": {
+      "title": "HUHN CHINITZEL",
+      "description": "200 Gramm panierte Hähnchenbrust, Parmesan, Butter, würzige Kartoffelpfanne."
+    },
+    "tfl-180": {
+      "title": "GEBRATENES HUHN",
+      "description": "200 grams of chicken thigh, colored peppers, shallots, garlic, cherry tomatoes"
+    },
+    "tfl-181": {
+      "title": "ALI NAZİK",
+      "description": "Geröstete Auberginen, passierter Joghurt, Knoblauch, 200 Gramm Filetscheiben, Buttersauce, rote Chilischote."
+    },
+    "tfl-182": {
+      "title": "FLEISCHBÄLLCHEN GEFALLEN",
+      "description": "mochte Trompetenpaprika, Tomate, Aubergine, Tomatensauce."
+    },
+    "tfl-183": {
+      "title": "RINDERFILET CAFÉ DE PARIS",
+      "description": "Würzige Bratkartoffeln, Café-de-Paris-Sauce."
+    },
+    "tfl-184": {
+      "title": "DALLAS STEAK",
+      "description": "Kartoffeln mit Milchcreme, sautierter Spinat"
+    },
+    "tfl-185": {
+      "title": "GEGRILLTE FLEISCHBÄLLCHEN 200GR",
+      "description": "Kartoffelpüree, Acuka, Tomate und Paprika."
+    },
+    "tfl-186": {
+      "title": "DELIGHT TOPFILE",
+      "description": "Gegrillte Filetscheiben, Ofenkartoffeln mit Milchcreme, gekochtes Gemüse."
+    },
+    "tfl-187": {
+      "title": "Filet mit Pilzen",
+      "description": "Ofenkartoffeln mit Milchcreme, gekochtem Gemüse, Pilzen, Steinpilzen, Sahnesauce."
+    },
+    "tfl-188": {
+      "title": "KEBAB MIT JOGHURT",
+      "description": "Gegrilltes Rinderfilet, gegrillte Fleischbällchen, Joghurt, geröstete Tomaten, Paprika, Fladenbrot, mit Buttersauce"
+    },
+    "tfl-189": {
+      "title": "PFEFFERSTEAK",
+      "description": "Ofenkartoffeln mit Milchcreme, gekochtes Gemüse, Demiglace-Sauce mit schwarzem Pfeffer"
+    },
+    "tfl-190": {
+      "title": "LAMMKOTELETTEN",
+      "description": "Lammkoteletts, Kartoffelpüree, gekochtes Gemüse, frischer Spargel, mit Demi-Gloce-Sauce"
+    },
+    "tfl-191": {
+      "title": "DELIGHT TOPFILE IN BUTTER",
+      "description": "Rinderfilet mariniert mit Spezialsaucen, Butter, frischen Gewürzen, Knoblauch, Kirschtomaten und Fladenbrot"
+    },
+    "tfl-192": {
+      "title": "ADANA-WICKEL",
+      "description": "Mit würzigen Kartoffeln"
+    },
+    "tfl-193": {
+      "title": "ADANA-TEIL",
+      "description": ""
+    },
+    "tfl-194": {
+      "title": "GEMISCHTES PITA",
+      "description": ""
+    },
+    "tfl-195": {
+      "title": "PITA MIT Cheddar",
+      "description": ""
+    },
+    "tfl-196": {
+      "title": "PITA MIT Cheddar und Wurst",
+      "description": ""
+    },
+    "tfl-197": {
+      "title": "GERÖSTETES PITA",
+      "description": ""
+    },
+    "tfl-198": {
+      "title": "GEHACKTES PITA",
+      "description": ""
+    },
+    "tfl-199": {
+      "title": "BUCKED PITA",
+      "description": ""
+    },
+    "tfl-200": {
+      "title": "SHISHED LAMB Wrap",
+      "description": "Grünen Cocktail mit Tomate und Gurke mischen"
+    },
+    "tfl-201": {
+      "title": "GESCHEIDETER LAMMTEIL",
+      "description": ""
+    },
+    "tfl-202": {
+      "title": "LAHMACUN",
+      "description": ""
+    },
+    "tfl-203": {
+      "title": "SPEZIELLES ANTEP LAHMACUN",
+      "description": ""
+    },
+    "tfl-204": {
+      "title": "SPEZIELLES URFA LAHMACUN",
+      "description": ""
+    },
+    "tfl-205": {
+      "title": "Chicken Shished Wrap",
+      "description": "Grünen Cocktail mit Tomate und Gurke mischen"
+    },
+    "tfl-206": {
+      "title": "HÜHNERSCHEIBENTEIL",
+      "description": ""
+    },
+    "tfl-207": {
+      "title": "URFA DÜRUM",
+      "description": "Mit würzigen Kartoffeln"
+    },
+    "tfl-208": {
+      "title": "URFA-TEIL",
+      "description": ""
+    },
+    "tfl-209": {
+      "title": "GEGRILLTE MEERE",
+      "description": "gegrillter Wolfsbarsch, Rucolasalat, rote Zwiebeln, Sauerkraut, mit Remulodsauce"
+    },
+    "tfl-210": {
+      "title": "GEGRILLTER LACHS",
+      "description": "Kartoffelpüree, sautierter Spinat, Buttersauce, Mohn."
+    },
+    "tfl-211": {
+      "title": "LACHS SPARGEL",
+      "description": "gegrillter Lachs, frischer Spargel, Babykartoffeln, mit Chimicurri-Sauce"
+    },
+    "tfl-212": {
+      "title": "KÜRBIS PROFITEROL",
+      "description": "Einfaches, mit Eis gefülltes Kürbispüree, weiße Schokoladensauce."
+    },
+    "tfl-213": {
+      "title": "KÄSEKUCHEN",
+      "description": "Mit Zitrone, Himbeere, Schokolade und Soße nach Wahl"
+    },
+    "tfl-214": {
+      "title": "SCHOKOLADEN-DUETT",
+      "description": ""
+    },
+    "tfl-215": {
+      "title": "SCHOKOLADENSOUFFE",
+      "description": "Serviert mit Eis."
+    },
+    "tfl-216": {
+      "title": "WAFFEL AM STÜCK",
+      "description": "Waffel, weiße Schokoladensauce, Milchschokoladensauce"
+    },
+    "tfl-217": {
+      "title": "PROFITEROL",
+      "description": "Profiteroles-Kugeln mit Schokoladensoße überzogen."
+    },
+    "tfl-218": {
+      "title": "TIRAMISU",
+      "description": "Mit einer Mischung aus Sahne, Löffelbiskuits und Kaffee"
+    },
+    "tfl-219": {
+      "title": "LOTUS-KÄSEKUCHEN",
+      "description": "Lotuscreme, Erdbeeren, Haselnüsse und weiße Schokoladensauce"
+    },
+    "tfl-220": {
+      "title": "MAGNOLIE",
+      "description": "Mit Sahne, Banane, Erdbeere und Schokoladensauce"
+    },
+    "tfl-221": {
+      "title": "FRUCHT DRYISSAN",
+      "description": "Croissant, Gebäckcreme, Erdbeer-, Bananen- und Schokoladensaucen"
+    },
+    "tfl-222": {
+      "title": "FRUCHTWAFFEL",
+      "description": "Waffel, Schokoladensauce, Kiwi, Banane, Erdbeere"
+    },
+    "tfl-223": {
+      "title": "BÄCKEREI-KÄSEKUCHEN",
+      "description": ""
+    },
+    "tfl-224": {
+      "title": "HERZWAFFEL-MILCHSCHOKOLADE",
+      "description": "Waffel, Milchschokoladensauce"
+    },
+    "tfl-225": {
+      "title": "HERZWAFFEL WEISSE SCHOKOLADE",
+      "description": "Waffel, weiße Schokoladensauce"
+    },
+    "tfl-226": {
+      "title": "BANANENROLLE",
+      "description": "Biskuitkuchen, Sahne, Banane und weiße Schokoladensauce"
+    },
+    "tfl-227": {
+      "title": "PINOLI (ERDBEERE)",
+      "description": "Mit Baiser, Sahne, Erdbeeren und Schokoladensauce"
+    },
+    "tfl-228": {
+      "title": "SCHOKOLADEN-BROWNNI",
+      "description": ""
+    },
+    "tfl-229": {
+      "title": "CREMEPUFF",
+      "description": ""
+    },
+    "tfl-230": {
+      "title": "WAFFEL",
+      "description": ""
+    },
+    "tfl-231": {
+      "title": "DESSERT DES TAGES",
+      "description": ""
+    },
+    "tfl-232": {
+      "title": "OBSTTELLER",
+      "description": ""
+    },
+    "tfl-233": {
+      "title": "AYRAN",
+      "description": ""
+    },
+    "tfl-234": {
+      "title": "AYRAN MIT BASILIKUM",
+      "description": ""
+    },
+    "tfl-235": {
+      "title": "AYRAN MIT MINZE",
+      "description": ""
+    },
+    "tfl-236": {
+      "title": "CAPPY-SAFT",
+      "description": "120-"
+    },
+    "tfl-237": {
+      "title": "COCA COLA",
+      "description": ""
+    },
+    "tfl-238": {
+      "title": "COCA COLA NULL",
+      "description": ""
+    },
+    "tfl-239": {
+      "title": "FANTA",
+      "description": ""
+    },
+    "tfl-240": {
+      "title": "FUSE TEE ZITRONE",
+      "description": ""
+    },
+    "tfl-241": {
+      "title": "FUSE TEE PFIRSICH",
+      "description": ""
+    },
+    "tfl-242": {
+      "title": "RED BULL",
+      "description": ""
+    },
+    "tfl-243": {
+      "title": "SAN PELLEGRINO 250 ML",
+      "description": ""
+    },
+    "tfl-244": {
+      "title": "SAN PELLEGRINO 750 ML",
+      "description": ""
+    },
+    "tfl-245": {
+      "title": "SCHWEPPES BITTER",
+      "description": ""
+    },
+    "tfl-246": {
+      "title": "SCHWEPPES MANDARINE",
+      "description": ""
+    },
+    "tfl-247": {
+      "title": "SCHWEPPES TONIC",
+      "description": ""
+    },
+    "tfl-248": {
+      "title": "SODA",
+      "description": ""
+    },
+    "tfl-249": {
+      "title": "SPRITE",
+      "description": ""
+    },
+    "tfl-250": {
+      "title": "WASSER 330 ml",
+      "description": ""
+    },
+    "tfl-251": {
+      "title": "WASSER 750 ML",
+      "description": ""
+    },
+    "tfl-252": {
+      "title": "HONIG-BANANEN-MISCHUNG",
+      "description": ""
+    },
+    "tfl-253": {
+      "title": "INGWER-ENTGIFTUNG",
+      "description": "Apfelsaft, Ingwer, Karottensaft, Orangensaft"
+    },
+    "tfl-254": {
+      "title": "GRÜNE DETOX",
+      "description": "Apfelsaft, Gurke, Minze, Petersilie, Dill, Zitronensaft, Orangensaft"
+    },
+    "tfl-255": {
+      "title": "ORANGENSAFT",
+      "description": ""
+    },
+    "tfl-256": {
+      "title": "FRISCHER APFELSAFT",
+      "description": ""
+    },
+    "tfl-257": {
+      "title": "FRISCHER KAROTTENSAFT",
+      "description": ""
+    },
+    "tfl-258": {
+      "title": "TFC DETOX",
+      "description": "Apfelsaft, Karottensaft, Orangensaft, Zitronengurke"
+    },
+    "tfl-259": {
+      "title": "ERDBEER-LIMONADE",
+      "description": ""
+    },
+    "tfl-260": {
+      "title": "MELONE-LIMONADE",
+      "description": ""
+    },
+    "tfl-261": {
+      "title": "LIMONADE",
+      "description": ""
+    },
+    "tfl-262": {
+      "title": "MANGO-LIMONADE",
+      "description": ""
+    },
+    "tfl-263": {
+      "title": "MINZE-LIMONADE",
+      "description": ""
+    },
+    "tfl-264": {
+      "title": "LEIDENSCHAFTSLIMONADE",
+      "description": ""
+    },
+    "tfl-265": {
+      "title": "PFIRSICH-LIMONADE",
+      "description": ""
+    },
+    "tfl-266": {
+      "title": "KIRSCHLIMONADE",
+      "description": ""
+    },
+    "tfl-267": {
+      "title": "INGWER-LIMONADE",
+      "description": ""
+    },
+    "tfl-268": {
+      "title": "APFEL GEFROREN",
+      "description": ""
+    },
+    "tfl-269": {
+      "title": "WASSERMELONE GEFROREN",
+      "description": ""
+    },
+    "tfl-270": {
+      "title": "MELONE GEFROREN",
+      "description": ""
+    },
+    "tfl-271": {
+      "title": "MANGO gefroren",
+      "description": ""
+    },
+    "tfl-272": {
+      "title": "MINZE-ZITRONE gefroren",
+      "description": ""
+    },
+    "tfl-273": {
+      "title": "LEIDENSCHAFT GEFROREN",
+      "description": ""
+    },
+    "tfl-274": {
+      "title": "PFIRSICH GEFROREN",
+      "description": ""
+    },
+    "tfl-275": {
+      "title": "ERDBEERE GEFROREN",
+      "description": ""
+    },
+    "tfl-276": {
+      "title": "MILCHSHAKE SCHOKOLADE",
+      "description": ""
+    },
+    "tfl-277": {
+      "title": "MILCHSHAKE ERDBEERE",
+      "description": ""
+    },
+    "tfl-278": {
+      "title": "MILCHSHAKE KARAMELL",
+      "description": ""
+    },
+    "tfl-279": {
+      "title": "MILKSHAKE LEIDENSCHAFT",
+      "description": ""
+    },
+    "tfl-280": {
+      "title": "MILCHSHAKE VANILLE",
+      "description": ""
+    },
+    "tfl-281": {
+      "title": "AMERICANO",
+      "description": ""
+    },
+    "tfl-282": {
+      "title": "CAFE LATTE",
+      "description": ""
+    },
+    "tfl-283": {
+      "title": "CAFE MOCHA",
+      "description": ""
+    },
+    "tfl-284": {
+      "title": "CAPPUCINO",
+      "description": ""
+    },
+    "tfl-285": {
+      "title": "GEBRÜHTER TEE",
+      "description": ""
+    },
+    "tfl-286": {
+      "title": "DOPPELTER TÜRKISCHER KAFFEE",
+      "description": ""
+    },
+    "tfl-287": {
+      "title": "ESPRESSO DOPPELT",
+      "description": ""
+    },
+    "tfl-288": {
+      "title": "ESPRESSO MACCHIATO",
+      "description": ""
+    },
+    "tfl-289": {
+      "title": "ESPRESSO EINZELN",
+      "description": ""
+    },
+    "tfl-290": {
+      "title": "FILTERKAFFEE",
+      "description": ""
+    },
+    "tfl-291": {
+      "title": "TASSE TEE",
+      "description": ""
+    },
+    "tfl-292": {
+      "title": "KARAMELLATTE",
+      "description": ""
+    },
+    "tfl-293": {
+      "title": "SAHLEP",
+      "description": ""
+    },
+    "tfl-294": {
+      "title": "HEISSE SCHOKOLADE",
+      "description": ""
+    },
+    "tfl-295": {
+      "title": "TÜRKISCHER KAFFEE",
+      "description": ""
+    },
+    "tfl-296": {
+      "title": "ICE AMERICANO",
+      "description": ""
+    },
+    "tfl-297": {
+      "title": "ICE LATTE",
+      "description": ""
+    },
+    "tfl-298": {
+      "title": "EIS MOCHA",
+      "description": ""
+    },
+    "tfl-299": {
+      "title": "EISWEISSER MOCHA",
+      "description": ""
+    },
+    "tfl-300": {
+      "title": "Linden",
+      "description": ""
+    },
+    "tfl-301": {
+      "title": "WINTERTEE",
+      "description": ""
+    },
+    "tfl-302": {
+      "title": "KAMILLENTE",
+      "description": ""
+    },
+    "tfl-303": {
+      "title": "AMSTERDAM 33 CL",
+      "description": ""
+    },
+    "tfl-304": {
+      "title": "BECKS 33 CL",
+      "description": ""
+    },
+    "tfl-305": {
+      "title": "BLANC 33 CL",
+      "description": ""
+    },
+    "tfl-306": {
+      "title": "BOMONTİ OHNE FILTER 50 CL",
+      "description": ""
+    },
+    "tfl-307": {
+      "title": "BUD 50 CL",
+      "description": ""
+    },
+    "tfl-308": {
+      "title": "CARSLBERG 33 CL",
+      "description": ""
+    },
+    "tfl-309": {
+      "title": "CARSLBERG LUNA 50 CL",
+      "description": ""
+    },
+    "tfl-310": {
+      "title": "CORONA 35 CL",
+      "description": ""
+    },
+    "tfl-311": {
+      "title": "DESPERADOS 33 CL",
+      "description": ""
+    },
+    "tfl-312": {
+      "title": "EFES MALT 50 CL",
+      "description": ""
+    },
+    "tfl-313": {
+      "title": "EFES SONDERREIHE 50 CL",
+      "description": ""
+    },
+    "tfl-314": {
+      "title": "ERDINGER 33 CL",
+      "description": ""
+    },
+    "tfl-315": {
+      "title": "GUINESS 44 CL",
+      "description": ""
+    },
+    "tfl-316": {
+      "title": "HEINEKEN 33 CL",
+      "description": ""
+    },
+    "tfl-317": {
+      "title": "MILLER 33 CL",
+      "description": ""
+    },
+    "tfl-318": {
+      "title": "LINKS 33 CL",
+      "description": ""
+    },
+    "tfl-319": {
+      "title": "TUBORG AMBER 50 CL",
+      "description": ""
+    },
+    "tfl-320": {
+      "title": "TUBORG FASS 33 CL",
+      "description": ""
+    },
+    "tfl-321": {
+      "title": "TUBORG KESSEL 50 CL",
+      "description": ""
+    },
+    "tfl-322": {
+      "title": "TUBORG OHNE FILTER 50 CL",
+      "description": ""
+    },
+    "tfl-323": {
+      "title": "WEIHENSTEPHAN 33 CL",
+      "description": ""
+    },
+    "tfl-324": {
+      "title": "APEROL SPRITZ",
+      "description": "Aperol, Prosecco, Limonade"
+    },
+    "tfl-325": {
+      "title": "DEEP BLUE (ALKOHOLFREI)",
+      "description": ""
+    },
+    "tfl-326": {
+      "title": "DREAM LOVE SOFT (ALKOHOLFREI)",
+      "description": ""
+    },
+    "tfl-327": {
+      "title": "ESPRESSO MARTINI",
+      "description": "Wodka, Kahlua, Espresso"
+    },
+    "tfl-328": {
+      "title": "INGWER-ZITRONE-MAGARITA",
+      "description": "Tequila, Zitronencello, süß-sauer, Ingwermischung"
+    },
+    "tfl-329": {
+      "title": "NUR ABLEHNEN",
+      "description": "Gin, Wodka, Hibiskustee, süß und sauer"
+    },
+    "tfl-330": {
+      "title": "LONG ISLAND EISTEE",
+      "description": "Wodka, Gin, Tequila, Rum, Countrau, süß-sauer, Top-Cola"
+    },
+    "tfl-331": {
+      "title": "LYNCHBURG LIMONADE",
+      "description": "Bourbon Whiskey, Country, süß-sauer, Top Sprite"
+    },
+    "tfl-332": {
+      "title": "MAGMA POSSION",
+      "description": "Würziger Wodka, Apfelsaft, Passionsfrucht, süß-sauer"
+    },
+    "tfl-333": {
+      "title": "MARGARITA",
+      "description": "Tequila, Country, Zitronensaft"
+    },
+    "tfl-334": {
+      "title": "MOJITO",
+      "description": "Rum, Limette, Minze, brauner Zucker, Limonade"
+    },
+    "tfl-335": {
+      "title": "MOJITO (ALKOHOLFREI)",
+      "description": ""
+    },
+    "tfl-336": {
+      "title": "NEGRONIA",
+      "description": "Gin, Rosso Wermut, Campari"
+    },
+    "tfl-337": {
+      "title": "PINA COLADA",
+      "description": "Weißer Rum, Ananassaft, Kokosnuss"
+    },
+    "tfl-338": {
+      "title": "SENSEI",
+      "description": "Mulver Flower, Wodka, Blaubeere, Wintertee, süß und sauer"
+    },
+    "tfl-339": {
+      "title": "SONNENUNTERGANG",
+      "description": ""
+    },
+    "tfl-340": {
+      "title": "BAILEY S",
+      "description": ""
+    },
+    "tfl-341": {
+      "title": "JACK DANIEL S",
+      "description": ""
+    },
+    "tfl-342": {
+      "title": "JAGER",
+      "description": ""
+    },
+    "tfl-343": {
+      "title": "ZITRONE",
+      "description": ""
+    },
+    "tfl-344": {
+      "title": "SAFARI",
+      "description": ""
+    },
+    "tfl-345": {
+      "title": "TEQUILA",
+      "description": ""
+    },
+    "tfl-346": {
+      "title": "JOHNNIE WALKER SCHWARZES ETIKETT",
+      "description": ""
+    },
+    "tfl-347": {
+      "title": "ABERLOUR 12 JAHRE",
+      "description": ""
+    },
+    "tfl-348": {
+      "title": "CHIVAS 12 JAHRE",
+      "description": ""
+    },
+    "tfl-349": {
+      "title": "CHIVAS 18 JAHRE",
+      "description": ""
+    },
+    "tfl-350": {
+      "title": "GLENLIVET",
+      "description": ""
+    },
+    "tfl-351": {
+      "title": "GLIENDFİDDİCH",
+      "description": ""
+    },
+    "tfl-352": {
+      "title": "JACK DANIEL S",
+      "description": ""
+    },
+    "tfl-353": {
+      "title": "JAMESON",
+      "description": ""
+    },
+    "tfl-354": {
+      "title": "JOHNNIE WALKER ROTES ETIKETT",
+      "description": ""
+    },
+    "tfl-355": {
+      "title": "RINDERFEDER",
+      "description": ""
+    },
+    "tfl-356": {
+      "title": "GORDON'S DRY GIN",
+      "description": ""
+    },
+    "tfl-357": {
+      "title": "GORDON S ROSA",
+      "description": ""
+    },
+    "tfl-358": {
+      "title": "HENDRIC S",
+      "description": ""
+    },
+    "tfl-359": {
+      "title": "TENQUARAY",
+      "description": ""
+    },
+    "tfl-360": {
+      "title": "ABSOLUT",
+      "description": ""
+    },
+    "tfl-361": {
+      "title": "BELVEDERE",
+      "description": ""
+    },
+    "tfl-362": {
+      "title": "GRAU GANS",
+      "description": ""
+    },
+    "tfl-363": {
+      "title": "SMİRNOFF",
+      "description": ""
+    },
+    "tfl-364": {
+      "title": "EFE GOLD DOPPELT",
+      "description": ""
+    },
+    "tfl-365": {
+      "title": "EFE GOLD TEK",
+      "description": ""
+    },
+    "tfl-366": {
+      "title": "BELLY RAKI DOPPELT",
+      "description": ""
+    },
+    "tfl-367": {
+      "title": "BELLY RAKI SINGLE",
+      "description": ""
+    },
+    "tfl-368": {
+      "title": "TEKİRDAĞ DOPPELT",
+      "description": ""
+    },
+    "tfl-369": {
+      "title": "TEKİRDAĞ TEK",
+      "description": ""
+    },
+    "tfl-370": {
+      "title": "NEUES RAKI-DOPPEL",
+      "description": ""
+    },
+    "tfl-371": {
+      "title": "NEUER RAKI SINGLE",
+      "description": ""
+    },
+    "tfl-372": {
+      "title": "APEROL",
+      "description": ""
+    },
+    "tfl-373": {
+      "title": "BAİYLS",
+      "description": ""
+    },
+    "tfl-374": {
+      "title": "CAMPARİ",
+      "description": ""
+    },
+    "tfl-375": {
+      "title": "CARDINA MELON",
+      "description": ""
+    },
+    "tfl-376": {
+      "title": "LIMONCELLO",
+      "description": ""
+    },
+    "tfl-377": {
+      "title": "MALIBU",
+      "description": ""
+    },
+    "tfl-378": {
+      "title": "SAFARI KAHLUA",
+      "description": ""
+    },
+    "tfl-379": {
+      "title": "ANCYRA BOĞAZKERE",
+      "description": ""
+    },
+    "tfl-380": {
+      "title": "ANCYRA CABERNET SAVIGNON SYRAH",
+      "description": ""
+    },
+    "tfl-381": {
+      "title": "ANCYRA CABERNET SAVIGNON SYRAH KDH",
+      "description": ""
+    },
+    "tfl-382": {
+      "title": "ANCYRA KALECİK SCHWARZ",
+      "description": ""
+    },
+    "tfl-383": {
+      "title": "ANCYRA MERLOT",
+      "description": ""
+    },
+    "tfl-384": {
+      "title": "ANCYRA MERLOT GLAS",
+      "description": ""
+    },
+    "tfl-385": {
+      "title": "DLC CABARNET SAVIGNON",
+      "description": ""
+    },
+    "tfl-386": {
+      "title": "DLC KALECİK DARK",
+      "description": ""
+    },
+    "tfl-387": {
+      "title": "DLC KALECİK BLACK GOAL",
+      "description": ""
+    },
+    "tfl-388": {
+      "title": "DLC OXEYE",
+      "description": ""
+    },
+    "tfl-389": {
+      "title": "DLC OXEYGAZÜ GOAL",
+      "description": ""
+    },
+    "tfl-390": {
+      "title": "DLC SHIRAZ",
+      "description": ""
+    },
+    "tfl-391": {
+      "title": "DOLUCA ALÇITEPE",
+      "description": ""
+    },
+    "tfl-392": {
+      "title": "KAV BOĞAZKERE ÖKÜZGÖZÜ",
+      "description": ""
+    },
+    "tfl-393": {
+      "title": "M PORTA DIVERTI ROT",
+      "description": ""
+    },
+    "tfl-394": {
+      "title": "M PORTA DIVERTI RED KDH",
+      "description": ""
+    },
+    "tfl-395": {
+      "title": "MONTES CABARNER SAUVIGNON",
+      "description": ""
+    },
+    "tfl-396": {
+      "title": "MONTES MERLOT",
+      "description": ""
+    },
+    "tfl-397": {
+      "title": "SARAFİN CABARNET SAVIGNON",
+      "description": ""
+    },
+    "tfl-398": {
+      "title": "SARAFİN MERLOT",
+      "description": ""
+    },
+    "tfl-399": {
+      "title": "SARAFİN SHIRAZ",
+      "description": ""
+    },
+    "tfl-400": {
+      "title": "URLA VOURLA",
+      "description": ""
+    },
+    "tfl-401": {
+      "title": "VALDİVİESO CABARNET SAUVIGNON",
+      "description": ""
+    },
+    "tfl-402": {
+      "title": "VALDİVIESO CHARDONNAY",
+      "description": ""
+    },
+    "tfl-403": {
+      "title": "VALDİVIESO MERLOT",
+      "description": ""
+    },
+    "tfl-404": {
+      "title": "RUBIN",
+      "description": ""
+    },
+    "tfl-405": {
+      "title": "DLC EMİR SULTANİYE",
+      "description": ""
+    },
+    "tfl-406": {
+      "title": "DLC MOSKADO DÖMİSEK",
+      "description": ""
+    },
+    "tfl-407": {
+      "title": "DLC MOSKADO DÖMİSEK GLAS",
+      "description": ""
+    },
+    "tfl-408": {
+      "title": "DLC NARINCE",
+      "description": ""
+    },
+    "tfl-409": {
+      "title": "DLC NARINCE KADEH",
+      "description": ""
+    },
+    "tfl-410": {
+      "title": "KAV NARINCE",
+      "description": ""
+    },
+    "tfl-411": {
+      "title": "KAVAKLIDERE MARMOR",
+      "description": ""
+    },
+    "tfl-412": {
+      "title": "KOCABAĞ Kappadokien NARİNCE EMİR",
+      "description": ""
+    },
+    "tfl-413": {
+      "title": "M PORTA DIVERTI WEISS",
+      "description": ""
+    },
+    "tfl-414": {
+      "title": "M PORTA DIVERTI WHITE KDH",
+      "description": ""
+    },
+    "tfl-415": {
+      "title": "SAFİR DÖMİSEK",
+      "description": ""
+    },
+    "tfl-416": {
+      "title": "SANTA HELENA SAVIGNON BLANC",
+      "description": ""
+    },
+    "tfl-417": {
+      "title": "SARAFİN CHARDONNAY",
+      "description": ""
+    },
+    "tfl-418": {
+      "title": "SARAFİN GERÄUCHERTE BLANC-FLASCHE",
+      "description": ""
+    },
+    "tfl-419": {
+      "title": "ANCYRA BLUSH",
+      "description": ""
+    },
+    "tfl-420": {
+      "title": "ANCYRA BLUSH GLAS",
+      "description": ""
+    },
+    "tfl-421": {
+      "title": "CASAL MENDES ROSE",
+      "description": ""
+    },
+    "tfl-422": {
+      "title": "LEONA BLUSH",
+      "description": ""
+    },
+    "tfl-423": {
+      "title": "LEONA BLUSH GLAS",
+      "description": ""
+    },
+    "tfl-424": {
+      "title": "M PORTA DIVERTISE",
+      "description": ""
+    },
+    "tfl-425": {
+      "title": "M PORTA DIVERTI KDH",
+      "description": ""
+    },
+    "tfl-426": {
+      "title": "M PORTA DIVERTI SAV. BLANK",
+      "description": ""
+    },
+    "tfl-427": {
+      "title": "M PORTA DIVERTI SAV. BLANC KDH",
+      "description": ""
+    },
+    "tfl-428": {
+      "title": "PINOT GRIGIO BLUSH",
+      "description": ""
+    },
+    "tfl-429": {
+      "title": "VERANO BLUSH",
+      "description": ""
+    },
+    "tfl-430": {
+      "title": "VERANO BLUSH-GLAS",
+      "description": ""
+    },
+    "tfl-431": {
+      "title": "ABERLOUR 12 JAHRE",
+      "description": ""
+    },
+    "tfl-432": {
+      "title": "CHIVAS 12 JAHRE",
+      "description": ""
+    },
+    "tfl-433": {
+      "title": "CHIVAS 12 JAHRE 35ER",
+      "description": ""
+    },
+    "tfl-434": {
+      "title": "CHIVAS 18 JAHRE",
+      "description": ""
+    },
+    "tfl-435": {
+      "title": "GLENLIVET",
+      "description": ""
+    },
+    "tfl-436": {
+      "title": "J.B FLASCHE",
+      "description": ""
+    },
+    "tfl-437": {
+      "title": "J.W. BLACK LABEL",
+      "description": ""
+    },
+    "tfl-438": {
+      "title": "J.W DOPPEL SCHWARZ",
+      "description": ""
+    },
+    "tfl-439": {
+      "title": "J.W RED LABEL",
+      "description": ""
+    },
+    "tfl-440": {
+      "title": "JAMESON",
+      "description": ""
+    },
+    "tfl-441": {
+      "title": "DER DEAKON",
+      "description": ""
+    },
+    "tfl-442": {
+      "title": "JACK DANIELS",
+      "description": ""
+    },
+    "tfl-443": {
+      "title": "RINDERFEDER",
+      "description": ""
+    },
+    "tfl-444": {
+      "title": "GORDONS",
+      "description": ""
+    },
+    "tfl-445": {
+      "title": "GORDONS ROSA",
+      "description": ""
+    },
+    "tfl-446": {
+      "title": "HENDRICKS",
+      "description": ""
+    },
+    "tfl-447": {
+      "title": "TANQUARY",
+      "description": ""
+    },
+    "tfl-448": {
+      "title": "ROSA",
+      "description": "Roséwein, Rum, Erdbeerstrauch, Zitronensaft, Orangensirup"
+    },
+    "tfl-449": {
+      "title": "ABLEHNEN",
+      "description": "Rotwein, dunkler Rum, Ananassaft, Pfirsichschnaps"
+    },
+    "tfl-450": {
+      "title": "WEISS",
+      "description": "Weißwein, Wodka, Ananassaft, Zitronensaft, Zuckersirup"
+    },
+    "tfl-451": {
+      "title": "ABSOLUT",
+      "description": ""
+    },
+    "tfl-452": {
+      "title": "BELVEDERE",
+      "description": ""
+    },
+    "tfl-453": {
+      "title": "GRAU GANS",
+      "description": ""
+    },
+    "tfl-454": {
+      "title": "SMİRNOFF",
+      "description": ""
+    },
+    "tfl-455": {
+      "title": "OLMECA",
+      "description": ""
+    },
+    "tfl-456": {
+      "title": "OLMECA GOLD",
+      "description": ""
+    },
+    "tfl-457": {
+      "title": "HENNESY VS",
+      "description": ""
+    },
+    "tfl-458": {
+      "title": "JAGERMAISTER",
+      "description": ""
+    },
+    "tfl-459": {
+      "title": "MARTEL VSOP",
+      "description": ""
+    },
+    "tfl-460": {
+      "title": "MARTINI BİANCO",
+      "description": ""
+    },
+    "tfl-461": {
+      "title": "MARTINI DRY",
+      "description": ""
+    },
+    "tfl-462": {
+      "title": "MARTINI ROSSO",
+      "description": ""
+    },
+    "tfl-463": {
+      "title": "CAPTAIN MORGAN WHITE",
+      "description": ""
+    },
+    "tfl-464": {
+      "title": "HAVANA CLUP",
+      "description": ""
+    },
+    "tfl-465": {
+      "title": "ABERLOUR 12 JAHRE DOPPEL",
+      "description": ""
+    },
+    "tfl-466": {
+      "title": "CHIVAS 12 JAHRE DOPPEL",
+      "description": ""
+    },
+    "tfl-467": {
+      "title": "CHIVAS 18 JAHRE DOPPEL",
+      "description": ""
+    },
+    "tfl-468": {
+      "title": "GLENLIVET DOPPEL",
+      "description": ""
+    },
+    "tfl-469": {
+      "title": "JACK DANIEL S DOPPELT",
+      "description": ""
+    },
+    "tfl-470": {
+      "title": "JAMESON DOPPELT",
+      "description": ""
+    },
+    "tfl-471": {
+      "title": "JIM BEAM DOPPEL",
+      "description": ""
+    },
+    "tfl-472": {
+      "title": "JW BLACK LABEL DOUBLE",
+      "description": ""
+    },
+    "tfl-473": {
+      "title": "JW DOPPEL SCHWARZ",
+      "description": ""
+    },
+    "tfl-474": {
+      "title": "JW RED LABEL DOPPELT",
+      "description": ""
+    },
+    "tfl-475": {
+      "title": "CASAMIGOS MEZCAL KDH",
+      "description": ""
+    },
+    "tfl-476": {
+      "title": "OLMECA KDH",
+      "description": ""
+    },
+    "tfl-477": {
+      "title": "BEYLERBEYİ BELLY 35 CL",
+      "description": ""
+    },
+    "tfl-478": {
+      "title": "EFE GOLD 35 CL",
+      "description": ""
+    },
+    "tfl-479": {
+      "title": "EFE GOLD 70 CL",
+      "description": ""
+    },
+    "tfl-480": {
+      "title": "BELLY RAKI 35 CL",
+      "description": ""
+    },
+    "tfl-481": {
+      "title": "BELLY RAKI 70 CL",
+      "description": ""
+    },
+    "tfl-482": {
+      "title": "TEKİRDAĞ 35 CL",
+      "description": ""
+    },
+    "tfl-483": {
+      "title": "TEKİRDAĞ 70 CL",
+      "description": ""
+    },
+    "tfl-484": {
+      "title": "NEUER RAKI 35 CL",
+      "description": ""
+    },
+    "tfl-485": {
+      "title": "NEUER RAKI 70 CL",
+      "description": ""
+    }
+  }
+}
