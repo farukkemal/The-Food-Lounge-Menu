@@ -68,6 +68,7 @@ const ToggleSwitch = memo(function ToggleSwitch({
 const AdminProductRow = memo(function AdminProductRow({
   item,
   onInlineSaveTitle,
+  onInlineSaveDescription,
   onInlineSavePrice,
   onToggleActive,
   onToggleFeatured,
@@ -78,6 +79,10 @@ const AdminProductRow = memo(function AdminProductRow({
   const [titleDraft, setTitleDraft] = useState(item.title);
   const titleInputRef = useRef(null);
 
+  const [editingDesc, setEditingDesc] = useState(false);
+  const [descDraft, setDescDraft] = useState(item.description || '');
+  const descInputRef = useRef(null);
+
   const [editingPrice, setEditingPrice] = useState(false);
   const [priceDraft, setPriceDraft] = useState(
     item.price !== null && item.price !== undefined ? String(item.price) : ''
@@ -87,6 +92,10 @@ const AdminProductRow = memo(function AdminProductRow({
   useEffect(() => {
     setTitleDraft(item.title);
   }, [item.title]);
+
+  useEffect(() => {
+    setDescDraft(item.description || '');
+  }, [item.description]);
 
   useEffect(() => {
     setPriceDraft(
@@ -100,6 +109,13 @@ const AdminProductRow = memo(function AdminProductRow({
       titleInputRef.current.select();
     }
   }, [editingTitle]);
+
+  useEffect(() => {
+    if (editingDesc && descInputRef.current) {
+      descInputRef.current.focus();
+      descInputRef.current.select();
+    }
+  }, [editingDesc]);
 
   useEffect(() => {
     if (editingPrice && priceInputRef.current) {
@@ -116,6 +132,16 @@ const AdminProductRow = memo(function AdminProductRow({
       return;
     }
     onInlineSaveTitle(item.id, cleaned);
+  };
+
+  const commitDesc = () => {
+    setEditingDesc(false);
+    const cleaned = descDraft.trim();
+    if (cleaned === (item.description || '')) {
+      setDescDraft(item.description || '');
+      return;
+    }
+    onInlineSaveDescription(item.id, cleaned, item.title);
   };
 
   const commitPrice = () => {
@@ -213,11 +239,39 @@ const AdminProductRow = memo(function AdminProductRow({
             )}
           </div>
 
-          {item.description && (
-            <p className="mt-0.5 line-clamp-1 text-xs text-[#7C766E]">
-              {item.description}
-            </p>
-          )}
+          {/* Click-to-Edit Inline Description */}
+          <div className="mt-0.5">
+            {editingDesc ? (
+              <input
+                ref={descInputRef}
+                type="text"
+                value={descDraft}
+                onChange={(e) => setDescDraft(e.target.value)}
+                onBlur={commitDesc}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    commitDesc();
+                  } else if (e.key === 'Escape') {
+                    setDescDraft(item.description || '');
+                    setEditingDesc(false);
+                  }
+                }}
+                placeholder="Ürün açıklaması..."
+                aria-label="Ürün açıklamasını düzenle"
+                className="h-7 w-full rounded-lg border border-[#CA2F2D] bg-white px-2 text-xs text-[#181716] ring-2 ring-[#CA2F2D]/15 focus:outline-none"
+              />
+            ) : (
+              <button
+                type="button"
+                onClick={() => setEditingDesc(true)}
+                title="Açıklamayı değiştirmek için tıklayın"
+                className="block max-w-full truncate text-left text-xs text-[#7C766E] hover:text-[#181716] hover:underline hover:decoration-dashed hover:underline-offset-2 focus:outline-none"
+              >
+                {item.description || '+ Açıklama ekle'}
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
@@ -420,6 +474,15 @@ export default function AdminDashboard({ user, onLogout, onOpenMenu }) {
       const res = await updateItem(itemId, { title: newTitle });
       if (handleAuthError(res)) return;
       showToast(`Ürün adı: "${newTitle}"`);
+    },
+    [updateItem, handleAuthError, showToast]
+  );
+
+  const handleInlineSaveDescription = useCallback(
+    async (itemId, newDescription, title) => {
+      const res = await updateItem(itemId, { description: newDescription });
+      if (handleAuthError(res)) return;
+      showToast(`${title} • Açıklama güncellendi`);
     },
     [updateItem, handleAuthError, showToast]
   );
@@ -787,8 +850,9 @@ export default function AdminDashboard({ user, onLogout, onOpenMenu }) {
                 listeleniyor
               </span>
               <span className="text-[11px]">
-                Hızlı Düzenleme: <strong className="text-[#181716]">Ad</strong> veya{' '}
-                <strong className="text-[#CA2F2D]">Fiyat</strong> üzerine tıklayın, değiştirip{' '}
+                Hızlı Düzenleme: <strong className="text-[#181716]">Ad</strong>,{' '}
+                <strong className="text-[#181716]">Açıklama</strong> veya{' '}
+                <strong className="text-[#CA2F2D]">Fiyat</strong> üzerine tıklayın,{' '}
                 <strong className="text-[#181716]">Enter</strong> veya dışına tıklayın — otomatik kaydedilir.
               </span>
             </div>
@@ -807,6 +871,7 @@ export default function AdminDashboard({ user, onLogout, onOpenMenu }) {
                     key={item.id}
                     item={item}
                     onInlineSaveTitle={handleInlineSaveTitle}
+                    onInlineSaveDescription={handleInlineSaveDescription}
                     onInlineSavePrice={handleInlineSavePrice}
                     onToggleActive={handleToggleActive}
                     onToggleFeatured={handleToggleFeatured}

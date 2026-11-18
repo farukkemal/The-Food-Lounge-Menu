@@ -12,5 +12,18 @@ export default defineConfig({
   build: {
     target: 'es2020',
     cssMinify: true,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.endsWith('menu_data.json')) return 'menu-data';
+          if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) {
+            return 'react-vendor';
+          }
+          if (id.includes('node_modules/lucide-react')) {
+            return 'icons';
+          }
+        },
+      },
+    },
   },
 });
