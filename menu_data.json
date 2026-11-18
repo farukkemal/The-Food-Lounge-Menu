@@ -70,199 +70,223 @@
       "id": "cat-82",
       "name": "KAHVALTILAR",
       "slug": "kahvaltilar",
-      "image": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/af9f3317613d4659909868b051b33c75.jpg",
+      "image": "/images/categories/cat-82.webp",
       "itemCount": 33,
-      "subcategories": []
+      "subcategories": [],
+      "imageSourceUrl": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/af9f3317613d4659909868b051b33c75.jpg"
     },
     {
       "id": "cat-133",
       "name": "YENİ EKLENEN LEZZETLER",
       "slug": "yeni-eklenen-lezzetler",
-      "image": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/260595ec5acb81bd6978312a15c70fbc.webp",
+      "image": "/images/categories/cat-133.webp",
       "itemCount": 25,
-      "subcategories": []
+      "subcategories": [],
+      "imageSourceUrl": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/260595ec5acb81bd6978312a15c70fbc.webp"
     },
     {
       "id": "cat-83",
       "name": "BAŞLANGIÇLAR",
       "slug": "baslangiclar",
-      "image": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/dd8561971d66c38bd5b9e471812b70f4.jpg",
+      "image": "/images/categories/cat-83.webp",
       "itemCount": 25,
-      "subcategories": []
+      "subcategories": [],
+      "imageSourceUrl": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/dd8561971d66c38bd5b9e471812b70f4.jpg"
     },
     {
       "id": "cat-84",
       "name": "SALATALAR",
       "slug": "salatalar",
-      "image": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/1026929aec1e4794e3ca196dc2ce7b50.jpg",
+      "image": "/images/categories/cat-84.webp",
       "itemCount": 15,
-      "subcategories": []
+      "subcategories": [],
+      "imageSourceUrl": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/1026929aec1e4794e3ca196dc2ce7b50.jpg"
     },
     {
       "id": "cat-85",
       "name": "DİET MENU- RİSOTTO-NOODLE",
       "slug": "diet-menu-risotto-noodle",
-      "image": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/f161d255e0cdf2184fa9f0638859141b.jpg",
+      "image": "/images/categories/cat-85.webp",
       "itemCount": 10,
-      "subcategories": []
+      "subcategories": [],
+      "imageSourceUrl": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/f161d255e0cdf2184fa9f0638859141b.jpg"
     },
     {
       "id": "cat-86",
       "name": "MAKARNALAR",
       "slug": "makarnalar",
-      "image": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/e0a5c2a3b3b05e46bc30e63810662d36.jpg",
+      "image": "/images/categories/cat-86.webp",
       "itemCount": 17,
-      "subcategories": []
+      "subcategories": [],
+      "imageSourceUrl": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/e0a5c2a3b3b05e46bc30e63810662d36.jpg"
     },
     {
       "id": "cat-87",
       "name": "PİZZALAR",
       "slug": "pizzalar",
-      "image": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/e3f6c9893dd7d98452f065e53e13e8d0.jpg",
+      "image": "/images/categories/cat-87.webp",
       "itemCount": 9,
-      "subcategories": []
+      "subcategories": [],
+      "imageSourceUrl": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/e3f6c9893dd7d98452f065e53e13e8d0.jpg"
     },
     {
       "id": "cat-88",
       "name": "BURGERLER",
       "slug": "burgerler",
-      "image": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/0621da7c223de4dd40d47c52397fd60c.jpg",
+      "image": "/images/categories/cat-88.webp",
       "itemCount": 10,
-      "subcategories": []
+      "subcategories": [],
+      "imageSourceUrl": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/0621da7c223de4dd40d47c52397fd60c.jpg"
     },
     {
       "id": "cat-89",
       "name": "TEX-MEX-FAJITA",
       "slug": "tex-mex-fajita",
-      "image": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/f88b7d01839d0dc51d0f49f1bde37fe8.jpg",
+      "image": "/images/categories/cat-89.webp",
       "itemCount": 8,
-      "subcategories": []
+      "subcategories": [],
+      "imageSourceUrl": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/f88b7d01839d0dc51d0f49f1bde37fe8.jpg"
     },
     {
       "id": "cat-90",
       "name": "ÇOCUK MENÜSÜ",
       "slug": "cocuk-menusu",
-      "image": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/8142f3ec007f9f6f67c357df6a7b59af.jpg",
+      "image": "/images/categories/cat-90.webp",
       "itemCount": 5,
-      "subcategories": []
+      "subcategories": [],
+      "imageSourceUrl": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/8142f3ec007f9f6f67c357df6a7b59af.jpg"
     },
     {
       "id": "cat-91",
       "name": "KASELER",
       "slug": "kaseler",
-      "image": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/36ae13e0e46554918dba9c64dc2dd7ee.jpg",
+      "image": "/images/categories/cat-91.webp",
       "itemCount": 6,
-      "subcategories": []
+      "subcategories": [],
+      "imageSourceUrl": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/36ae13e0e46554918dba9c64dc2dd7ee.jpg"
     },
     {
       "id": "cat-92",
       "name": "TAVUK YEMEKLERİ",
       "slug": "tavuk-yemekleri",
-      "image": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/e592367eefc9afb7d5e57c37358a1181.jpg",
+      "image": "/images/categories/cat-92.webp",
       "itemCount": 17,
-      "subcategories": []
+      "subcategories": [],
+      "imageSourceUrl": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/e592367eefc9afb7d5e57c37358a1181.jpg"
     },
     {
       "id": "cat-124",
       "name": "ET YEMEKLERİ",
       "slug": "et-yemekleri",
-      "image": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/93d7ebdd8f0b5ccfa07dd76dc9654ce3.jpg",
+      "image": "/images/categories/cat-124.webp",
       "itemCount": 11,
-      "subcategories": []
+      "subcategories": [],
+      "imageSourceUrl": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/93d7ebdd8f0b5ccfa07dd76dc9654ce3.jpg"
     },
     {
       "id": "cat-93",
       "name": "ANADOLU LEZZETLERİ",
       "slug": "anadolu-lezzetleri",
-      "image": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/b25eb52642a421623a235db246c6729c.jpg",
+      "image": "/images/categories/cat-93.webp",
       "itemCount": 17,
-      "subcategories": []
+      "subcategories": [],
+      "imageSourceUrl": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/b25eb52642a421623a235db246c6729c.jpg"
     },
     {
       "id": "cat-94",
       "name": "BALIKLAR",
       "slug": "baliklar",
-      "image": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/5ff7afe237ab121d0c40840e53af7410.jpg",
+      "image": "/images/categories/cat-94.webp",
       "itemCount": 3,
-      "subcategories": []
+      "subcategories": [],
+      "imageSourceUrl": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/5ff7afe237ab121d0c40840e53af7410.jpg"
     },
     {
       "id": "cat-95",
       "name": "TATLILAR",
       "slug": "tatlilar",
-      "image": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/714d3b14fef39690400030eb742348d9.png",
+      "image": "/images/categories/cat-95.webp",
       "itemCount": 21,
-      "subcategories": []
+      "subcategories": [],
+      "imageSourceUrl": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/714d3b14fef39690400030eb742348d9.png"
     },
     {
       "id": "cat-96",
       "name": "MEŞRUBATLAR",
       "slug": "mesrubatlar",
-      "image": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/7d849f614b2b5d69d82086124bdcc5ed.jpg",
+      "image": "/images/categories/cat-96.webp",
       "itemCount": 19,
-      "subcategories": []
+      "subcategories": [],
+      "imageSourceUrl": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/7d849f614b2b5d69d82086124bdcc5ed.jpg"
     },
     {
       "id": "cat-97",
       "name": "TAZE MEYVE SULARI",
       "slug": "taze-meyve-sulari",
-      "image": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/e05e7c03bc11e24854482769fd82041b.jpg",
+      "image": "/images/categories/cat-97.webp",
       "itemCount": 7,
-      "subcategories": []
+      "subcategories": [],
+      "imageSourceUrl": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/e05e7c03bc11e24854482769fd82041b.jpg"
     },
     {
       "id": "cat-98",
       "name": "LİMONATALAR",
       "slug": "limonatalar",
-      "image": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/48c4080c96b321e638e64c327e2885ab.jpg",
+      "image": "/images/categories/cat-98.webp",
       "itemCount": 9,
-      "subcategories": []
+      "subcategories": [],
+      "imageSourceUrl": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/48c4080c96b321e638e64c327e2885ab.jpg"
     },
     {
       "id": "cat-99",
       "name": "FROZENLAR",
       "slug": "frozenlar",
-      "image": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/c9fc6f8763b098fd957a6987f4db0d39.jpg",
+      "image": "/images/categories/cat-99.webp",
       "itemCount": 8,
-      "subcategories": []
+      "subcategories": [],
+      "imageSourceUrl": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/c9fc6f8763b098fd957a6987f4db0d39.jpg"
     },
     {
       "id": "cat-100",
       "name": "MİLKSHAKELER",
       "slug": "milkshakeler",
-      "image": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/a2634c73480c12f8c360927776114f21.jpg",
+      "image": "/images/categories/cat-100.webp",
       "itemCount": 5,
-      "subcategories": []
+      "subcategories": [],
+      "imageSourceUrl": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/a2634c73480c12f8c360927776114f21.jpg"
     },
     {
       "id": "cat-101",
       "name": "SICAKLAR",
       "slug": "sicaklar",
-      "image": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/d282bcffb3bb31b6795042c44f3b5713.png",
+      "image": "/images/categories/cat-101.webp",
       "itemCount": 15,
-      "subcategories": []
+      "subcategories": [],
+      "imageSourceUrl": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/d282bcffb3bb31b6795042c44f3b5713.png"
     },
     {
       "id": "cat-102",
       "name": "SOĞUK KAHVELER",
       "slug": "soguk-kahveler",
-      "image": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/2088390bdcb3aace56f1a06029bc7404.jpg",
+      "image": "/images/categories/cat-102.webp",
       "itemCount": 4,
-      "subcategories": []
+      "subcategories": [],
+      "imageSourceUrl": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/2088390bdcb3aace56f1a06029bc7404.jpg"
     },
     {
       "id": "cat-103",
       "name": "BİTKİ ÇAYLARI",
       "slug": "bitki-caylari",
-      "image": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/e692668c7b167176e714ec6381955da3.jpg",
+      "image": "/images/categories/cat-103.webp",
       "itemCount": 3,
-      "subcategories": []
+      "subcategories": [],
+      "imageSourceUrl": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/e692668c7b167176e714ec6381955da3.jpg"
     },
     {
       "id": "cat-123",
       "name": "ALKOLLÜ İÇECEKLER",
       "slug": "alkollu-icecekler",
-      "image": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/b60706750e844b7a2051c8f46ddd0e7c.jpg",
+      "image": "/images/categories/cat-123.webp",
       "itemCount": 183,
       "subcategories": [
         "BİRALAR",
@@ -287,7 +311,8 @@
         "DOUBLE WİSKYLER",
         "TEKİLA",
         "ŞİŞE RAKILAR"
-      ]
+      ],
+      "imageSourceUrl": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/b60706750e844b7a2051c8f46ddd0e7c.jpg"
     }
   ],
   "items": [

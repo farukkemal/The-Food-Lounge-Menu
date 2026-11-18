@@ -23,7 +23,7 @@ import {
   HardDrive,
   QrCode,
 } from 'lucide-react';
-import logoImg from '../../assets/logo.png';
+import logoImg from '../../assets/logo.webp';
 import { useMenu } from '../../context/MenuContext';
 import LazyImage from '../LazyImage';
 import ProductFormModal from './ProductFormModal';

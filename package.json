@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "scrape": "node scripts/scrape-menu.mjs"
+    "scrape": "node scripts/scrape-menu.mjs",
+    "optimize:images": "python scripts/optimize-images.py"
   },
   "dependencies": {
     "lucide-react": "^0.511.0",

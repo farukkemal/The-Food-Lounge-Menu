@@ -170,11 +170,12 @@ function CustomerMenuView({ onOpenAdmin }) {
                 </p>
               </div>
             ) : (
-              <div className="flex flex-col gap-2.5">
-                {displayedItems.map((item) => (
+              <div className="gpu-list flex flex-col gap-2.5">
+                {displayedItems.map((item, idx) => (
                   <ProductCard
                     key={item.id}
                     item={item}
+                    priority={idx < 4}
                     onSelect={setSelectedItem}
                     showCategoryBadge
                   />
@@ -250,8 +251,8 @@ function CustomerMenuView({ onOpenAdmin }) {
             )}
 
             {groupedSubcategories ? (
-              <div className="space-y-6">
-                {groupedSubcategories.map(([subName, subItems]) => (
+              <div className="gpu-list space-y-6">
+                {groupedSubcategories.map(([subName, subItems], groupIdx) => (
                   <div key={subName}>
                     <div className="mb-2.5 flex items-center justify-between border-b border-[#E8E4DC] pb-1.5">
                       <h3 className="text-xs font-bold tracking-[0.12em] text-[#CA2F2D] uppercase">
@@ -262,10 +263,11 @@ function CustomerMenuView({ onOpenAdmin }) {
                       </span>
                     </div>
                     <div className="flex flex-col gap-2.5">
-                      {subItems.map((item) => (
+                      {subItems.map((item, idx) => (
                         <ProductCard
                           key={item.id}
                           item={item}
+                          priority={groupIdx === 0 && idx < 4}
                           onSelect={setSelectedItem}
                         />
                       ))}
@@ -274,11 +276,12 @@ function CustomerMenuView({ onOpenAdmin }) {
                 ))}
               </div>
             ) : (
-              <div className="flex flex-col gap-2.5">
-                {displayedItems.map((item) => (
+              <div className="gpu-list flex flex-col gap-2.5">
+                {displayedItems.map((item, idx) => (
                   <ProductCard
                     key={item.id}
                     item={item}
+                    priority={idx < 4}
                     onSelect={setSelectedItem}
                   />
                 ))}

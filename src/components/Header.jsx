@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { Info, Search, X, Clock } from 'lucide-react';
-import logoImg from '../assets/logo.png';
+import logoImg from '../assets/logo.webp';
 
 const Header = memo(function Header({
   restaurantName,
@@ -16,7 +16,7 @@ const Header = memo(function Header({
   const isOpenNow = hour >= 8 || hour < 1;
 
   return (
-    <header className="border-b border-[#EBE8E2]/80 bg-white/95 backdrop-blur-md">
+    <header className="border-b border-[#EBE8E2] bg-white">
       <div className="mx-auto max-w-2xl px-4 pt-3 pb-2.5">
         {/* Top Row: Logo + Brand + Table Badge / Info Action */}
         <div className="flex items-center justify-between gap-3">

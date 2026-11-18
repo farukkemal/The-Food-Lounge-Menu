@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Lock, User, Eye, EyeOff, ArrowLeft, ShieldCheck } from 'lucide-react';
-import logoImg from '../../assets/logo.png';
+import logoImg from '../../assets/logo.webp';
 import { authenticateAdmin, writeStoredAuth } from '../../services/menuRepository';
 
 export default function AdminLogin({ onSuccess, onBackToMenu }) {

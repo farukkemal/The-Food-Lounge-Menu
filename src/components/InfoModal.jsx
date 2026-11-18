@@ -1,6 +1,6 @@
 import { memo, useEffect } from 'react';
 import { X, MapPin, Clock, Instagram, Facebook, CheckCircle2 } from 'lucide-react';
-import logoImg from '../assets/logo.png';
+import logoImg from '../assets/logo.webp';
 
 const InfoModal = memo(function InfoModal({ open, restaurant, onClose }) {
   useEffect(() => {

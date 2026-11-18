@@ -23,7 +23,7 @@ const CategoryNav = memo(function CategoryNav({
   }, [activeCategoryId]);
 
   return (
-    <div className="border-b border-[#EBE8E2] bg-[#F8F7F4]/95 backdrop-blur-md">
+    <div className="border-b border-[#EBE8E2] bg-[#F8F7F4]">
       <nav
         ref={scrollRef}
         aria-label="Menü Kategorileri"

@@ -1,5 +1,5 @@
 import { memo, useEffect, useState } from 'react';
-import logoImg from '../assets/logo.png';
+import logoImg from '../assets/logo.webp';
 
 const MIN_DISPLAY_MS = 1200;
 const MAX_WAIT_MS = 2400;

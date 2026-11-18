@@ -2,7 +2,12 @@ import { memo } from 'react';
 import { Flame, WheatOff } from 'lucide-react';
 import LazyImage from './LazyImage';
 
-const ProductCard = memo(function ProductCard({ item, onSelect, showCategoryBadge = false }) {
+const ProductCard = memo(function ProductCard({
+  item,
+  onSelect,
+  showCategoryBadge = false,
+  priority = false,
+}) {
   const hasImage = Boolean(item.image);
 
   return (
@@ -16,7 +21,7 @@ const ProductCard = memo(function ProductCard({ item, onSelect, showCategoryBadg
           onSelect(item);
         }
       }}
-      className="cv-auto-card group flex cursor-pointer items-stretch gap-3.5 rounded-2xl border border-[#ECE8E1] bg-white p-3.5 shadow-[0_1px_2px_rgba(0,0,0,0.03)] transition-all duration-150 hover:border-[#DCD6CC] hover:shadow-[0_6px_18px_rgba(24,23,22,0.06)] active:scale-[0.99]"
+      className="gpu-card cv-auto-card group flex cursor-pointer items-stretch gap-3.5 rounded-2xl border border-[#ECE8E1] bg-white p-3.5 transition-transform duration-150 active:scale-[0.985]"
     >
       {/* Text Content */}
       <div className="flex min-w-0 flex-1 flex-col justify-between gap-2">
@@ -43,7 +48,7 @@ const ProductCard = memo(function ProductCard({ item, onSelect, showCategoryBadg
             </div>
           )}
 
-          <h3 className="text-[15px] leading-snug font-bold text-[#1C1B1A] transition-colors group-hover:text-[#CA2F2D]">
+          <h3 className="text-[15px] leading-snug font-bold text-[#1C1B1A]">
             {item.title}
           </h3>
 
@@ -66,13 +71,16 @@ const ProductCard = memo(function ProductCard({ item, onSelect, showCategoryBadg
         </div>
       </div>
 
-      {/* Aspect-Ratio Locked Thumbnail */}
+      {/* Aspect-Ratio Locked Thumbnail with Explicit Dimensions */}
       {hasImage && (
         <LazyImage
           src={item.image}
           alt={item.title}
+          width={104}
+          height={104}
+          sizes="104px"
+          priority={priority}
           containerClassName="aspect-square h-24 w-24 shrink-0 self-center rounded-xl ring-1 ring-black/5 sm:h-26 sm:w-26"
-          className="transition-transform duration-300 group-hover:scale-105"
         />
       )}
     </article>

@@ -43,33 +43,35 @@ const SpotlightHeroCard = memo(function SpotlightHeroCard({
           onSelectItem(item);
         }
       }}
-      className="group relative mt-3.5 cursor-pointer overflow-hidden rounded-3xl bg-[#181716] shadow-[0_10px_28px_rgba(24,23,22,0.12)] ring-1 ring-black/8 transition-transform duration-150 active:scale-[0.985] active:brightness-95"
+      className="gpu-card group relative mt-3.5 cursor-pointer overflow-hidden rounded-3xl bg-[#181716] ring-1 ring-black/8 transition-transform duration-150 active:scale-[0.985]"
     >
       <div className="relative aspect-[16/10] w-full overflow-hidden sm:aspect-[16/9]">
         <LazyImage
           src={item.image}
           alt={item.title}
+          width={640}
+          height={400}
+          sizes="(max-width: 672px) 94vw, 640px"
           priority
           containerClassName="h-full w-full"
-          className="transition-transform duration-500 group-hover:scale-105"
           fallbackIconSize={34}
         />
 
         {/* Editorial Gradient Scrim */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/88 via-black/35 to-black/10" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/88 via-black/35 to-transparent" />
 
-        {/* Top Badges */}
+        {/* Top Badges (no backdrop-blur for 60 FPS scroll) */}
         <div className="absolute inset-x-3.5 top-3.5 flex items-center justify-between gap-2">
           <span
-            className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-bold tracking-wide text-white shadow-xs backdrop-blur-md ${
-              isMorning ? 'bg-amber-600/92' : 'bg-[#CA2F2D]/92'
+            className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-bold tracking-wide text-white ${
+              isMorning ? 'bg-amber-600' : 'bg-[#CA2F2D]'
             }`}
           >
             <Sparkles size={11} />
             {badge}
           </span>
           {item.calories && (
-            <span className="rounded-full bg-black/55 px-2.5 py-1 text-[11px] font-medium text-white/95 backdrop-blur-md">
+            <span className="rounded-full bg-black/72 px-2.5 py-1 text-[11px] font-medium text-white">
               {item.calories}
             </span>
           )}
@@ -106,7 +108,7 @@ const SpotlightHeroCard = memo(function SpotlightHeroCard({
   );
 });
 
-const CuratedSlideCard = memo(function CuratedSlideCard({ item, onSelectItem }) {
+const CuratedSlideCard = memo(function CuratedSlideCard({ item, index, onSelectItem }) {
   return (
     <article
       role="button"
@@ -118,16 +120,19 @@ const CuratedSlideCard = memo(function CuratedSlideCard({ item, onSelectItem }) 
           onSelectItem(item);
         }
       }}
-      className="snap-card group flex w-[68vw] max-w-[248px] shrink-0 cursor-pointer flex-col overflow-hidden rounded-2xl border border-[#EAE6DF] bg-white shadow-[0_2px_10px_rgba(24,23,22,0.04)] transition-transform duration-150 active:scale-[0.975] active:brightness-[0.98]"
+      className="gpu-card snap-card group flex w-[68vw] max-w-[248px] shrink-0 cursor-pointer flex-col overflow-hidden rounded-2xl border border-[#EAE6DF] bg-white transition-transform duration-150 active:scale-[0.975]"
     >
       <div className="relative aspect-[4/3] w-full overflow-hidden">
         <LazyImage
           src={item.image}
           alt={item.title}
+          width={248}
+          height={186}
+          sizes="248px"
+          priority={index < 2}
           containerClassName="h-full w-full"
-          className="transition-transform duration-500 group-hover:scale-105"
         />
-        <span className="absolute top-2.5 left-2.5 rounded-full bg-black/62 px-2.5 py-0.5 text-[10px] font-semibold tracking-wide text-white backdrop-blur-sm">
+        <span className="absolute top-2.5 left-2.5 rounded-full bg-black/72 px-2.5 py-0.5 text-[10px] font-semibold tracking-wide text-white">
           {item.recommendationTag}
         </span>
       </div>
@@ -180,7 +185,7 @@ const PairingSlideCard = memo(function PairingSlideCard({
   const hasDiscount = discountPercent > 0 && Boolean(savingsFormatted);
 
   return (
-    <article className="snap-card flex w-[85vw] max-w-[360px] shrink-0 flex-col overflow-hidden rounded-3xl bg-[#1A1918] text-white shadow-[0_12px_30px_rgba(24,23,22,0.18)] ring-1 ring-white/10">
+    <article className="gpu-card snap-card flex w-[85vw] max-w-[360px] shrink-0 flex-col overflow-hidden rounded-3xl bg-[#1A1918] text-white ring-1 ring-white/10">
       {/* Top Steak Visual */}
       <div
         role="button"
@@ -192,23 +197,25 @@ const PairingSlideCard = memo(function PairingSlideCard({
             onSelectItem(food);
           }
         }}
-        className="group relative aspect-[16/10] w-full cursor-pointer overflow-hidden active:brightness-95"
+        className="group relative aspect-[16/10] w-full cursor-pointer overflow-hidden"
       >
         <LazyImage
           src={food.image}
           alt={headline}
-          priority={index === 0}
+          width={360}
+          height={225}
+          sizes="360px"
+          priority={index < 2}
           containerClassName="h-full w-full"
-          className="transition-transform duration-500 group-hover:scale-105"
         />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1A1918] via-black/35 to-black/10" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1A1918] via-black/35 to-transparent" />
 
         <div className="absolute inset-x-3 top-3 flex items-center justify-between gap-2">
-          <span className="inline-flex items-center gap-1 rounded-full bg-[#CA2F2D] px-2.5 py-1 text-[10.5px] font-bold tracking-wide text-white shadow-sm">
+          <span className="inline-flex items-center gap-1 rounded-full bg-[#CA2F2D] px-2.5 py-1 text-[10.5px] font-bold tracking-wide text-white">
             {hasDiscount ? <Tag size={11} /> : <Wine size={11} />}
             {badge}
           </span>
-          <span className="rounded-full bg-black/58 px-2.5 py-1 text-[10.5px] font-semibold text-amber-200 backdrop-blur-md">
+          <span className="rounded-full bg-black/72 px-2.5 py-1 text-[10.5px] font-semibold text-amber-200">
             {accentLabel}
           </span>
         </div>
@@ -419,12 +426,13 @@ const SmartRecommendations = memo(function SmartRecommendations({
           </div>
           <div
             ref={carouselRef}
-            className="no-scrollbar touch-scroll-x flex gap-3 overflow-x-auto px-4 pb-2"
+            className="gpu-list no-scrollbar touch-scroll-x flex gap-3 overflow-x-auto px-4 pb-2"
           >
-            {data.items.map((item) => (
+            {data.items.map((item, idx) => (
               <CuratedSlideCard
                 key={item.id}
                 item={item}
+                index={idx}
                 onSelectItem={onSelectItem}
               />
             ))}
@@ -442,7 +450,7 @@ const SmartRecommendations = memo(function SmartRecommendations({
           </div>
           <div
             ref={carouselRef}
-            className="no-scrollbar touch-scroll-x flex gap-3.5 overflow-x-auto px-4 pb-2"
+            className="gpu-list no-scrollbar touch-scroll-x flex gap-3.5 overflow-x-auto px-4 pb-2"
           >
             {data.pairings.map((pairing, idx) => (
               <PairingSlideCard
