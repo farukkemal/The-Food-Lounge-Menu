@@ -4,6 +4,7 @@ import logoImg from '../assets/logo.webp';
 
 const Header = memo(function Header({
   restaurantName,
+  hoursLabel = '08:00 – 24:00',
   tableNumber,
   searchQuery,
   onSearchChange,
@@ -13,7 +14,7 @@ const Header = memo(function Header({
   totalItems,
 }) {
   const hour = new Date().getHours();
-  const isOpenNow = hour >= 8 || hour < 1;
+  const isOpenNow = hour >= 8 && hour < 24;
 
   return (
     <header className="border-b border-[#EBE8E2] bg-white">
@@ -67,7 +68,7 @@ const Header = memo(function Header({
                 <span className="text-[#D4CFC7]">•</span>
                 <span className="inline-flex items-center gap-1">
                   <Clock size={11} className="text-[#9A938A]" />
-                  08:00 – 01:00
+                  {hoursLabel}
                 </span>
                 <span className="hidden text-[#D4CFC7] sm:inline">•</span>
                 <span className="hidden sm:inline">{totalItems} Ürün</span>

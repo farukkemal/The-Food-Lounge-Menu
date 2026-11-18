@@ -10,6 +10,7 @@ import ProductCard from './components/ProductCard';
 import ProductModal from './components/ProductModal';
 import InfoModal from './components/InfoModal';
 import SplashScreen from './components/SplashScreen';
+import GoogleReviewButton from './components/GoogleReviewButton';
 
 // Code-split Admin bundle so QR customers never download admin/qrcode JS
 const AdminLogin = lazy(() => import('./components/admin/AdminLogin'));
@@ -124,6 +125,7 @@ function CustomerMenuView({ onOpenAdmin }) {
       <div className="sticky top-0 z-30 shadow-[0_1px_8px_rgba(24,23,22,0.04)]">
         <Header
           restaurantName={restaurant.name}
+          hoursLabel={restaurant.hoursLabel}
           tableNumber={tableNumber}
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
@@ -291,14 +293,21 @@ function CustomerMenuView({ onOpenAdmin }) {
         )}
       </main>
 
-      <footer className="border-t border-[#EBE8E2] bg-white/70 py-6 text-center text-xs text-[#8A837A]">
-        <div className="mx-auto flex max-w-2xl flex-col items-center gap-2 px-4">
-          <div className="inline-flex items-center gap-1.5 font-semibold text-[#4A4641]">
+      <footer className="border-t border-[#EBE8E2] bg-white py-7 text-center text-xs text-[#8A837A]">
+        <div className="mx-auto flex max-w-2xl flex-col items-center gap-3 px-4">
+          <GoogleReviewButton href={restaurant.googleReviewUrl} variant="card" />
+
+          <div className="mt-1 inline-flex items-center gap-1.5 font-semibold text-[#4A4641]">
             <Utensils size={13} className="text-[#CA2F2D]" />
             <span>{restaurant.name} Dijital Menü</span>
           </div>
+          {restaurant.address && (
+            <p className="max-w-md text-[11px] leading-relaxed text-[#7A746C]">
+              {restaurant.address}
+            </p>
+          )}
           <p className="text-[11px]">
-            Tüm fiyatlara KDV dahildir • {categories.length} Kategori, {stats.activeItems} Aktif Ürün
+            Çalışma Saatleri: {restaurant.hoursLabel || '08:00 – 24:00'} • Tüm fiyatlara KDV dahildir • {categories.length} Kategori, {stats.activeItems} Aktif Ürün
           </p>
           <button
             type="button"

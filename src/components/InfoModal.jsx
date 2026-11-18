@@ -1,6 +1,7 @@
 import { memo, useEffect } from 'react';
-import { X, MapPin, Clock, Instagram, Facebook, CheckCircle2 } from 'lucide-react';
+import { X, MapPin, Clock, Instagram, Facebook } from 'lucide-react';
 import logoImg from '../assets/logo.webp';
+import GoogleReviewButton from './GoogleReviewButton';
 
 const InfoModal = memo(function InfoModal({ open, restaurant, onClose }) {
   useEffect(() => {
@@ -32,10 +33,16 @@ const InfoModal = memo(function InfoModal({ open, restaurant, onClose }) {
         className="animate-sheet-up pb-safe relative max-h-[88vh] w-full max-w-lg overflow-y-auto overscroll-y-contain rounded-t-3xl bg-white p-5 shadow-2xl sm:rounded-3xl sm:p-6"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between pb-4 border-b border-[#EEEAE3]">
+        <div className="flex items-center justify-between border-b border-[#EEEAE3] pb-4">
           <div className="flex items-center gap-3">
             <div className="h-11 w-11 overflow-hidden rounded-xl shadow-xs ring-1 ring-[#CA2F2D]/20">
-              <img src={logoImg} alt={restaurant.name} className="h-full w-full object-cover" />
+              <img
+                src={logoImg}
+                alt={restaurant.name}
+                width={44}
+                height={44}
+                className="h-full w-full object-cover"
+              />
             </div>
             <div>
               <h2
@@ -57,23 +64,16 @@ const InfoModal = memo(function InfoModal({ open, restaurant, onClose }) {
           </button>
         </div>
 
-        {/* Features */}
-        {restaurant.features?.length > 0 && (
+        {/* Official Address */}
+        {restaurant.address && (
           <div className="mt-5">
-            <h3 className="text-xs font-bold tracking-wider text-[#8C857C] uppercase">
-              İşletme Özellikleri
+            <h3 className="flex items-center gap-1.5 text-xs font-bold tracking-wider text-[#8C857C] uppercase">
+              <MapPin size={13} className="text-[#CA2F2D]" />
+              Resmi Adres
             </h3>
-            <div className="mt-2.5 flex flex-wrap gap-2">
-              {restaurant.features.map((feat) => (
-                <span
-                  key={feat}
-                  className="inline-flex items-center gap-1.5 rounded-xl border border-[#ECE8E1] bg-[#FAF9F6] px-3 py-1.5 text-xs font-medium text-[#2E2C29]"
-                >
-                  <CheckCircle2 size={13} className="text-[#CA2F2D]" />
-                  {feat}
-                </span>
-              ))}
-            </div>
+            <p className="mt-2 rounded-2xl border border-[#ECE8E1] bg-[#FAF9F6] px-3.5 py-3 text-xs leading-relaxed font-medium text-[#2E2C29]">
+              {restaurant.address}
+            </p>
           </div>
         )}
 
@@ -100,8 +100,13 @@ const InfoModal = memo(function InfoModal({ open, restaurant, onClose }) {
           </div>
         )}
 
+        {/* Google Review CTA */}
+        <div className="mt-5">
+          <GoogleReviewButton href={restaurant.googleReviewUrl} variant="button" />
+        </div>
+
         {/* Actions */}
-        <div className="mt-5 flex flex-wrap gap-2.5">
+        <div className="mt-3 flex flex-wrap gap-2.5">
           {restaurant.directionsUrl && (
             <a
               href={restaurant.directionsUrl}

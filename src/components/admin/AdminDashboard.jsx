@@ -22,6 +22,7 @@ import {
   X,
   HardDrive,
   QrCode,
+  Star,
 } from 'lucide-react';
 import logoImg from '../../assets/logo.webp';
 import { useMenu } from '../../context/MenuContext';
@@ -36,6 +37,7 @@ const AdminProductRow = memo(function AdminProductRow({
   item,
   onQuickSavePrice,
   onToggleActive,
+  onToggleFeatured,
   onEdit,
   onDelete,
 }) {
@@ -66,11 +68,16 @@ const AdminProductRow = memo(function AdminProductRow({
   };
 
   const isActive = item.active !== false;
+  const isFeatured = Boolean(item.featured);
 
   return (
     <div
       className={`cv-auto-card flex flex-col gap-3 rounded-2xl border bg-white p-3.5 shadow-2xs transition-colors sm:flex-row sm:items-center sm:justify-between ${
-        isActive ? 'border-[#EAE6DF]' : 'border-dashed border-[#D8D3CA] bg-[#FAF9F7] opacity-75'
+        !isActive
+          ? 'border-dashed border-[#D8D3CA] bg-[#FAF9F7] opacity-75'
+          : isFeatured
+            ? 'border-amber-300/90 bg-amber-50/25'
+            : 'border-[#EAE6DF]'
       }`}
     >
       {/* Left: Thumbnail + Info */}
@@ -92,8 +99,14 @@ const AdminProductRow = memo(function AdminProductRow({
                 {item.subcategory}
               </span>
             )}
+            {isFeatured && (
+              <span className="inline-flex items-center gap-0.5 rounded-md bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-800">
+                <Star size={10} className="fill-amber-500 text-amber-500" />
+                Öne Çıkan
+              </span>
+            )}
             {!isActive && (
-              <span className="rounded-md bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-800">
+              <span className="rounded-md bg-stone-200 px-2 py-0.5 text-[10px] font-bold text-stone-700">
                 Pasif (Gizli)
               </span>
             )}
@@ -162,6 +175,29 @@ const AdminProductRow = memo(function AdminProductRow({
         <div className="flex items-center gap-1.5">
           <button
             type="button"
+            onClick={() => onToggleFeatured(item)}
+            title={
+              isFeatured
+                ? 'Öne çıkarılanlardan kaldır'
+                : 'Öne Çıkar (Günün Önerisi alanında öncelikli göster)'
+            }
+            className={`inline-flex h-9 items-center gap-1 rounded-xl border px-2.5 text-[11px] font-bold transition-colors active:scale-95 ${
+              isFeatured
+                ? 'border-amber-300 bg-amber-100 text-amber-800 hover:bg-amber-200/70'
+                : 'border-[#E7E3DC] bg-white text-[#6B665F] hover:border-amber-300 hover:bg-amber-50 hover:text-amber-700'
+            }`}
+            aria-pressed={isFeatured}
+            aria-label={isFeatured ? 'Öne çıkarılanlardan kaldır' : 'Öne çıkar'}
+          >
+            <Star
+              size={14}
+              className={isFeatured ? 'fill-amber-500 text-amber-500' : ''}
+            />
+            <span className="hidden md:inline">Öne Çıkar</span>
+          </button>
+
+          <button
+            type="button"
             onClick={() => onToggleActive(item)}
             title={isActive ? 'Müşteri menüsünden gizle (Pasif)' : 'Müşteri menüsünde göster (Aktif)'}
             className={`flex h-9 w-9 items-center justify-center rounded-xl border transition-colors ${
@@ -209,6 +245,7 @@ export default function AdminDashboard({ user, onLogout, onOpenMenu }) {
     addItem,
     deleteItem,
     toggleItemActive,
+    toggleItemFeatured,
     addCategory,
     updateCategory,
     deleteCategory,
@@ -257,6 +294,7 @@ export default function AdminDashboard({ user, onLogout, onOpenMenu }) {
   );
 
   const passiveCount = index.stats.totalItems - index.stats.activeItems;
+  const featuredCount = index.stats.featuredItems ?? index.featuredItems.length;
 
   const handleAuthError = useCallback(
     (res) => {
@@ -288,6 +326,18 @@ export default function AdminDashboard({ user, onLogout, onOpenMenu }) {
       showToast(`"${item.title}" ${nextState}.`);
     },
     [toggleItemActive, handleAuthError, showToast]
+  );
+
+  const handleToggleFeatured = useCallback(
+    async (item) => {
+      const res = await toggleItemFeatured(item.id);
+      if (handleAuthError(res)) return;
+      const nextMsg = item.featured
+        ? `"${item.title}" öne çıkarılanlardan kaldırıldı.`
+        : `"${item.title}" öne çıkarıldı — Günün Önerisi alanında öncelikli gösterilecek.`;
+      showToast(nextMsg);
+    },
+    [toggleItemFeatured, handleAuthError, showToast]
   );
 
   const handleDeleteItem = useCallback(
@@ -405,16 +455,36 @@ export default function AdminDashboard({ user, onLogout, onOpenMenu }) {
               {index.stats.totalItems}
             </p>
           </div>
+          <button
+            type="button"
+            onClick={() => {
+              setActiveTab('products');
+              setStatusFilter((prev) => (prev === 'featured' ? 'all' : 'featured'));
+            }}
+            className={`rounded-2xl border p-3.5 text-left shadow-2xs transition-colors ${
+              statusFilter === 'featured'
+                ? 'border-amber-400 bg-amber-50'
+                : 'border-[#EAE6DF] bg-white hover:border-amber-300'
+            }`}
+          >
+            <p className="flex items-center gap-1 text-[11px] font-semibold text-amber-700">
+              <Star size={11} className="fill-amber-500 text-amber-500" />
+              Öne Çıkanlar
+            </p>
+            <p className="mt-1 text-2xl font-extrabold text-amber-700">
+              {featuredCount}
+            </p>
+            <p className="mt-0.5 text-[10px] font-medium text-[#8A837A]">
+              {featuredCount > 0 ? 'Öncelikli gösterimde' : 'Otomatik saat modu'}
+            </p>
+          </button>
           <div className="rounded-2xl border border-[#EAE6DF] bg-white p-3.5 shadow-2xs">
-            <p className="text-[11px] font-semibold text-emerald-700">Aktif Ürün</p>
+            <p className="text-[11px] font-semibold text-emerald-700">Aktif / Pasif</p>
             <p className="mt-1 text-2xl font-extrabold text-emerald-700">
               {index.stats.activeItems}
-            </p>
-          </div>
-          <div className="rounded-2xl border border-[#EAE6DF] bg-white p-3.5 shadow-2xs">
-            <p className="text-[11px] font-semibold text-amber-700">Pasif (Gizli)</p>
-            <p className="mt-1 text-2xl font-extrabold text-amber-700">
-              {passiveCount}
+              <span className="ml-1.5 text-sm font-semibold text-[#8A837A]">
+                / {passiveCount}
+              </span>
             </p>
           </div>
           <div className="rounded-2xl border border-[#EAE6DF] bg-white p-3.5 shadow-2xs">
@@ -531,6 +601,7 @@ export default function AdminDashboard({ user, onLogout, onOpenMenu }) {
                   className="h-10 w-full rounded-xl border border-[#E5E1D9] bg-[#FAF9F6] px-3 text-xs font-semibold text-[#181716] focus:border-[#CA2F2D] focus:bg-white focus:outline-none"
                 >
                   <option value="all">Tüm Durumlar</option>
+                  <option value="featured">Sadece Öne Çıkanlar ({featuredCount})</option>
                   <option value="active">Sadece Aktif</option>
                   <option value="passive">Sadece Pasif ({passiveCount})</option>
                 </select>
@@ -563,6 +634,7 @@ export default function AdminDashboard({ user, onLogout, onOpenMenu }) {
                     item={item}
                     onQuickSavePrice={handleQuickSavePrice}
                     onToggleActive={handleToggleActive}
+                    onToggleFeatured={handleToggleFeatured}
                     onEdit={handleOpenEditModal}
                     onDelete={handleDeleteItem}
                   />

@@ -157,23 +157,18 @@ async function scrapeMenu() {
     return m ? m[1].trim() : fallback;
   };
 
-  // Extract business info
-  const features = [];
-  $('#landing-info .feature-item').each((_, el) => {
-    const txt = cleanText($(el).text());
-    if (txt) features.push(txt);
-  });
-
-  const workingHours = [];
-  $('#landing-info .hours-table tr').each((_, row) => {
-    const cells = $(row).find('td');
-    if (cells.length >= 2) {
-      workingHours.push({
-        day: cleanText($(cells[0]).text()),
-        hours: cleanText($(cells[1]).text()),
-      });
-    }
-  });
+  const workingHours = [
+    'Pazartesi',
+    'Salı',
+    'Çarşamba',
+    'Perşembe',
+    'Cuma',
+    'Cumartesi',
+    'Pazar',
+  ].map((day) => ({
+    day,
+    hours: '08:00 - 24:00',
+  }));
 
   const directionsUrl = $('#landing-info .info-actions a[target="_blank"]').attr('href') || null;
   const mapEmbedUrl = $('#landing-info .map-container iframe').attr('src') || null;
@@ -244,6 +239,7 @@ async function scrapeMenu() {
         image: imageUrl,
         dietary,
         active: true,
+        featured: false,
       });
     };
 
@@ -279,6 +275,8 @@ async function scrapeMenu() {
   const output = {
     restaurant: {
       name: brandName,
+      address: 'Koza Mah. 1655 Sok. Akbatı AVM No:6, D:3, 34538 Esenyurt/İstanbul',
+      hoursLabel: '08:00 – 24:00',
       sourceUrl: SOURCE_URL,
       logo: '/logo.png',
       logoSourceUrl,
@@ -287,13 +285,13 @@ async function scrapeMenu() {
         accent: getCssVar('--color-accent', '#ca2f2d'),
         background: getCssVar('--color-bg', '#ffffff'),
       },
-      features,
       workingHours,
       socials: {
         instagram: instagramUrl,
         facebook: facebookUrl,
       },
       directionsUrl,
+      googleReviewUrl: 'https://maps.google.com/?cid=15489077177326640443',
       mapEmbedUrl,
       scrapedAt: new Date().toISOString(),
     },

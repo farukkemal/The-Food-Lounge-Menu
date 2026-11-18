@@ -9,42 +9,34 @@
       "accent": "#ca2f2d",
       "background": "#ffffff"
     },
-    "features": [
-      "Dünya Mutfağı",
-      "Restaurant",
-      "Kredi Kartı",
-      "Tatlı ve Pasta",
-      "Nakit",
-      "Wifi"
-    ],
     "workingHours": [
       {
         "day": "Pazartesi",
-        "hours": "08:00 - 01:00"
+        "hours": "08:00 - 24:00"
       },
       {
         "day": "Salı",
-        "hours": "08:00 - 01:00"
+        "hours": "08:00 - 24:00"
       },
       {
         "day": "Çarşamba",
-        "hours": "08:00 - 01:00"
+        "hours": "08:00 - 24:00"
       },
       {
         "day": "Perşembe",
-        "hours": "08:00 - 01:00"
+        "hours": "08:00 - 24:00"
       },
       {
         "day": "Cuma",
-        "hours": "08:00 - 01:00"
+        "hours": "08:00 - 24:00"
       },
       {
         "day": "Cumartesi",
-        "hours": "08:00 - 01:00"
+        "hours": "08:00 - 24:00"
       },
       {
         "day": "Pazar",
-        "hours": "08:00 - 01:00"
+        "hours": "08:00 - 24:00"
       }
     ],
     "socials": {
@@ -53,13 +45,18 @@
     },
     "directionsUrl": "https://www.google.com/search?sca_esv=96d7e8eff03ac209&rlz=1C5CHFA_enTR1040TR1040&kgmid=/g/11cs3j_fw1&q=The+Food+Lounge&shem=dlvsc,shrtsdl&shndl=30&source=sh/x/loc/uni/m1/1&kgs=fe92dd654ad3248f&utm_source=dlvsc,shrtsdl,sh/x/loc/uni/m1/1",
     "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3008.5246595390618!2d28.665482575505237!3d41.05752291639196!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14b558a157ec26b9%3A0xd6f441a0cd2a1d3b!2sThe%20Food%20Lounge!5e0!3m2!1str!2str!4v1773411776859!5m2!1str!2str",
-    "scrapedAt": "2026-11-18T13:17:47.971Z"
+    "scrapedAt": "2026-11-18T13:17:47.971Z",
+    "updatedAt": "2026-11-18T13:43:25.422Z",
+    "address": "Koza Mah. 1655 Sok. Akbatı AVM No:6, D:3, 34538 Esenyurt/İstanbul",
+    "hoursLabel": "08:00 – 24:00",
+    "googleReviewUrl": "https://maps.google.com/?cid=15489077177326640443"
   },
   "stats": {
     "totalCategories": 25,
     "totalSubcategories": 22,
     "totalItems": 485,
     "activeItems": 485,
+    "featuredItems": 0,
     "itemsWithImages": 224,
     "itemsWithDescriptions": 221,
     "itemsWithCalories": 475,
@@ -328,7 +325,8 @@
       "calories": "2710 kcal",
       "image": "https://thefoodlounge.akbatidijital.com/assets/img/uploads/36df4653863c9bea6c9342cdd0872e89.webp",
       "dietary": [],
-      "active": true
+      "active": true,
+      "featured": false
     },
     {
       "id": "tfl-002",

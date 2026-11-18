@@ -415,29 +415,35 @@ const SmartRecommendations = memo(function SmartRecommendations({
 
       {/* Horizontal Momentum-Scroll Carousel */}
       {data.mode === 'featured' ? (
-        <div key={`carousel-${activeSlot}`} className="animate-fade-in mt-3.5">
-          <div className="mb-2 flex items-center justify-between px-4">
-            <span className="text-[11px] font-bold tracking-wider text-[#8C857C] uppercase">
-              {isMorning ? 'Kahvaltı Grubu Öne Çıkanlar' : 'Dünya Mutfağı Öne Çıkanlar'}
-            </span>
-            <span className="text-[11px] font-medium text-[#A19A91]">
-              Kaydır →
-            </span>
+        data.items.length > 0 && (
+          <div key={`carousel-${activeSlot}-${data.isAdminCurated ? 'admin' : 'auto'}`} className="animate-fade-in mt-3.5">
+            <div className="mb-2 flex items-center justify-between px-4">
+              <span className="text-[11px] font-bold tracking-wider text-[#8C857C] uppercase">
+                {data.isAdminCurated
+                  ? `Öne Çıkarılan Diğer Lezzetler (${data.items.length})`
+                  : isMorning
+                    ? 'Kahvaltı Grubu Öne Çıkanlar'
+                    : 'Dünya Mutfağı Öne Çıkanlar'}
+              </span>
+              <span className="text-[11px] font-medium text-[#A19A91]">
+                Kaydır →
+              </span>
+            </div>
+            <div
+              ref={carouselRef}
+              className="gpu-list no-scrollbar touch-scroll-x flex gap-3 overflow-x-auto px-4 pb-2"
+            >
+              {data.items.map((item, idx) => (
+                <CuratedSlideCard
+                  key={item.id}
+                  item={item}
+                  index={idx}
+                  onSelectItem={onSelectItem}
+                />
+              ))}
+            </div>
           </div>
-          <div
-            ref={carouselRef}
-            className="gpu-list no-scrollbar touch-scroll-x flex gap-3 overflow-x-auto px-4 pb-2"
-          >
-            {data.items.map((item, idx) => (
-              <CuratedSlideCard
-                key={item.id}
-                item={item}
-                index={idx}
-                onSelectItem={onSelectItem}
-              />
-            ))}
-          </div>
-        </div>
+        )
       ) : (
         <div key={`carousel-${activeSlot}`} className="animate-fade-in mt-3.5">
           <div className="mb-2 flex items-center justify-between px-4">

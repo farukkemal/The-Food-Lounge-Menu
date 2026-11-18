@@ -62,6 +62,7 @@ export function recomputeMenuData(rawData) {
         calories: item.calories ? String(item.calories).trim() : null,
         image: typeof item.image === 'string' && item.image.trim() ? item.image.trim() : null,
         active: item.active !== false,
+        featured: Boolean(item.featured),
         price: numPrice,
         priceFormatted:
           numPrice !== null ? formatPriceTL(numPrice) : item.priceFormatted || '—',
@@ -102,6 +103,7 @@ export function recomputeMenuData(rawData) {
     ),
     totalItems: items.length,
     activeItems: items.filter((i) => i.active !== false).length,
+    featuredItems: items.filter((i) => i.active !== false && Boolean(i.featured)).length,
     itemsWithImages: items.filter((i) => Boolean(i.image)).length,
     itemsWithDescriptions: items.filter((i) => Boolean(i.description)).length,
     itemsWithCalories: items.filter((i) => Boolean(i.calories)).length,
@@ -110,7 +112,9 @@ export function recomputeMenuData(rawData) {
 
   const fallbackRestaurant = bundledMenuData?.restaurant || {
     name: 'The Food Lounge',
-    features: [],
+    address: 'Koza Mah. 1655 Sok. Akbatı AVM No:6, D:3, 34538 Esenyurt/İstanbul',
+    hoursLabel: '08:00 – 24:00',
+    googleReviewUrl: 'https://maps.google.com/?cid=15489077177326640443',
     workingHours: [],
     socials: {},
   };
@@ -122,6 +126,18 @@ export function recomputeMenuData(rawData) {
         ? safeData.restaurant
         : {}),
       name: safeData.restaurant?.name || fallbackRestaurant.name || 'The Food Lounge',
+      address:
+        safeData.restaurant?.address ||
+        fallbackRestaurant.address ||
+        'Koza Mah. 1655 Sok. Akbatı AVM No:6, D:3, 34538 Esenyurt/İstanbul',
+      hoursLabel:
+        safeData.restaurant?.hoursLabel ||
+        fallbackRestaurant.hoursLabel ||
+        '08:00 – 24:00',
+      googleReviewUrl:
+        safeData.restaurant?.googleReviewUrl ||
+        fallbackRestaurant.googleReviewUrl ||
+        'https://maps.google.com/?cid=15489077177326640443',
     },
     stats,
     categories,
@@ -140,6 +156,7 @@ export function buildMenuIndex(menuData) {
   }));
 
   const activeItems = allItems.filter((i) => i.active !== false);
+  const featuredItems = activeItems.filter((i) => Boolean(i.featured));
 
   const itemsById = new Map();
   const activeItemsByCategory = new Map();
@@ -173,6 +190,7 @@ export function buildMenuIndex(menuData) {
     activeCategories: normalized.categories.filter((c) => c.itemCount > 0),
     allItems,
     activeItems,
+    featuredItems,
 
     getCategoryById(categoryId) {
       return categoriesById.get(categoryId) || null;
@@ -206,6 +224,8 @@ export function buildMenuIndex(menuData) {
         pool = pool.filter((i) => i.active !== false);
       } else if (includeInactive && statusFilter === 'passive') {
         pool = pool.filter((i) => i.active === false);
+      } else if (includeInactive && statusFilter === 'featured') {
+        pool = pool.filter((i) => Boolean(i.featured));
       }
 
       if (!q) return pool;

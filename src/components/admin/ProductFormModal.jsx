@@ -21,6 +21,7 @@ export default function ProductFormModal({
   const [image, setImage] = useState('');
   const [dietary, setDietary] = useState([]);
   const [active, setActive] = useState(true);
+  const [featured, setFeatured] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
@@ -35,6 +36,7 @@ export default function ProductFormModal({
       setImage(item.image || '');
       setDietary(Array.isArray(item.dietary) ? item.dietary : []);
       setActive(item.active !== false);
+      setFeatured(Boolean(item.featured));
     } else {
       setTitle('');
       setCategoryId(defaultCategoryId || categories[0]?.id || '');
@@ -45,6 +47,7 @@ export default function ProductFormModal({
       setImage('');
       setDietary([]);
       setActive(true);
+      setFeatured(false);
     }
   }, [open, item, categories, defaultCategoryId]);
 
@@ -92,6 +95,7 @@ export default function ProductFormModal({
       image: image.trim() || null,
       dietary,
       active,
+      featured,
     });
     setSubmitting(false);
     onClose();
@@ -297,15 +301,27 @@ export default function ProductFormModal({
               </label>
             </div>
 
-            <label className="flex cursor-pointer items-center gap-2 text-xs font-bold text-[#181716]">
-              <input
-                type="checkbox"
-                checked={active}
-                onChange={(e) => setActive(e.target.checked)}
-                className="h-4 w-4 accent-emerald-600"
-              />
-              <span>Menüde Aktif</span>
-            </label>
+            <div className="flex flex-wrap items-center gap-4">
+              <label className="flex cursor-pointer items-center gap-2 text-xs font-bold text-amber-700">
+                <input
+                  type="checkbox"
+                  checked={featured}
+                  onChange={(e) => setFeatured(e.target.checked)}
+                  className="h-4 w-4 accent-amber-500"
+                />
+                <span>Öne Çıkar (Günün Önerisi)</span>
+              </label>
+
+              <label className="flex cursor-pointer items-center gap-2 text-xs font-bold text-[#181716]">
+                <input
+                  type="checkbox"
+                  checked={active}
+                  onChange={(e) => setActive(e.target.checked)}
+                  className="h-4 w-4 accent-emerald-600"
+                />
+                <span>Menüde Aktif</span>
+              </label>
+            </div>
           </div>
 
           {/* Actions */}

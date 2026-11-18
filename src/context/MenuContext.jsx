@@ -148,6 +148,7 @@ export function MenuProvider({ children }) {
           image: newItemInput.image?.trim() || null,
           dietary: Array.isArray(newItemInput.dietary) ? newItemInput.dietary : [],
           active: newItemInput.active !== false,
+          featured: Boolean(newItemInput.featured),
         };
 
         return {
@@ -173,6 +174,17 @@ export function MenuProvider({ children }) {
         ...prev,
         items: prev.items.map((i) =>
           i.id === itemId ? { ...i, active: i.active === false } : i
+        ),
+      })),
+    [commitChange]
+  );
+
+  const toggleItemFeatured = useCallback(
+    (itemId) =>
+      commitChange((prev) => ({
+        ...prev,
+        items: prev.items.map((i) =>
+          i.id === itemId ? { ...i, featured: !Boolean(i.featured) } : i
         ),
       })),
     [commitChange]
@@ -282,6 +294,7 @@ export function MenuProvider({ children }) {
       addItem,
       deleteItem,
       toggleItemActive,
+      toggleItemFeatured,
       addCategory,
       updateCategory,
       deleteCategory,
@@ -298,6 +311,7 @@ export function MenuProvider({ children }) {
       addItem,
       deleteItem,
       toggleItemActive,
+      toggleItemFeatured,
       addCategory,
       updateCategory,
       deleteCategory,

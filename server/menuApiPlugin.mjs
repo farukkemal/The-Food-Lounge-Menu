@@ -64,6 +64,7 @@ function normalizeAndRecomputeMenu(data) {
     totalSubcategories: updatedCategories.reduce((acc, c) => acc + c.subcategories.length, 0),
     totalItems: items.length,
     activeItems: items.filter((i) => i.active !== false).length,
+    featuredItems: items.filter((i) => i.active !== false && Boolean(i.featured)).length,
     itemsWithImages: items.filter((i) => Boolean(i.image)).length,
     itemsWithDescriptions: items.filter((i) => Boolean(i.description)).length,
     itemsWithCalories: items.filter((i) => Boolean(i.calories)).length,

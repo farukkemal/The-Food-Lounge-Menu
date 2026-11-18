@@ -164,6 +164,46 @@ function resolveEveningPairings(menuIndex) {
 }
 
 export function getRecommendationsForSlot(slotId, menuIndex) {
+  // Priority 1: Admin-selected Featured items ("Öne Çıkarılanlar / Günün Önerisi")
+  const adminFeatured = menuIndex.featuredItems || [];
+  if (adminFeatured.length > 0) {
+    const spotlightItem = adminFeatured[0];
+    const remainingItems = adminFeatured.slice(1).map((item) => ({
+      ...item,
+      recommendationTag: item.subcategory || item.category,
+    }));
+
+    const uniqueQuickLinks = [];
+    const seenCatIds = new Set();
+    for (const item of adminFeatured) {
+      if (!seenCatIds.has(item.categoryId) && uniqueQuickLinks.length < 4) {
+        seenCatIds.add(item.categoryId);
+        uniqueQuickLinks.push({
+          label: item.category,
+          categoryId: item.categoryId,
+        });
+      }
+    }
+
+    return {
+      slotId,
+      mode: 'featured',
+      isAdminCurated: true,
+      eyebrow: 'Öne Çıkanlar • Günün Önerisi',
+      title: 'Şefin Özel Seçimleri',
+      subtitle:
+        'The Food Lounge tarafından bugün sizin için özel olarak öne çıkarılan lezzetler.',
+      spotlight: {
+        item: spotlightItem,
+        badge: 'Günün Önerisi',
+        highlightNote: `${spotlightItem.subcategory || spotlightItem.category} • Özel Seçim`,
+      },
+      items: remainingItems,
+      quickLinks: uniqueQuickLinks,
+    };
+  }
+
+  // Priority 2: Automatic Time-Based Recommendations (when no admin featured override is set)
   // 03:00 - 15:00 -> Strictly Serpme Kahvaltı & Kahvaltı Grubu (cat-82)
   if (slotId === TIME_SLOT_IDS.MORNING) {
     const spotlight =
